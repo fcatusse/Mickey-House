@@ -28,3 +28,11 @@ Route::post('/order/new', 'OrderController@store');
 Route::get('/dish/{id}', 'DishesController@show');
 
 Route::put('/dish/order', 'DishesController@updateServings');
+
+// =========== CATEGORIES ==========
+
+Route::get('/categories', 'CategoriesController@index');
+Route::get('/categories/{category}', 'CategoriesController@show');
+Route::post('/categories', 'CategoriesController@store');
+Route::put('/categories/{category}', 'CategoriesController@update');
+Route::delete('/categories/{category}', 'CategoriesController@destroy');
