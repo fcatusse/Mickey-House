@@ -11,6 +11,7 @@
                 <p>Email : {{ $user->email }}</p>
                 <p>Address : {{ $user->address ? $user->complete_address : ''}}</p>
             </div>
+
             <div class="dishes">
                 <h4>Dishes</h4>
                 @foreach($dishes as $dish)

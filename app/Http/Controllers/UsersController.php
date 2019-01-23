@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 class UsersController extends Controller
 {
 
+
     /**
      * Affiche les informations relatives à un cuisinier en fonction de son username
      *
