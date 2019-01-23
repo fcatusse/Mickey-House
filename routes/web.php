@@ -18,10 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/*Route::group(['middleware' => ['web']], function() {
-    Route::resource('dishes', 'DishesController');
-});*/
-
-//Route::resource('/order', 'OrderController');
+// =========== ORDERS ==========
 
 Route::post('/order/new', 'OrderController@store');
+
+
+// =========== DISHES ==========
+
+Route::get('/dish/{id}', 'DishesController@show');
+
+Route::put('/dish/order', 'DishesController@updateServings');

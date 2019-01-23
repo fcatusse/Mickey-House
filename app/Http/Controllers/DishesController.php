@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Order;
+use App\Dish;
+use App\User;
+use DB;
 
 class DishesController extends Controller
 {
@@ -45,8 +49,16 @@ class DishesController extends Controller
      */
     public function show($id)
     {
-        //
+      $dish = DB::table('dishes')
+      ->join('users', 'dishes.user_id', '=', 'users.id')
+      ->select('dishes.*', 'users.username')
+      ->where('dishes.id', $id)
+      ->get();
+      //dump($dish);
+
+      return view('dishes.showDish')->with('dish', $dish);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -69,6 +81,22 @@ class DishesController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateServings(Request $request)
+    {
+      $dish = Dish::find($request->input('dish_id'));
+      $dish->nb_servings = $dish->nb_servings - $request->input('nb_servings');
+      $dish->save();
+
+      return redirect('');
     }
 
     /**
