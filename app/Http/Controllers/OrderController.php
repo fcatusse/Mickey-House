@@ -38,6 +38,11 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+      //check the inputs
+      if (!is_int($request->input('user_id')) || !is_int($request->input('dish_id')) || !is_int($request->input('nb_servings')) || !is_numeric($request->input('price'))) {
+        return response('One or more inputs have the wrong type', 400);
+      }
+
       $order = new Order;
       //in form_hidden
       $order->user_id = $request->input('user_id');
