@@ -17,3 +17,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+/*Route::group(['middleware' => ['web']], function() {
+    Route::resource('dishes', 'DishesController');
+});*/
+
+//Route::resource('/order', 'OrderController');
+
+Route::post('/order/new', 'OrderController@store');

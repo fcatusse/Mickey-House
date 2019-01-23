@@ -15,7 +15,7 @@ class CreateDishesTable extends Migration
     {
         Schema::create('dishes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id_cook');
+            $table->unsignedInteger('user_id');
             $table->string('name');
             $table->mediumText('description');
             $table->mediumText('photos');
@@ -27,7 +27,7 @@ class CreateDishesTable extends Migration
         });
 
         Schema::table('dishes', function (Blueprint $table) {
-          $table->foreign('user_id_cook')->references('id')->on('users');
+          $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
