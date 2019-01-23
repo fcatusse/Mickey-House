@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Order;
+use App\Dish;
+use App\User;
+
 
 class OrderController extends Controller
 {
@@ -34,7 +38,16 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $order = new Order;
+      //in form_hidden
+      $order->user_id = $request->input('user_id');
+      $order->dish_id = $request->input('dish_id');
+      //in form
+      $order->nb_servings = $request->input('nb_servings');
+      $order->price = $request->input('nb_servings') * $request->input('price');
+      $order->save();
+      return redirect(''); //donne status 302
+      //return response('Success', 200); donnera status 200  - pour tester avec postamn à localhost:8000/order/new
     }
 
     /**
