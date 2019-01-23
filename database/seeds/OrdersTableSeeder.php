@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Seeder;
+
+class OrdersTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+      DB::table('orders')->insert([
+          'user_id' => 3,
+          'dish_id' => 2,
+          'nb_servings'=> 2,
+          'price'=> 8,
+      ]);
+      DB::table('orders')->insert([
+          'user_id' => 2,
+          'dish_id' => 1,
+          'nb_servings'=> 2,
+          'price'=> 9,
+      ]);
+
+    }
+}
