@@ -63,6 +63,14 @@ class DishesController extends Controller
        ->where('dishes.id', $id)
        ->get();
        //dump($dish);
+
+       $dish[0]->photos = json_decode($dish[0]->photos); // transfom json in string
+       $dish[0]->categories = json_decode($dish[0]->categories); // transfom json in string
+       $cat = DB::table('categories')
+       ->whereIn('id', $dish[0]->categories)
+       ->get();
+       $dish[0]->categories = $cat;
+
        $servings = [];
        for ($i = 1; $i <= $dish[0]->nb_servings; $i++) {
          $servings[$i] = $i;
