@@ -30,6 +30,7 @@ Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index');
 
+
 // =========== ORDERS ==========
 
 Route::post('/order/new', 'OrderController@store');
