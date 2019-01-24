@@ -16,13 +16,14 @@ class DishesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // Test PHPSTORM
-
     public function index()
     {
+        // dd(json_encode(["tarte01.jpg","tarte02.jpg","tarte03.jpg"]));
+
         $dishes = Dish::all();
         foreach ($dishes as $dish) {
-            $dish["photos"] = json_decode($dish["photos"]);
+            $dish["photos"] = json_decode($dish["photos"]); // transfom json in string
+            $dish["categories"] = json_decode($dish["categories"]); // transfom json in string
         }
         return view('dishes.indexDish', compact('dishes'));
     }
