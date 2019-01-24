@@ -23,7 +23,7 @@
                 </p>
                 <p>visible: {{ $dish->is_visible }}</p>
                 <p>
-                    <a class="btn btn-primary" href="{{ "/dishes/" . $dish->id }}">Show detail</a>
+                    <a class="btn btn-primary" href="{{ "/dish/". $dish->id }}">Show detail</a>
                 </p>
                 <p>
                     <code>id: {{ $dish->id }}</code>
