@@ -6,6 +6,7 @@
   @php ($photos = $dish[0]->photos)
 
 
+
   <div style="display: flex">
     <div style="margin:10px; width:50%; padding:10px; border:1px solid #eee; background-color: #f9f9f9">
       <h2>{{ $dish[0]->name }}</h2>
@@ -24,6 +25,7 @@
     </p>
   </div>
   <div style="margin:10px; width:50%; padding:10px; border:1px solid #eee; background-color:#f9f9f9">
+
     {!! Form::open(['action' => 'OrderController@storeAndUpdate', 'method'=>'POST']) !!}
 
     <div class="form-group">
