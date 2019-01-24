@@ -1,16 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-
-<div class="flash-message">
-  @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-    @if(Session::has('alert-' . $msg))
-    <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}</p>
-    @endif
-  @endforeach
-</div>
-
 <div><a href="http://127.0.0.1:8000/admin/categories/create" class="btn btn-success my-1">Add a category</a></div>
 <table class="table">
   <thead class="thead-dark">
@@ -39,6 +29,5 @@
         @endif
   </tbody>
 </table>
-</div>
 @endsection
 
