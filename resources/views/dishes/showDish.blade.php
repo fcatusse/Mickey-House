@@ -2,8 +2,8 @@
 
 @section('content')
 
-  @php ($cat = json_decode($dish[0]->categories))
-  @php ($photos = json_decode($dish[0]->photos))
+  @php ($cat = $dish[0]->categories)
+  @php ($photos = $dish[0]->photos)
 
 
     <div style="display: flex">
@@ -13,15 +13,14 @@
                 <div id="carousel">
                     <img style="width:100%" src="/img/{{ $photos[0] }}">
                 </div>
+              </br>
                 <h4>{{ $dish[0]->description }}</h4>
                 <p>Nombre de parts disponibles : {{ $dish[0]->nb_servings }}</p>
                 <p>Prix par part: {{ $dish[0]->price }} €</p>
-                <p>catégories:
-                    <ul>
+                <p>
                     @foreach( $cat as $categorie)
-                        <li>{{ $categorie }}</li>
+                        • {{ $categorie->title }}
                     @endforeach
-                    </ul>
                 </p>
             </div>
     </div>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Dish;
 use Illuminate\Http\Response;
+use DB;
 
 class UsersController extends Controller
 {
@@ -20,12 +22,22 @@ class UsersController extends Controller
         $user = User::findById($id);
         if ($user) {
             $user->complete_address = $user->address.' - '.$user->postal_code.' - '.$user->city;
-            /**
-             * En attente du model Dishes
-            $dishes = Dishes::where('user_id_cook', $user->id)->where('is_visible', 1)->get();
-            $dishes->photos = unserialize($dishes->photos);
-             */
-            $dishes = []; /** Valeur par défaut */
+
+            $dishes = DB::table('dishes')
+            ->where('dishes.user_id', $id)
+            ->get();
+            foreach ($dishes as $dish) {
+                $dish->photos = json_decode($dish->photos); // transfom json in string
+                $dish->categories = json_decode($dish->categories); // transfom json in string
+
+                //bget categories names
+                $cat = DB::table('categories')
+                ->whereIn('id', $dish->categories)
+                ->get();
+                $dish->categories = $cat;
+            }
+
+            //$dishes = []; /** Valeur par défaut */
             return response()->view('users.show', compact('user', 'dishes'), 200);
         }
         return response()->view('error.error404', [], 404);
