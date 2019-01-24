@@ -28,6 +28,7 @@ Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
 
 // =========== ORDERS ==========
 
@@ -42,8 +43,9 @@ Route::put('/dish/order', 'DishesController@updateServings');
 
 // =========== CATEGORIES ==========
 
-Route::get('/categories', 'CategoriesController@index');
-Route::get('/categories/{category}', 'CategoriesController@show');
-Route::post('/categories', 'CategoriesController@store');
-Route::put('/categories/{category}', 'CategoriesController@update');
-Route::delete('/categories/{category}', 'CategoriesController@destroy');
+Route::get('admin/categories', 'CategoriesController@index');
+Route::get('admin/categories/create', 'CategoriesController@create');
+Route::get('admin/categories/{category}', 'CategoriesController@show');
+Route::post('admin/categories', 'CategoriesController@store');
+Route::put('admin/categories/{category}', 'CategoriesController@update');
+Route::delete('admin/categories/{category}', 'CategoriesController@destroy');
