@@ -13,9 +13,11 @@ class ReviewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($order_id)
     {
-        return view('reviews.index');
+        return view('reviews.index', [
+            'order_id' => $order_id
+        ]);
     }
 
     /**
