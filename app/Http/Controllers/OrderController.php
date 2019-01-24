@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\Dish;
 use App\User;
-
+use Illuminate\Support\Facades\Session;
+use DB;
 
 class OrderController extends Controller
 {
@@ -38,9 +39,28 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-      //check the inputs
-      if (!is_int($request->input('user_id')) || !is_int($request->input('dish_id')) || !is_int($request->input('nb_servings')) || !is_numeric($request->input('price'))) {
-        return response('One or more inputs have the wrong type', 400);
+
+    }
+
+    /**
+     * Store a newly created resource in storage and update another resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeAndUpdate(Request $request)
+    {
+      $data = $request->validate([
+        'user_id' => 'required|integer',
+        'dish_id' => 'required|integer',
+        'nb_servings' => 'required|integer',
+        'price' => 'required|numeric',
+      ]);
+
+      if ($data == false) {
+        //return response('One or more inputs have the wrong type', 400);
+        Session::flash('alert-danger', 'One or more inputs have the wrong type');
+        return redirect('/');
       }
 
       $order = new Order;
@@ -51,8 +71,14 @@ class OrderController extends Controller
       $order->nb_servings = $request->input('nb_servings');
       $order->price = $request->input('nb_servings') * $request->input('price');
       $order->save();
-      return redirect(''); //donne status 302
-      //return response('Success', 200); donnera status 200  - pour tester avec postamn à localhost:8000/order/new
+
+      $dish = Dish::find($request->input('dish_id'));
+      $dish->nb_servings = $dish->nb_servings - $request->input('nb_servings');
+      $dish->save();
+
+      Session::flash('alert-success', 'The order has been passed!');
+      return redirect('/'); //donne status 302
+      //return response('Success', 200); //donnera status 200  - pour tester avec postman à localhost:8000/order/new
     }
 
     /**

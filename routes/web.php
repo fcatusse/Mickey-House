@@ -33,7 +33,7 @@ Route::get('/', 'HomeController@index');
 
 // =========== ORDERS ==========
 
-Route::post('/order/new', 'OrderController@store');
+Route::post('/order/new', 'OrderController@storeAndUpdate');
 
 
 // =========== DISHES ==========
