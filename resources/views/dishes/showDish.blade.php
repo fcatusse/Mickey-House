@@ -2,12 +2,30 @@
 
 @section('content')
 
-  <div class="container">
+  @php ($cat = json_decode($dish[0]->categories))
+  @php ($photos = json_decode($dish[0]->photos))
 
-    <h3 class=my-4>{{$dish[0]->name}}</h3>
-    <h5>Cook: {{$dish[0]->username}}</h5>
-    <p>{{$dish[0]->description}}</p>
-    <p>Price per serving: {{$dish[0]->price}} €</p>
+
+    <div style="display: flex">
+            <div style="margin:10px; width:50%; padding:10px; border:1px solid #eee; background-color: #f9f9f9">
+                <h2>{{ $dish[0]->name }}</h2>
+                <h5>Cook: {{$dish[0]->username}}</h5>
+                <div id="carousel">
+                    <img style="width:100%" src="/img/{{ $photos[0] }}">
+                </div>
+                <h4>{{ $dish[0]->description }}</h4>
+                <p>Nombre de parts disponibles : {{ $dish[0]->nb_servings }}</p>
+                <p>Prix par part: {{ $dish[0]->price }} €</p>
+                <p>catégories:
+                    <ul>
+                    @foreach( $cat as $categorie)
+                        <li>{{ $categorie }}</li>
+                    @endforeach
+                    </ul>
+                </p>
+            </div>
+    </div>
+
 
     {!! Form::open(['action' => 'OrderController@storeAndUpdate', 'method'=>'POST']) !!}
 

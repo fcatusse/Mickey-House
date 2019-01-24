@@ -55,17 +55,24 @@ class DishesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-      $dish = DB::table('dishes')
-      ->join('users', 'dishes.user_id', '=', 'users.id')
-      ->select('dishes.*', 'users.username')
-      ->where('dishes.id', $id)
-      ->get();
-      //dump($dish);
+     public function show($id)
+     {
+       $dish = DB::table('dishes')
+       ->join('users', 'dishes.user_id', '=', 'users.id')
+       ->select('dishes.*', 'users.username')
+       ->where('dishes.id', $id)
+       ->get();
+       //dump($dish);
+       $servings = [];
+       for ($i = 1; $i <= $dish[0]->nb_servings; $i++) {
+         $servings[$i] = $i;
+       }
 
-      return view('dishes.showDish')->with('dish', $dish);
-    }
+       return view('dishes.showDish', [
+         'dish' => $dish,
+         'servings' => $servings
+       ]);
+     }
 
 
     /**
