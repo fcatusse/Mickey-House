@@ -14,9 +14,20 @@
 // Test Habib pour git
 // test Camille pour git
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Auth::routes();
+
+// ============= USERS =========
+
+Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
+
+//============== HOME =========
+
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 // =========== ORDERS ==========
 
