@@ -17,7 +17,11 @@ class DishesController extends Controller
      */
     public function index()
     {
-        return (1);
+        $dishes = Dish::all();
+        foreach ($dishes as $dish) {
+            $dish["photos"] = json_decode($dish["photos"]);
+        }
+        return view('dishes.indexDish', compact('dishes'));
     }
 
     /**
