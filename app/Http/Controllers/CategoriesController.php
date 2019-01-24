@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Categories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoriesController extends Controller
 {
@@ -14,7 +15,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        return Categories::all();
+        $categories = Categories::all();
+        return view('admin.categories.index', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -33,7 +37,8 @@ class CategoriesController extends Controller
         //Add the new task in the database
         $category = Categories::create($data);
 
-        return response($category, 201);
+        Session::flash('alert-success', 'The category has been created with success.');
+        return redirect()->action('CategoriesController@index');
     }
 
     /**
@@ -44,7 +49,9 @@ class CategoriesController extends Controller
      */
     public function show(Categories $category)
     {
-        return $category;
+        return view('admin.categories.edit', [
+            'category' => $category
+        ]);
     }
 
     /**
@@ -64,7 +71,8 @@ class CategoriesController extends Controller
         //Add the new task in the database
         $category->update($data);
 
-        return response($category, 200);
+        Session::flash('alert-success', 'The category has been updated with success.');
+        return redirect()->action('CategoriesController@index');
     }
 
     /**
@@ -76,6 +84,12 @@ class CategoriesController extends Controller
     public function destroy(Categories $category)
     {
         $category->delete();
-        return response('Category item deleted', 200);
+        Session::flash('alert-danger', 'The category has been deleted with success.');
+        return redirect()->action('CategoriesController@index');
+    }
+
+    public function create()
+    {
+        return view('admin.categories.create');
     }
 }
