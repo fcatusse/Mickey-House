@@ -44,9 +44,11 @@ Route::put('/dish/order', 'DishesController@updateServings');
 
 // =========== CATEGORIES ==========
 
-Route::get('admin/categories', 'CategoriesController@index');
-Route::get('admin/categories/create', 'CategoriesController@create');
-Route::get('admin/categories/{category}', 'CategoriesController@show');
-Route::post('admin/categories', 'CategoriesController@store');
-Route::put('admin/categories/{category}', 'CategoriesController@update');
-Route::delete('admin/categories/{category}', 'CategoriesController@destroy');
+Route::group(['middleware' => 'IsAdmin'], function () {
+    Route::get('admin/categories', 'CategoriesController@index');
+    Route::get('admin/categories/create', 'CategoriesController@create');
+    Route::get('admin/categories/{category}', 'CategoriesController@show');
+    Route::post('admin/categories', 'CategoriesController@store');
+    Route::put('admin/categories/{category}', 'CategoriesController@update');
+    Route::delete('admin/categories/{category}', 'CategoriesController@destroy');
+});
