@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
     <h1>Create a category</h1>
 
     {!! Form::open(['action' => 'CategoriesController@store', 'method' => 'POST']) !!}
@@ -14,5 +13,4 @@
     {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}
 
-</div>
 @endsection

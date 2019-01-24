@@ -52,3 +52,8 @@ Route::group(['middleware' => 'IsAdmin'], function () {
     Route::put('admin/categories/{category}', 'CategoriesController@update');
     Route::delete('admin/categories/{category}', 'CategoriesController@destroy');
 });
+
+// =========== REVIEWS ==========
+
+Route::get('/user/review', 'ReviewsController@index')->middleware('auth');
+Route::post('/user/review', 'ReviewsController@store')->middleware('auth');
