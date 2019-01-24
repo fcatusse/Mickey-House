@@ -59,7 +59,7 @@ class DishesController extends Controller
      {
        $dish = DB::table('dishes')
        ->join('users', 'dishes.user_id', '=', 'users.id')
-       ->select('dishes.*', 'users.username')
+       ->select('dishes.*', 'users.username', 'users.id as cook_id')
        ->where('dishes.id', $id)
        ->get();
        //dump($dish);
@@ -73,7 +73,7 @@ class DishesController extends Controller
 
        $servings = [];
        for ($i = 1; $i <= $dish[0]->nb_servings; $i++) {
-         $servings[$i] = $i;
+         $servings[$i] = $i. " - ". $i*$dish[0]->price. "€";
        }
 
        return view('dishes.showDish', [

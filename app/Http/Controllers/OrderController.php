@@ -60,7 +60,7 @@ class OrderController extends Controller
       if ($data == false) {
         //return response('One or more inputs have the wrong type', 400);
         Session::flash('alert-danger', 'One or more inputs have the wrong type');
-        return redirect('/');
+        return redirect('/dishes');
       }
 
       $order = new Order;
@@ -76,8 +76,8 @@ class OrderController extends Controller
       $dish->nb_servings = $dish->nb_servings - $request->input('nb_servings');
       $dish->save();
 
-      Session::flash('alert-success', 'The order has been passed!');
-      return redirect('/'); //donne status 302
+      Session::flash('alert-success', 'Votre commande a été passée');
+      return redirect('/dishes'); //donne status 302
       //return response('Success', 200); //donnera status 200  - pour tester avec postman à localhost:8000/order/new
     }
 

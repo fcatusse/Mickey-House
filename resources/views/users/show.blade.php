@@ -11,7 +11,10 @@
 
           </br>
 
-            <h4>Dishes</h4>
+          @if (count($dishes) > 0)
+
+            <h4>Plats</h4>
+
 
             <div class="dishes" style="display: flex">
 
@@ -25,19 +28,24 @@
                       <h4>{{ $dish->description }}</h4>
                       <p>nombre de part disponibles : {{ $dish->nb_servings }}</p>
                       <p>prix par part: {{ $dish->price }}</p>
-                      <p>catégories:
-                          <ul>
+
+                      <p>
                           @foreach($dish->categories as $categorie)
-                              <li>{{ $categorie->title }}</li>
+                              • {{ $categorie->title }}
                           @endforeach
-                          </ul>
                       </p>
                       <p>
-                          <a class="btn btn-primary" href="{{ "/dish/". $dish->id }}">Show detail</a>
+                          <a class="btn btn-primary" href="{{ "/dish/". $dish->id }}">Voir le détail</a>
+
                       </p>
                   </div>
               @endforeach
             </div>
+
+          @else
+            <h4>{{ $user->username }} n'a pas encore de plats</h4>
+          @endif
+
 
     </div>
 @endsection
