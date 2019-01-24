@@ -15,6 +15,9 @@ class DishesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // Test PHPSTORM
+
     public function index()
     {
         $dishes = Dish::all();
