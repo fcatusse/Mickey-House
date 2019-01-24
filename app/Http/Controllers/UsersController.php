@@ -10,14 +10,14 @@ class UsersController extends Controller
 
 
     /**
-     * Affiche les informations relatives à un cuisinier en fonction de son username
+     * Affiche les informations relatives à un cuisinier en fonction de son id
      *
-     * @param  string  $username
+     * @param  string  $id
      * @return Response
      */
-    public function show(string $username): Response
+    public function show(string $id): Response
     {
-        $user = User::findByUsername($username);
+        $user = User::findById($id);
         if ($user) {
             $user->complete_address = $user->address.' - '.$user->postal_code.' - '.$user->city;
             /**

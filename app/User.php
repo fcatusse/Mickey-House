@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use DB;
+
 
 class User extends Authenticatable
 {
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'email', 'password',
     ];
 
     /**
@@ -29,12 +31,12 @@ class User extends Authenticatable
     ];
 
     /**
-     * Renvoie un objet user en fonction de son username
-     * @param string $username
+     * Renvoie un objet user en fonction de son id
+     * @param string $id
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|null|object
      */
-    public static function findByUsername(string $username)
+    public static function findById(string $id)
     {
-        return DB::table('users')->where('username', $username)->first();
+        return DB::table('users')->where('id', $id)->first();
     }
 }
