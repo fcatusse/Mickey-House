@@ -38,8 +38,8 @@ Route::post('/order/new', 'OrderController@store');
 
 // =========== DISHES ==========
 
+Route::get('/dishes', 'DishesController@index');
 Route::get('/dish/{id}', 'DishesController@show');
-
 Route::put('/dish/order', 'DishesController@updateServings');
 
 // =========== CATEGORIES ==========
