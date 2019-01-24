@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <h1>Give us your feedback !</h1>
 
     {!! Form::open(['action' => 'ReviewsController@store', 'method' => 'POST']) !!}
@@ -14,7 +15,7 @@
         {{ Form::label('comment', 'Your feedback', [], false) }}
         {{ form::textarea('comment', '', ['class' => 'form-control']) }}
     </div>
-    {{Form::hidden('order_id', 10)}}
+    {{Form::hidden('order_id', $order_id)}}
     {{Form::submit('Send my review', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}
 
