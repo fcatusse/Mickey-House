@@ -56,4 +56,8 @@ Route::group(['middleware' => 'IsAdmin'], function () {
 // =========== REVIEWS ==========
 
 Route::get('/user/review/{order_id}', 'ReviewsController@index')->middleware('auth');
+<<<<<<< HEAD
 Route::post('/user/review', 'ReviewsController@store')->middleware('auth');
+=======
+Route::post('/user/review', 'ReviewsController@store')->middleware('auth'); 
+>>>>>>> update routes
