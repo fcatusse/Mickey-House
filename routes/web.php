@@ -24,6 +24,12 @@ Auth::routes();
 
 Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
 
+Route::get('/users/edit/{id}', 'UsersController@edit')->name('user.edit');
+Route::put('/users/edit/{user}', 'UsersController@update')->name('user.update');
+
+Route::get('/users/password/{id}', 'UsersController@psw_edit')->name('password.edit');
+Route::put('/users/password/{user}', 'UsersController@psw_update')->name('password.update');
+
 //============== HOME =========
 
 
@@ -64,4 +70,4 @@ Route::group(['middleware' => 'IsAdmin'], function () {
 // =========== REVIEWS ==========
 
 Route::get('/user/review/{order_id}', 'ReviewsController@index')->middleware('auth');
-Route::post('/user/review', 'ReviewsController@store')->middleware('auth'); 
+Route::post('/user/review', 'ReviewsController@store')->middleware('auth');
