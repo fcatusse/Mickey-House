@@ -42,15 +42,20 @@ Route::get('/dishes', 'DishesController@index');
 Route::get('/dish/{id}', 'DishesController@show');
 Route::put('/dish/order', 'DishesController@updateServings');
 
-// =========== CATEGORIES ==========
+// =========== ADMIN ==========
 
 Route::group(['middleware' => 'IsAdmin'], function () {
+    // =========== CATEGORIES ==========
     Route::get('admin/categories', 'CategoriesController@index');
     Route::get('admin/categories/create', 'CategoriesController@create');
     Route::get('admin/categories/{category}', 'CategoriesController@show');
     Route::post('admin/categories', 'CategoriesController@store');
     Route::put('admin/categories/{category}', 'CategoriesController@update');
     Route::delete('admin/categories/{category}', 'CategoriesController@destroy');
+
+    // =========== REVIEWS  ==========
+    Route::get('admin/reviews', 'ReviewsController@admin');
+    Route::get('admin/reviews/{review_id}/delete', 'ReviewsController@delete');
 });
 
 // =========== REVIEWS ==========

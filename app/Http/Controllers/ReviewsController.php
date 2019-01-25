@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Dish;
+use App\User;
+use App\Order;
 use App\Reviews;
 use App\Order;
 use App\Dish;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ReviewsController extends Controller
@@ -77,7 +81,6 @@ class ReviewsController extends Controller
     {
         $orders = Order::all();
         foreach ($orders as $key => $value) {
-
             // Calculer en heures la différence entre today et la date de la commande
             $hours = (time() - strtotime($value->created_at)) / 3600;
             if($hours > 24 && !$value->sent)
@@ -97,5 +100,27 @@ class ReviewsController extends Controller
 
             }
         }
+    }
+
+    public function admin()
+    {
+
+        $reviews = DB::table('reviews')
+        ->join('orders', 'orders.id', '=', 'reviews.order_id')
+        ->join('users', 'users.id', '=', 'orders.user_id')
+        ->select('reviews.id as review_id', 'reviews.*', 'users.*')
+        ->get();
+
+        return view('admin.reviews.index', [
+            'reviews' => $reviews
+        ]);
+    }
+
+    public function delete($review)
+    {
+        $review = Reviews::find($review);
+        $review->delete();
+        Session::flash('alert-danger', 'The review has been deleted with success.');
+        return redirect()->action('ReviewsController@admin');
     }
 }
