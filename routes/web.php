@@ -62,4 +62,3 @@ Route::group(['middleware' => 'IsAdmin'], function () {
 
 Route::get('/user/review/{order_id}', 'ReviewsController@index')->middleware('auth');
 Route::post('/user/review', 'ReviewsController@store')->middleware('auth'); 
-Route::get('/sendReviewsEmails', 'ReviewsController@sendEmail'); 

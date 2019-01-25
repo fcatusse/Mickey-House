@@ -6,9 +6,6 @@ use App\Dish;
 use App\User;
 use App\Order;
 use App\Reviews;
-use App\Order;
-use App\Dish;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -22,16 +19,9 @@ class ReviewsController extends Controller
      */
     public function index($order_id)
     {
-        // Vérifier que le user n'a pas déjà donné son avis sur cette commande
-        $review = Reviews::find($order_id);
-        if($review) {
-            Session::flash('alert-danger', 'You have already given your review for this order !');
-            return redirect()->action('HomeController@index');
-        } else {
-            return view('reviews.index', [
-                'order_id' => $order_id
-            ]);
-        }
+        return view('reviews.index', [
+            'order_id' => $order_id
+        ]);
     }
 
     /**
@@ -67,17 +57,24 @@ class ReviewsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Show the form for editing the specified resource.
      *
      * @param  \App\Reviews  $reviews
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Reviews $reviews)
+    public function edit(Reviews $reviews)
     {
         //
     }
 
-    public function sendEmail()
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Reviews  $reviews
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Reviews $reviews)
     {
         $orders = Order::all();
         foreach ($orders as $key => $value) {
@@ -97,9 +94,20 @@ class ReviewsController extends Controller
                 // $headers = "From: webmaster@example.com";
                 // mail($to,$subject,$msg,$headers);
                 return $msg;
+        //
+    }
+    }
+}
 
-            }
-        }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Reviews  $reviews
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Reviews $reviews)
+    {
+        //
     }
 
     public function admin()
