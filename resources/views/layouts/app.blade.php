@@ -35,13 +35,10 @@
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Les plats</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Mes commandes</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Top 10</a>
@@ -51,7 +48,7 @@
               <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher</button>
             </form>
           </ul>
-  
+
           <!-- Right Side Of Navbar -->
           <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
@@ -74,7 +71,9 @@
                   @if (Auth::user()->is_admin)
                   <a href="{{route('adminPanel')}}" class="dropdown-item">Admin Panel</a>
                   @endif
-                  <a href="#" class="dropdown-item">Editer mon profil</a>
+                  <a href="{{route('user.show', Auth::user()->id)}}" class="dropdown-item">Ma page</a>
+                  <a href="{{route('orders.show', Auth::user()->id)}}" class="dropdown-item">Mes commandes</a>
+                  <a href="{{route('user.edit', Auth::user()->id)}}" class="dropdown-item">Editer mon profil</a>
                   <a class="dropdown-item" href="{{ route('logout') }}"
                   onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">

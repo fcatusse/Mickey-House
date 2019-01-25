@@ -7,6 +7,7 @@ use App\Order;
 use App\Dish;
 use App\User;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use DB;
 
 class OrderController extends Controller
@@ -90,6 +91,30 @@ class OrderController extends Controller
     public function show($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showAll()
+    {
+      $orders = DB::table('orders')
+      ->join('dishes', 'dishes.id', '=', 'orders.dish_id')
+      ->join('users', 'users.id', '=', 'dishes.user_id')
+      ->select('orders.*', 'dishes.name', 'dishes.description', 'dishes.photos', 'users.username')
+      ->where('orders.user_id', Auth::user()->id)
+      ->get();
+
+
+      foreach ($orders as $order) {
+          $order->photos = json_decode($order->photos); // transfom json in string
+      }
+
+      return view('users.orders', [
+        'orders' => $orders,
+      ]);
     }
 
     /**
