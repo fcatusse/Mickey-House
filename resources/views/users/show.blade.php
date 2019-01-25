@@ -51,5 +51,10 @@
           @endif
 
 
+          @else
+            <h4>{{ $user->username }} n'a pas encore de plats</h4>
+          @endif
+
+
     </div>
 @endsection
