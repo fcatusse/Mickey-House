@@ -39,13 +39,14 @@ Route::get('/', 'DishesController@index');
 
 // =========== ORDERS ==========
 
-Route::post('/order/new', 'OrderController@storeAndUpdate');
+Route::post('/orders/new', 'OrderController@storeAndUpdate');
+Route::get('/orders/show', 'OrderController@showAll')->name('orders.show');
 
 
 // =========== DISHES ==========
 
 Route::get('/dishes', 'DishesController@index');
-Route::get('/dish/{id}', 'DishesController@show');
+Route::get('/dish/{id}', 'DishesController@show')->name('dish.show');
 Route::put('/dish/order', 'DishesController@updateServings');
 
 // =========== ADMIN ==========

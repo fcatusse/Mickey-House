@@ -91,7 +91,7 @@ class UsersController extends Controller
       $user->update($data);
 
       Session::flash('alert-success', 'Profil édité avec succès');
-      return redirect()->action('HomeController@index');
+      return redirect()->action('UsersController@show', [$user->id]);
   }
 
   /**
