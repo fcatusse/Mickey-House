@@ -6,6 +6,9 @@ use App\Dish;
 use App\User;
 use App\Order;
 use App\Reviews;
+use App\Order;
+use App\Dish;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -78,7 +81,6 @@ class ReviewsController extends Controller
     {
         $orders = Order::all();
         foreach ($orders as $key => $value) {
-
             // Calculer en heures la différence entre today et la date de la commande
             $hours = (time() - strtotime($value->created_at)) / 3600;
             if($hours > 24 && !$value->sent)
