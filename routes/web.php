@@ -24,11 +24,17 @@ Auth::routes();
 
 Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
 
+Route::get('/users/edit/{id}', 'UsersController@edit')->name('user.edit');
+Route::put('/users/edit/{user}', 'UsersController@update')->name('user.update');
+
+Route::get('/users/password/{id}', 'UsersController@psw_edit')->name('password.edit');
+Route::put('/users/password/{user}', 'UsersController@psw_update')->name('password.update');
+
 //============== HOME =========
 
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'HomeController@index');
+Route::get('/home', 'DishesController@index')->name('home');
+Route::get('/', 'DishesController@index');
 
 
 // =========== ORDERS ==========
@@ -42,15 +48,23 @@ Route::get('/dishes', 'DishesController@index');
 Route::get('/dish/{id}', 'DishesController@show');
 Route::put('/dish/order', 'DishesController@updateServings');
 
-// =========== CATEGORIES ==========
+// =========== ADMIN ==========
 
 Route::group(['middleware' => 'IsAdmin'], function () {
-    Route::get('admin/categories', 'CategoriesController@index');
+    // =========== CATEGORIES ==========
+    Route::get('admin/categories', 'CategoriesController@index')->name('adminCat');
     Route::get('admin/categories/create', 'CategoriesController@create');
     Route::get('admin/categories/{category}', 'CategoriesController@show');
     Route::post('admin/categories', 'CategoriesController@store');
     Route::put('admin/categories/{category}', 'CategoriesController@update');
     Route::delete('admin/categories/{category}', 'CategoriesController@destroy');
+
+    // =========== REVIEWS  ==========
+    Route::get('admin/reviews', 'ReviewsController@admin')->name('adminRev');
+    Route::get('admin/reviews/{review_id}/delete', 'ReviewsController@delete');
+
+    // =========== ADMIN PANEL ==========
+    Route::get('/admin', 'AdminController@index')->name('adminPanel');
 });
 
 // =========== REVIEWS ==========
