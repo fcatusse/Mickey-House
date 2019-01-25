@@ -27,8 +27,8 @@ Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
 //============== HOME =========
 
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'HomeController@index');
+Route::get('/home', 'DishesController@index')->name('home');
+Route::get('/', 'DishesController@index');
 
 
 // =========== ORDERS ==========
