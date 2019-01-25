@@ -10,11 +10,9 @@
             </div>
 
           </br>
-
           @if (count($dishes) > 0)
 
             <h4>Plats</h4>
-
 
             <div class="dishes" style="display: flex">
 
@@ -41,11 +39,9 @@
                   </div>
               @endforeach
             </div>
-
           @else
             <h4>{{ $user->username }} n'a pas encore de plats</h4>
           @endif
-
 
     </div>
 @endsection
