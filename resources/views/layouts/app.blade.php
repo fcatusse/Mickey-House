@@ -72,7 +72,7 @@
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   @if (Auth::user()->is_admin)
-                  <a href="#" class="dropdown-item">Admin Panel</a>
+                  <a href="{{route('adminPanel')}}" class="dropdown-item">Admin Panel</a>
                   @endif
                   <a href="#" class="dropdown-item">Editer mon profil</a>
                   <a class="dropdown-item" href="{{ route('logout') }}"
