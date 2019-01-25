@@ -25,7 +25,7 @@
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
       <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-          {{ config('app.name', 'Mickey House') }}
+          Mickey House
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
           <span class="navbar-toggler-icon"></span>
@@ -34,9 +34,24 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
-
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Les plats</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Mes commandes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Top 10</a>
+            </li>
+            <form class="form-inline my-2 my-lg-0 ml-5">
+              <input class="form-control mr-sm-2" type="text" placeholder="Rechercher un plat...">
+              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher</button>
+            </form>
           </ul>
-
+  
           <!-- Right Side Of Navbar -->
           <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
@@ -56,6 +71,10 @@
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  @if (Auth::user()->is_admin)
+                  <a href="#" class="dropdown-item">Admin Panel</a>
+                  @endif
+                  <a href="#" class="dropdown-item">Editer mon profil</a>
                   <a class="dropdown-item" href="{{ route('logout') }}"
                   onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">
