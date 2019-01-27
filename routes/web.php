@@ -37,8 +37,11 @@ Route::post('/order/new', 'OrderController@store');
 // =========== DISHES ==========
 
 Route::get('/dishes', 'DishesController@index');
-Route::get('/dish/{id}', 'DishesController@show');
+Route::get('/dish/create', 'DishesController@create');
+Route::put('/dish/create', 'DishesController@store');
+Route::get('/dish/{id}', 'DishesController@show')->name('showdish');
 Route::put('/dish/order', 'DishesController@updateServings');
+Route::get('/dish/{id}', 'DishesController@show');
 
 // =========== CATEGORIES ==========
 
