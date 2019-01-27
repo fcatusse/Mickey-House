@@ -26,29 +26,28 @@ class UsersController extends Controller
     $user = User::findById($id);
     if ($user) {
       $user->complete_address = $user->address.' - '.$user->postal_code.' - '.$user->city;
-
+      // find dishes that are made by this cook
       $dishes = DB::table('dishes')
       ->where('dishes.user_id', $id)
       ->get();
+      // converts json to string
       foreach ($dishes as $dish) {
-        $dish->photos = json_decode($dish->photos); // transfom json in string
-        $dish->categories = json_decode($dish->categories); // transfom json in string
+        $dish->photos = json_decode($dish->photos);
+        $dish->categories = json_decode($dish->categories);
 
-        //bget categories names
+        //find categories that are linked to this dish
         $cat = DB::table('categories')
         ->whereIn('id', $dish->categories)
         ->get();
         $dish->categories = $cat;
       }
-
-      //$dishes = []; /** Valeur par défaut */
       return response()->view('users.show', compact('user', 'dishes'), 200);
     }
     return response()->view('error.error404', [], 404);
   }
 
   /**
-  * Show the form for editing the specified resource.
+  * Show the form for editing the current user's data.
   *
   * @param  int  $id
   * @return \Illuminate\Http\Response
@@ -56,19 +55,22 @@ class UsersController extends Controller
   public function edit($id)
   {
     $user = User::find($id);
-  //  dd($user);
-    if (Auth::user()->id == $user->id) {
-      $data = [
-        'user' => $user,
-      ];
-      return view('users.edit')->with('data', $data);
+    if ($user) {
+      if (Auth::user()->id == $user->id) {
+        $data = [
+          'user' => $user,
+        ];
+        return view('users.edit')->with('data', $data);
+      } else {
+        return redirect()->action('HomeController@index');
+      }
     } else {
-      return redirect()->action('HomeController@index');
+      return response()->view('error.error404', [], 404);
     }
   }
 
   /**
-   * Update the specified resource in storage.
+   * Update the current user's data.
    *
    * @param  \Illuminate\Http\Request  $request
    * @param  \App\User  $user
@@ -87,7 +89,7 @@ class UsersController extends Controller
         'email' => 'required|string|email',
       ]);
 
-      //Add the new task in the database
+      //Change the updated user in the database
       $user->update($data);
 
       Session::flash('alert-success', 'Profil édité avec succès');

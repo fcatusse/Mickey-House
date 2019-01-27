@@ -5,7 +5,7 @@
   @php ($cat = $dish[0]->categories)
   @php ($photos = $dish[0]->photos)
 
-
+{{-- Display the dish information --}}
 
   <div style="display: flex">
     <div style="margin:10px; width:50%; padding:10px; border:1px solid #eee; background-color: #f9f9f9">
@@ -29,6 +29,7 @@
     </p>
   </div>
 
+{{-- Display the dish order part : if there are servings available show the form otherwise display an info message "unavailable "--}}
 
     <div style="margin:10px; width:50%; height:50%; padding:10px; border:1px solid #eee; background-color:#f9f9f9">
       @if ($dish[0]->nb_servings > 0)
