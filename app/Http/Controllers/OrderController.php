@@ -44,7 +44,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage and update another resource.
+     * Store a newly created order and update a dish (nb of servings).
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -61,25 +61,25 @@ class OrderController extends Controller
       if ($data == false) {
         //return response('One or more inputs have the wrong type', 400);
         Session::flash('alert-danger', 'One or more inputs have the wrong type');
-        return redirect('/dishes');
+        return response()->view('dish.show.all', [], 400);
       }
 
       $order = new Order;
-      //in form_hidden
       $order->user_id = $request->input('user_id');
       $order->dish_id = $request->input('dish_id');
-      //in form
       $order->nb_servings = $request->input('nb_servings');
       $order->price = $request->input('nb_servings') * $request->input('price');
       $order->save();
 
+      // find dish corresponding to order and update the number of servings
+      // remove the nb of servings that has just been ordered
       $dish = Dish::find($request->input('dish_id'));
       $dish->nb_servings = $dish->nb_servings - $request->input('nb_servings');
       $dish->save();
 
       Session::flash('alert-success', 'Votre commande a été passée');
       return redirect('/dishes'); //donne status 302
-      //return response('Success', 200); //donnera status 200  - pour tester avec postman à localhost:8000/order/new
+      //return response('Success', 200); //donnera status 200
     }
 
     /**
@@ -94,7 +94,9 @@ class OrderController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the orders of the currently authentified customer.
+     * Calls the dishes table to get the detail of the order and
+     * the users table to get name of the cook
      *
      * @return \Illuminate\Http\Response
      */
@@ -107,9 +109,9 @@ class OrderController extends Controller
       ->where('orders.user_id', Auth::user()->id)
       ->get();
 
-
+      //converts json into string
       foreach ($orders as $order) {
-          $order->photos = json_decode($order->photos); // transfom json in string
+          $order->photos = json_decode($order->photos);
       }
 
       return view('users.orders', [

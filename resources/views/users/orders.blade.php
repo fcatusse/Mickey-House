@@ -4,6 +4,8 @@
 
   <h2>Mes commandes</h2>
 
+  {{-- Display orders as cards and show a custom message if no order has been passed by this customer yet --}}
+
   @if (count($orders) > 0)
 
     <div class="card-deck">
