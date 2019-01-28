@@ -11,7 +11,7 @@
     @if($i % 2 == 0)
         <div class="card">
             @isset ($dishes[$i-1]->photos[0])
-            <img class="card-img-top" style="width:100%" src="{{ url('/'.$dishes[$i-1]->photos[0]) }}">
+            <img class="card-img-top" style="width:100%" src="{{ url('/storage/'.$dishes[$i-1]->photos[0]) }}">
             @endisset
             <div class="card-body">
                 <span class="badge badge-secondary badgeHome">{{ $dishes[$i-1]->nb_servings }} Parts disponibles</span>
@@ -32,7 +32,7 @@
     <div class="card-deck">
         <div class="card">
             @isset ($dishes[$i-1]->photos[0])
-            <img class="card-img-top" style="width:100%" src="{{ url('/'.$dishes[$i-1]->photos[0]) }}">
+            <img class="card-img-top" style="width:100%" src="{{ url('/storage/'.$dishes[$i-1]->photos[0]) }}">
             @endisset
             <div class="card-body">
                 <span class="badge badge-secondary badgeHome">{{ $dishes[$i-1]->nb_servings }} Parts disponibles</span>
@@ -51,3 +51,4 @@
     @endif
 @endfor
 @endsection
+

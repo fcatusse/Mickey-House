@@ -53,6 +53,7 @@ Route::get('/dish/{id}', 'DishesController@show')->name('dish.show');
 Route::put('/dish/order', 'DishesController@updateServings')->middleware('auth');
 
 
+
 // =========== ADMIN ==========
 
 Route::group(['middleware' => 'IsAdmin'], function () {
