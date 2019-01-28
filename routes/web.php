@@ -24,29 +24,55 @@ Auth::routes();
 
 Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
 
+Route::get('/users/edit/{id}', 'UsersController@edit')->name('user.edit');
+Route::put('/users/edit/{user}', 'UsersController@update')->name('user.update');
+
+Route::get('/users/password/{id}', 'UsersController@psw_edit')->name('password.edit');
+Route::put('/users/password/{user}', 'UsersController@psw_update')->name('password.update');
+
 //============== HOME =========
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'DishesController@index')->name('home');
+Route::get('/', 'DishesController@index');
+
 
 // =========== ORDERS ==========
 
-Route::post('/order/new', 'OrderController@store');
+Route::post('/orders/new', 'OrderController@storeAndUpdate');
+Route::get('/orders/show', 'OrderController@showAll')->name('orders.show');
 
 
 // =========== DISHES ==========
 
-Route::get('/dishes', 'DishesController@index');
+
+Route::get('/dishes', 'DishesController@index')->name('dish.show.all');
 Route::get('/dish/create', 'DishesController@create');
 Route::put('/dish/create', 'DishesController@store');
-Route::get('/dish/{id}', 'DishesController@show')->name('showdish');
+Route::get('/dish/{id}', 'DishesController@show')->name('dish.show');
 Route::put('/dish/order', 'DishesController@updateServings');
-Route::get('/dish/{id}', 'DishesController@show');
 
-// =========== CATEGORIES ==========
 
-Route::get('/categories', 'CategoriesController@index');
-Route::get('/categories/{category}', 'CategoriesController@show');
-Route::post('/categories', 'CategoriesController@store');
-Route::put('/categories/{category}', 'CategoriesController@update');
-Route::delete('/categories/{category}', 'CategoriesController@destroy');
+// =========== ADMIN ==========
+
+Route::group(['middleware' => 'IsAdmin'], function () {
+    // =========== CATEGORIES ==========
+    Route::get('admin/categories', 'CategoriesController@index')->name('adminCat');
+    Route::get('admin/categories/create', 'CategoriesController@create');
+    Route::get('admin/categories/{category}', 'CategoriesController@show');
+    Route::post('admin/categories', 'CategoriesController@store');
+    Route::put('admin/categories/{category}', 'CategoriesController@update');
+    Route::delete('admin/categories/{category}', 'CategoriesController@destroy');
+
+    // =========== REVIEWS  ==========
+    Route::get('admin/reviews', 'ReviewsController@admin')->name('adminRev');
+    Route::get('admin/reviews/{review_id}/delete', 'ReviewsController@delete');
+
+    // =========== ADMIN PANEL ==========
+    Route::get('/admin', 'AdminController@index')->name('adminPanel');
+});
+
+// =========== REVIEWS ==========
+
+Route::get('/user/review/{order_id}', 'ReviewsController@index')->middleware('auth');
+Route::post('/user/review', 'ReviewsController@store')->middleware('auth');

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\Dish;
 use App\User;
-
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use DB;
 
 class OrderController extends Controller
 {
@@ -38,21 +40,46 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-      //check the inputs
-      if (!is_int($request->input('user_id')) || !is_int($request->input('dish_id')) || !is_int($request->input('nb_servings')) || !is_numeric($request->input('price'))) {
-        return response('One or more inputs have the wrong type', 400);
+
+    }
+
+    /**
+     * Store a newly created order and update a dish (nb of servings).
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeAndUpdate(Request $request)
+    {
+      $data = $request->validate([
+        'user_id' => 'required|integer',
+        'dish_id' => 'required|integer',
+        'nb_servings' => 'required|integer',
+        'price' => 'required|numeric',
+      ]);
+
+      if ($data == false) {
+        //return response('One or more inputs have the wrong type', 400);
+        Session::flash('alert-danger', 'One or more inputs have the wrong type');
+        return response()->view('dish.show.all', [], 400);
       }
 
       $order = new Order;
-      //in form_hidden
       $order->user_id = $request->input('user_id');
       $order->dish_id = $request->input('dish_id');
-      //in form
       $order->nb_servings = $request->input('nb_servings');
       $order->price = $request->input('nb_servings') * $request->input('price');
       $order->save();
-      return redirect(''); //donne status 302
-      //return response('Success', 200); donnera status 200  - pour tester avec postamn à localhost:8000/order/new
+
+      // find dish corresponding to order and update the number of servings
+      // remove the nb of servings that has just been ordered
+      $dish = Dish::find($request->input('dish_id'));
+      $dish->nb_servings = $dish->nb_servings - $request->input('nb_servings');
+      $dish->save();
+
+      Session::flash('alert-success', 'Votre commande a été passée');
+      return redirect('/dishes'); //donne status 302
+      //return response('Success', 200); //donnera status 200
     }
 
     /**
@@ -64,6 +91,32 @@ class OrderController extends Controller
     public function show($id)
     {
         //
+    }
+
+    /**
+     * Display the orders of the currently authentified customer.
+     * Calls the dishes table to get the detail of the order and
+     * the users table to get name of the cook
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showAll()
+    {
+      $orders = DB::table('orders')
+      ->join('dishes', 'dishes.id', '=', 'orders.dish_id')
+      ->join('users', 'users.id', '=', 'dishes.user_id')
+      ->select('orders.*', 'dishes.name', 'dishes.description', 'dishes.photos', 'users.username')
+      ->where('orders.user_id', Auth::user()->id)
+      ->get();
+
+      //converts json into string
+      foreach ($orders as $order) {
+          $order->photos = json_decode($order->photos);
+      }
+
+      return view('users.orders', [
+        'orders' => $orders,
+      ]);
     }
 
     /**
