@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -12,7 +11,7 @@
     @if($i % 2 == 0)
         <div class="card">
             @isset ($dishes[$i-1]->photos[0])
-            <img class="card-img-top" style="width:100%" src="{{ url('/'.$dishes[$i-1]->photos[0]) }}">
+            <img class="card-img-top" style="width:100%" src="{{ url('/storage/'.$dishes[$i-1]->photos[0]) }}">
             @endisset
             <div class="card-body">
                 <span class="badge badge-secondary badgeHome">{{ $dishes[$i-1]->nb_servings }} Parts disponibles</span>
@@ -26,7 +25,6 @@
                 <small class="text-muted">{{ $categorie }} - </small>
                 @endforeach
                 <div class="priceHome badge badge-success">{{$dishes[$i-1]->price}} € / Part</div>
-
             </div>
         </div>
     </div>
@@ -34,7 +32,7 @@
     <div class="card-deck">
         <div class="card">
             @isset ($dishes[$i-1]->photos[0])
-            <img class="card-img-top" style="width:100%" src="{{ url('/'.$dishes[$i-1]->photos[0]) }}">
+            <img class="card-img-top" style="width:100%" src="{{ url('/storage/'.$dishes[$i-1]->photos[0]) }}">
             @endisset
             <div class="card-body">
                 <span class="badge badge-secondary badgeHome">{{ $dishes[$i-1]->nb_servings }} Parts disponibles</span>
