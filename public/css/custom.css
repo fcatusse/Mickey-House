@@ -1,0 +1,45 @@
+* {
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.priceHome {
+    float: right;
+    font-size: 16px !important;
+}
+
+.badgeHome {
+    float: right;
+    font-size: 14px !important;
+}
+
+.jumbotron {
+    background-image: url("/img/hero.jpg");
+    margin-bottom: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+    color: white;
+}
+
+.titleHome {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.descriptionHome {
+    font-size: 18px;
+    text-transform: capitalize;
+}
+
+.btnHome {
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+}
+
+.catFooter small {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
