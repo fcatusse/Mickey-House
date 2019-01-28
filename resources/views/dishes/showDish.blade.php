@@ -16,7 +16,7 @@
             <div class="card-body">
                 <span class="badge badge-secondary badgeHome">{{ $dish[0]->nb_servings }} Parts disponibles</span>
                 <h5 class="card-title titleHome">{{$dish[0]->name}}</h5>
-                <h6 class="text-muted">Cuisiné par <a href="/users/show/{{$dish[0]->cook_id}}">{{$dish[0]->username}}</a></h6>
+                <h6 class="text-muted madeBy"><span>Cuisiné par </span><a href="/users/show/{{$dish[0]->cook_id}}">{{$dish[0]->username}}</a></h6>
                 <p class="card-text descriptionHome">{{$dish[0]->description}}</p>
             </div>
             <div class="card-footer catFooter">
