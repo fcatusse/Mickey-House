@@ -10,7 +10,7 @@
                 <h2>{{ $dish->name }}</h2>
                 <div>
                     @isset ($dish->photos[0])
-                    <img style="width:100%" src="{{ url('storage/'.$dish->photos[0]) }}">
+                    <img style="width:100%" src="{{ url('/'.$dish->photos[0]) }}">
                     @endisset
 
                 </div>
@@ -25,14 +25,7 @@
                         <li>{{ $categorie }}</li>
                     @endforeach
                     </ul>
-                </p>
-                <p>visible: {{ $dish->is_visible }}</p>
-                <p>
                     <a class="btn btn-primary" href="{{ "/dish/" . $dish->id }}">Show detail</a>
-                </p>
-                <p>
-                    <code>id: {{ $dish->id }}</code>
-                    <code>user_id: {{ $dish->user_id }}</code>
                 </p>
             </div>
         @endforeach
