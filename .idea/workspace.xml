@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f514e62d-2c62-48c2-9c80-0ea840b1f93f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/dishes/createDish.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Mickey-House.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Mickey-House.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="f514e62d-2c62-48c2-9c80-0ea840b1f93f" name="Default Changelist" comment="Test Phhstorm">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DishesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DishesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dishes/indexDish.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dishes/indexDish.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -56,55 +47,76 @@
         <item name="mickey_house: schema" type="76f4a085:MysqlImplModel$Schema" />
         <item name="dishes: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
+
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="mickey_house@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="collations" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+
     </expand>
     <select />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DishesController.php">
+
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/dishes/indexDish.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="31">
-              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="210">
+              <caret line="19" column="41" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
               <folding>
-                <element signature="e#40#59#0#PHP" expanded="true" />
+                <element signature="e#363#381#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/dishes/createDish.blade.php">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DishesController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="37" column="47" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="47" />
+            <state relative-caret-position="238">
+              <caret line="25" column="29" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="29" />
+              <folding>
+                <element signature="e#40#68#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/seeds/CategoriesTableSeeder.php">
+          <provider selected="true" editor-type-id="text-editor">
+
+            <state relative-caret-position="15">
+              <caret line="5" column="42" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="42" />
+              <folding>
+                <element signature="e#7#38#0#PHP" expanded="true" />
+
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="das://63a93038-7f9e-4763-ad82-74b26f0d7fe3/schema/mickey_house/table/dishes">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/dishes/indexDish.blade.php">
+
+        <entry file="file://$PROJECT_DIR$/database/seeds/DatabaseSeeder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+            <state relative-caret-position="105">
+              <caret line="7" column="39" lean-forward="true" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
+
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/web.php">
+
+        <entry file="file://$PROJECT_DIR$/database/seeds/DishesTableSeeder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+            <state relative-caret-position="329">
+              <caret line="34" column="9" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="34" selection-end-column="9" />
+
             </state>
           </provider>
         </entry>
@@ -164,17 +176,11 @@
         <option value="$PROJECT_DIR$/app/Dishes.php" />
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/tests/Api/DishesApiTest.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/database/seeds/CategoriesTableSeeder.php" />
         <option value="$PROJECT_DIR$/database/seeds/DishesTableSeeder.php" />
         <option value="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/config/app.php" />
-        <option value="$PROJECT_DIR$/composer.json" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/resources/views/dishes/createDish.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/dishes/testDish.blade.php" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
-        <option value="$PROJECT_DIR$/config/filesystems.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/DishesController.php" />
         <option value="$PROJECT_DIR$/resources/views/dishes/indexDish.blade.php" />
       </list>
@@ -275,11 +281,13 @@
       <path value="$PROJECT_DIR$/vendor/laravelcollective/html" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="x" value="34" />
-    <option name="y" value="68" />
-    <option name="width" value="1333" />
-    <option name="height" value="792" />
+
+  <component name="ProjectFrameBounds">
+    <option name="x" value="53" />
+    <option name="y" value="23" />
+    <option name="width" value="1119" />
+    <option name="height" value="693" />
+
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -301,48 +309,17 @@
             <path>
               <item name="Mickey-House" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mickey-House" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Mickey-House" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mickey-House" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+              <item name="seeds" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Mickey-House" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mickey-House" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Mickey-House" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Mickey-House" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="dishes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Mickey-House" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Mickey-House" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Mickey-House" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Mickey-House" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Mickey-House" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Mickey-House" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Mickey-House" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Mickey-House" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -368,8 +345,6 @@
       <recent name="$PROJECT_DIR$/tests/Unit" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/views/dishes" />
-      <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -418,24 +393,16 @@
       <option name="project" value="LOCAL" />
       <updated>1548335312381</updated>
     </task>
-    <task id="LOCAL-00003" summary="Test Phhstorm">
-      <created>1548335333221</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1548335333221</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44696000" />
+    <option name="totallyTimeSpent" value="12836000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="924" height="900" extended-state="6" />
-    <editor active="true" />
+    <frame x="53" y="23" width="1119" height="693" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18707483" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.31383473" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -449,14 +416,14 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3294509" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.3294509" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5012255" side_tool="true" weight="0.32891566" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4987745" visible="true" weight="0.11686747" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4987745" weight="0.281198" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" weight="0.18445475" />
+      <window_info anchor="right" id="Database" order="3" visible="true" weight="0.09935005" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -464,9 +431,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Display all dishes and good seeders" />
     <MESSAGE value="Test Phhstorm" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test Phhstorm" />
+    <MESSAGE value="Display all dishes and good seeders" />
+    <option name="LAST_COMMIT_MESSAGE" value="Display all dishes and good seeders" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tests/TestCase.php">
@@ -543,6 +510,128 @@
           <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
           <folding>
             <element signature="e#28#70#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="38" column="48" selection-start-line="38" selection-start-column="48" selection-end-line="38" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitattributes">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Order.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Dish.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_01_22_141323_create_orders_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_01_23_203631_create_categories_table.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Container/Container.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/seeds/UsersTableSeeder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="11" lean-forward="true" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://63a93038-7f9e-4763-ad82-74b26f0d7fe3/schema/mickey_house/table/dishes">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-89">
+          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/dishes/showDish.blade.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="das://63a93038-7f9e-4763-ad82-74b26f0d7fe3/schema/mickey_house/table/categories">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Categories.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="16" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/seeds/DishesTableSeeder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="34" column="9" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="34" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/seeds/DatabaseSeeder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="39" lean-forward="true" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DishesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="25" column="29" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="29" />
+          <folding>
+            <element signature="e#40#68#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/seeds/CategoriesTableSeeder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="5" column="42" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="42" />
+          <folding>
+            <element signature="e#7#38#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/dishes/indexDish.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="19" column="41" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
+          <folding>
+            <element signature="e#363#381#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>

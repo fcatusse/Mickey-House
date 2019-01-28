@@ -12,13 +12,16 @@
                     @isset ($dish->photos[0])
                     <img style="width:100%" src="{{ url('storage/'.$dish->photos[0]) }}">
                     @endisset
+
                 </div>
                 <h4>{{ $dish->description }}</h4>
                 <p>nombre de part disponibles : {{ $dish->nb_servings }}</p>
                 <p>prix par part: {{ $dish->price }}</p>
                 <p>catégories:
                     <ul>
+
                     @foreach($dish->cat_names as $categorie)
+
                         <li>{{ $categorie }}</li>
                     @endforeach
                     </ul>
@@ -36,3 +39,4 @@
     </div>
 
 @endsection
+

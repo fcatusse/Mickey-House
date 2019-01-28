@@ -19,6 +19,7 @@ class DishesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $dishes = Dish::all();
@@ -110,22 +111,50 @@ class DishesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the dish that corresponds to the id.
+     * Calls the table dishes, the table users to retrieve the name of the cook
+     * that we want to display in the view, and the table categories to retrieve
+     * the name of the categories we have in this dish
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-      $dish = DB::table('dishes')
-      ->join('users', 'dishes.user_id', '=', 'users.id')
-      ->select('dishes.*', 'users.username')
-      ->where('dishes.id', $id)
-      ->get();
-      //dump($dish);
+     public function show($id)
+     {
+       $find_dish = Dish::findById($id);
+       if ($find_dish) {
+         $dish = DB::table('dishes')
+         ->join('users', 'dishes.user_id', '=', 'users.id')
+         ->select('dishes.*', 'users.username', 'users.id as cook_id')
+         ->where('dishes.id', $id)
+         ->get();
 
-      return view('dishes.showDish')->with('dish', $dish);
-    }
+         // converts json into string for photos and categories
+         $dish[0]->photos = json_decode($dish[0]->photos);
+         $dish[0]->categories = json_decode($dish[0]->categories);
+
+         // call to table categories
+         $cat = DB::table('categories')
+         ->whereIn('id', $dish[0]->categories)
+         ->get();
+         $dish[0]->categories = $cat;
+
+         // create array of nb of servings from 1 to the total available nb of
+         // servings for the selector in the form
+         // display the price corresponding to the number of servings
+         $servings = [];
+         for ($i = 1; $i <= $dish[0]->nb_servings; $i++) {
+           $servings[$i] = $i. " - ". $i*$dish[0]->price. "€";
+         }
+
+         return view('dishes.showDish', [
+           'dish' => $dish,
+           'servings' => $servings
+         ]);
+       } else {
+         return response()->view('error.error404', [], 404);
+       }
+     }
 
 
     /**
@@ -151,21 +180,6 @@ class DishesController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateServings(Request $request)
-    {
-      $dish = Dish::find($request->input('dish_id'));
-      $dish->nb_servings = $dish->nb_servings - $request->input('nb_servings');
-      $dish->save();
-
-      return redirect('');
-    }
 
     /**
      * Remove the specified resource from storage.
