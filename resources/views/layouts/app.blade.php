@@ -78,6 +78,7 @@
                                 @if (Auth::user()->is_admin)
                                 <a href="{{route('adminPanel')}}" class="dropdown-item">Admin Panel</a>
                                 @endif
+                                <a href="{{route('create.dish')}}" class="dropdown-item">Ajouter un plat</a>
                                 <a href="{{route('user.show', Auth::user()->id)}}" class="dropdown-item">Ma page</a>
                                 <a href="{{route('orders.show', Auth::user()->id)}}" class="dropdown-item">Mes
                                     commandes</a>

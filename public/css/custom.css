@@ -55,3 +55,7 @@
         max-width: 47%;
     }
 }
+
+.madeBy span {
+    font-style: italic;
+}
