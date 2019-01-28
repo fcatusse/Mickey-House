@@ -17,9 +17,5 @@ composer.json
 phpunit.xml
 .DS_Store
 /.idea
-<<<<<<< HEAD
 .idea/workspace.xml
 .idea/*
-=======
-.idea/workspace.xml
->>>>>>> c76b2ec10307574271fdbf266007ec7a82b1cd90
