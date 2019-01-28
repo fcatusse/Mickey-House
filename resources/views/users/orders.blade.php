@@ -11,7 +11,23 @@
     <div class="card-deck">
 
       @foreach($orders as $order)
-
+      <div class="card">
+            @isset ($order->photos[0])
+            <img class="card-img-top" style="" src="{{ url('/storage/'.$order->photos[0]) }}">
+            @endisset
+            <div class="card-body">
+                {{-- <span class="badge badge-secondary badgeHome">{{ $order->nb_servings }} Parts disponibles</span> --}}
+                <h5 class="card-title titleHome">{{$order->name}}</h5>
+                <h6 class="text-muted madeBy">Passée le {{$order->created_at}}</h6>
+                <p class="card-text descriptionHome">{{$order->description}}</p>
+                <a class="btn btn-success btnHome" href="{{route('dish.show', $order->dish_id)}}"><i class="fas fa-shopping-cart"></i> Commander de nouveau</a>
+            </div>
+            <div class="card-footer catFooter">
+                <small class="text-muted">Nombre de parts commandées : {{ $order->nb_servings }}</small>
+                <div class="priceHome badge badge-primary">Prix total : {{$order->price}} €</div>
+            </div>
+        </div>
+{{-- 
         <div class="card" style="padding:10px;">
           <h4 class="card-title">{{ $order->name }}</h4>
           <p class="card-text">Passée le {{$order->created_at}}</p>
@@ -25,7 +41,7 @@
               <a class="btn btn-primary" href="{{route('dish.show', $order->dish_id)}}">Commander de nouveau</a>
             </p>
           </div>
-        </div>
+        </div> --}}
 
     @endforeach
   </div>
