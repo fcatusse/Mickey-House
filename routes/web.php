@@ -39,8 +39,8 @@ Route::get('/', 'DishesController@index');
 
 // =========== ORDERS ==========
 
-Route::post('/orders/new', 'OrderController@storeAndUpdate');
-Route::get('/orders/show', 'OrderController@showAll')->name('orders.show');
+Route::post('/orders/new', 'OrderController@storeAndUpdate')->middleware('auth');
+Route::get('/orders/show', 'OrderController@showAll')->name('orders.show')->middleware('auth');
 
 
 // =========== DISHES ==========
@@ -50,7 +50,7 @@ Route::get('/dishes', 'DishesController@index')->name('dish.show.all');
 Route::get('/dish/create', 'DishesController@create');
 Route::put('/dish/create', 'DishesController@store');
 Route::get('/dish/{id}', 'DishesController@show')->name('dish.show');
-Route::put('/dish/order', 'DishesController@updateServings');
+Route::put('/dish/order', 'DishesController@updateServings')->middleware('auth');
 
 
 // =========== ADMIN ==========

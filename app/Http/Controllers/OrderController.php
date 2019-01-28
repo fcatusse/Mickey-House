@@ -69,6 +69,7 @@ class OrderController extends Controller
       $order->dish_id = $request->input('dish_id');
       $order->nb_servings = $request->input('nb_servings');
       $order->price = $request->input('nb_servings') * $request->input('price');
+      $order->sent = 0;
       $order->save();
 
       // find dish corresponding to order and update the number of servings
