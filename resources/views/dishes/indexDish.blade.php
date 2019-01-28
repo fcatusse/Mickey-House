@@ -2,41 +2,55 @@
 
 @section('content')
 
-    <code>Dishes > Index</code>
-
-    <div style="display:flex; flex-wrap:wrap;" class="container">
-        @foreach($dishes as $dish)
-            <div style="margin:10px; width:30%; padding:10px; border:1px solid #eee; background-color: #f9f9f9">
-                <h2>{{ $dish->name }}</h2>
-                <div>
-                    @isset ($dish->photos[0])
-                    <img style="width:100%" src="{{ url('storage/'.$dish->photos[0]) }}">
-                    @endisset
-
-                </div>
-                <h4>{{ $dish->description }}</h4>
-                <p>nombre de part disponibles : {{ $dish->nb_servings }}</p>
-                <p>prix par part: {{ $dish->price }}</p>
-                <p>catégories:
-                    <ul>
-
-                    @foreach($dish->cat_names as $categorie)
-
-                        <li>{{ $categorie }}</li>
-                    @endforeach
-                    </ul>
-                </p>
-                <p>visible: {{ $dish->is_visible }}</p>
-                <p>
-                    <a class="btn btn-primary" href="{{ "/dish/" . $dish->id }}">Show detail</a>
-                </p>
-                <p>
-                    <code>id: {{ $dish->id }}</code>
-                    <code>user_id: {{ $dish->user_id }}</code>
-                </p>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Dishes</li>
+    </ol>
+</nav>
+@for ($i = 1; $i <= count($dishes); $i++)
+    @if($i % 2 == 0)
+        <div class="card">
+            @isset ($dishes[$i-1]->photos[0])
+            <img class="card-img-top" style="width:100%" src="{{ url('/'.$dishes[$i-1]->photos[0]) }}">
+            @endisset
+            <div class="card-body">
+                <span class="badge badge-secondary badgeHome">{{ $dishes[$i-1]->nb_servings }} Parts disponibles</span>
+                <h5 class="card-title titleHome">{{$dishes[$i-1]->name}}</h5>
+                <p class="card-text descriptionHome">{{$dishes[$i-1]->description}}</p>
+                <a class="btn btn-primary text-white btnHome" href="{{ "/dish/" . $dishes[$i-1]->id }}">Voir le plat</a>
             </div>
-        @endforeach
-    </div>
+            <div class="card-footer catFooter">
+                {{-- <b class="categorieHome">Catégories :</b> --}}
+                @foreach($dishes[$i-1]->cat_names as $categorie)
+                <small class="text-muted">{{ $categorie }} - </small>
+                @endforeach
+                <div class="priceHome badge badge-success">{{$dishes[$i-1]->price}} € / Part</div>
 
+            </div>
+        </div>
+    </div>
+    @else
+    <div class="card-deck">
+        <div class="card">
+            @isset ($dishes[$i-1]->photos[0])
+            <img class="card-img-top" style="width:100%" src="{{ url('/'.$dishes[$i-1]->photos[0]) }}">
+            @endisset
+            <div class="card-body">
+                <span class="badge badge-secondary badgeHome">{{ $dishes[$i-1]->nb_servings }} Parts disponibles</span>
+                <h5 class="card-title titleHome">{{$dishes[$i-1]->name}}</h5>
+                <p class="card-text descriptionHome">{{$dishes[$i-1]->description}}</p>
+                <a class="btn btn-primary text-white btnHome" href="{{ "/dish/" . $dishes[$i-1]->id }}">Voir le plat</a>
+            </div>
+            <div class="card-footer catFooter">
+                {{-- <b class="categorieHome">Catégories :</b> --}}
+                @foreach($dishes[$i-1]->cat_names as $categorie)
+                <small class="text-muted">{{ $categorie }} - </small>
+                @endforeach
+                <div class="priceHome badge badge-success">{{$dishes[$i-1]->price}} € / Part</div>
+            </div>
+        </div>
+    @endif
+@endfor
 @endsection
 

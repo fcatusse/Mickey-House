@@ -32,7 +32,7 @@
 {{-- Display the dish order part : if there are servings available show the form otherwise display an info message "unavailable "--}}
 
     <div style="margin:10px; width:50%; height:50%; padding:10px; border:1px solid #eee; background-color:#f9f9f9">
-      @if ($dish[0]->nb_servings > 0)
+      @if ($dish[0]->nb_servings > 0 && isset(Auth::user()->id))
 
       {!! Form::open(['action' => 'OrderController@storeAndUpdate', 'method'=>'POST']) !!}
 
@@ -50,9 +50,13 @@
       </div>
 
       {!! Form::close() !!}
-    @else
+    @elseif (isset(Auth::user()->id))
       <div class="alert alert-warning" role="alert" style="heigth:30px">
           <strong>Désolé...</strong> Ce plat n'est pas disponible pour le moment.
+      </div>
+    @else
+      <div class="alert alert-warning" role="alert" style="heigth:30px">
+          <strong>Désolé...</strong> Vous devez être connecté pour commander
       </div>
     @endif
     </div>
