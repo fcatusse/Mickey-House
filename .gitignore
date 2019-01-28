@@ -16,4 +16,5 @@ phpcs.xml
 composer.json
 phpunit.xml
 .DS_Store
-.idea
+/.idea/
+.idea/workspace.xml

@@ -4,19 +4,24 @@
 
     <code>Dishes > Index</code>
 
-    <div style="display: flex">
+    <div style="display:flex; flex-wrap:wrap;" class="container">
         @foreach($dishes as $dish)
-            <div style="margin:10px; width:50%; padding:10px; border:1px solid #eee; background-color: #f9f9f9">
+            <div style="margin:10px; width:30%; padding:10px; border:1px solid #eee; background-color: #f9f9f9">
                 <h2>{{ $dish->name }}</h2>
-                <div id="carousel">
-                    <img style="width:100%" src="/img/{{ $dish->photos[0] }}">
+                <div>
+                    @isset ($dish->photos[0])
+                    <img style="width:100%" src="{{ url('storage/'.$dish->photos[0]) }}">
+                    @endisset
+
                 </div>
                 <h4>{{ $dish->description }}</h4>
                 <p>nombre de part disponibles : {{ $dish->nb_servings }}</p>
                 <p>prix par part: {{ $dish->price }}</p>
                 <p>catégories:
                     <ul>
-                    @foreach($dish->categories as $categorie)
+
+                    @foreach($dish->cat_names as $categorie)
+
                         <li>{{ $categorie }}</li>
                     @endforeach
                     </ul>
@@ -34,3 +39,4 @@
     </div>
 
 @endsection
+
