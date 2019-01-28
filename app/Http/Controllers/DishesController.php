@@ -121,7 +121,7 @@ class DishesController extends Controller
      */
      public function show($id)
      {
-       $find_dish = Dish::findById($id);
+       $find_dish = Dish::find($id);
        if ($find_dish) {
          $dish = DB::table('dishes')
          ->join('users', 'dishes.user_id', '=', 'users.id')
