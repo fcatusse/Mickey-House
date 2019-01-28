@@ -43,3 +43,15 @@
     font-weight: bold;
     letter-spacing: 1px;
 }
+
+.orderCol {
+    padding: 10px;
+    border: 1px solid #eee;
+    background-color: #f9f9f9;
+}
+
+@media (min-width: 576px) {
+    .card-deck .card {
+        max-width: 47%;
+    }
+}
