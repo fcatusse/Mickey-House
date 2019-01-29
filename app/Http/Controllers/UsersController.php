@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use DB;
 use App\Dish;
+use App\User;
+use App\Reviews;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use DB;
+use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
@@ -40,8 +41,19 @@ class UsersController extends Controller
         ->whereIn('id', $dish->categories)
         ->get();
         $dish->categories = $cat;
+
+        // ------ HABIB ------ //
+        // Load reviews & Join them with Order & Dish 
+        $reviews = DB::table('users')
+            ->join('dishes', 'users.id', '=', 'dishes.user_id')
+            ->join('orders', 'dishes.id', '=', 'orders.dish_id')
+            ->join('reviews', 'orders.id', '=', 'reviews.order_id')
+            ->get();
+        
+        $averageNote = $reviews->sum('note') / $reviews->count();
+        
       }
-      return response()->view('users.show', compact('user', 'dishes'), 200);
+      return response()->view('users.show', compact('user', 'dishes', 'reviews', 'averageNote'), 200);
     }
     return response()->view('error.error404', [], 404);
   }
