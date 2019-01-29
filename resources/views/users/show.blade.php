@@ -45,17 +45,19 @@
 <h4>{{ $user->username }} n'a pas encore de plats</h4>
 @endif
 
-<h1 class="titleProfile mt-5">Les reviews du cuisinier</h1>
-<hr>
-@foreach($reviews as $review)
-<div class="card mt-4">
-  <div class="card-header">
-    <span class="reviewName font-weight-bold">Client @ {{$review->firstname}} </span><span class="badge badge-warning badgeBuyer">Acheteur vérifié</span><div class="priceHome badge badge-primary">Note : {{$review->note}} / 5</div>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title reviewDishTitle">Le plat noté : {{$review->name}}</h5>
-    <p class="card-text txtReview">{{$review->comment}}</p>
-  </div>
-</div>
-@endforeach
+@if(count($dishes) > 0)
+    <h1 class="titleProfile mt-5">Les reviews du cuisinier : <span class="badge badge-success">{{$averageNote}} / 5</span></h1>
+    <hr>
+    @foreach($reviews as $review)
+        <div class="card mt-4">
+        <div class="card-header">
+            <span class="reviewName font-weight-bold">Client @ {{$review->firstname}} </span><span class="badge badge-warning badgeBuyer">Acheteur vérifié</span><div class="priceHome badge badge-primary">Note : {{$review->note}} / 5</div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title reviewDishTitle">Le plat noté : {{$review->name}}</h5>
+            <p class="card-text txtReview">{{$review->comment}}</p>
+        </div>
+        </div>
+    @endforeach
+@endif
 @endsection

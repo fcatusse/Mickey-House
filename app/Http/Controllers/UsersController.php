@@ -49,8 +49,11 @@ class UsersController extends Controller
             ->join('orders', 'dishes.id', '=', 'orders.dish_id')
             ->join('reviews', 'orders.id', '=', 'reviews.order_id')
             ->get();
+        
+        $averageNote = $reviews->sum('note') / $reviews->count();
+        
       }
-      return response()->view('users.show', compact('user', 'dishes', 'reviews'), 200);
+      return response()->view('users.show', compact('user', 'dishes', 'reviews', 'averageNote'), 200);
     }
     return response()->view('error.error404', [], 404);
   }
