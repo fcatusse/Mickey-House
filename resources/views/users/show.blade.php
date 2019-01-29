@@ -17,23 +17,25 @@
 <h1 class="titleProfile">Plats</h1>
 <hr>
 
-<div class="card-deck">
+<div class="row">
     @foreach($dishes as $dish)
-    <div class="card">
-        @isset ($dish->photos[0])
-        <img class="card-img-top" src="{{ url('/storage/'.$dish->photos[0]) }}">
-        @endisset
-        <div class="card-body">
-            <span class="badge badge-secondary badgeHome">{{ $dish->nb_servings }} Parts disponibles</span>
-            <h5 class="card-title titleHome">{{$dish->name}}</h5>
-            <p class="card-text descriptionHome">{{$dish->description}}</p>
-            <a class="btn btn-primary text-white btnHome" href="{{ "/dish/". $dish->id }}">Voir le plat</a>
-        </div>
-        <div class="card-footer catFooter">
-            @foreach($dish->categories as $categorie)
-            <small class="text-muted">{{ $categorie->title }} - </small>
-            @endforeach
-            <div class="priceHome badge badge-success">{{$dish->price}} € / Part</div>
+    <div class="col-sm-4">
+        <div class="card mt-4">
+            @isset ($dish->photos[0])
+            <img class="card-img-top" src="{{ url('/storage/'.$dish->photos[0]) }}">
+            @endisset
+            <div class="card-body">
+                <span class="badge badge-secondary badgeHome">{{ $dish->nb_servings }} Parts disponibles</span>
+                <h5 class="card-title titleHome">{{$dish->name}}</h5>
+                <p class="card-text descriptionHome">{{$dish->description}}</p>
+                <a class="btn btn-primary text-white btnHome" href="{{ "/dish/". $dish->id }}">Voir le plat</a>
+            </div>
+            <div class="card-footer catFooter">
+                @foreach($dish->categories as $categorie)
+                <small class="text-muted">{{ $categorie->title }} - </small>
+                @endforeach
+                <div class="priceHome badge badge-success">{{$dish->price}} € / Part</div>
+            </div>
         </div>
     </div>
     @endforeach
@@ -43,5 +45,17 @@
 <h4>{{ $user->username }} n'a pas encore de plats</h4>
 @endif
 
-
+<h1 class="titleProfile mt-5">Les reviews du cuisinier</h1>
+<hr>
+@foreach($reviews as $review)
+<div class="card mt-4">
+  <div class="card-header">
+    <span class="reviewName font-weight-bold">Client @ {{$review->firstname}} </span><span class="badge badge-warning badgeBuyer">Acheteur vérifié</span><div class="priceHome badge badge-primary">Note : {{$review->note}} / 5</div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title reviewDishTitle">Le plat noté : {{$review->name}}</h5>
+    <p class="card-text txtReview">{{$review->comment}}</p>
+  </div>
+</div>
+@endforeach
 @endsection
