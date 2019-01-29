@@ -17,7 +17,7 @@ class DishesApiTest extends TestCase
     $response->assertViewHas('dish');
     $response->assertViewHas('servings');
     $this->assertTrue($response->status() == 200);
-    //$this->assertTrue($response->original->getData()["dish"][0]->id == 1);
+    $this->assertTrue($response->original->getData()["dish"][0]->id == 1);
   }
 
 }
