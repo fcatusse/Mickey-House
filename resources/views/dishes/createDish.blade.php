@@ -4,6 +4,16 @@
 
     <code>Dishes > Create</code>
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     {!! Form::open(['method' => 'put', 'files' => true]) !!}
         <table class="table">
             <tr>

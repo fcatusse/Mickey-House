@@ -43,3 +43,10 @@
     font-weight: bold;
     letter-spacing: 1px;
 }
+
+/* Edit Dish */
+
+.edit-preview {
+    max-width: 100px;
+    max-height: 100px;
+}

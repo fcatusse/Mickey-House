@@ -24,24 +24,18 @@ class DishesController extends Controller
     {
         $dishes = Dish::all();
         foreach ($dishes as $dish) {
-            $dish["photos"] = json_decode($dish["photos"]); // transform json in string
-            // $url = Storage::url('test.jpg');
-            // return "<img src='".$url."'/>";
-
-            $dish["categories"] = json_decode($dish["categories"]); // transfom json in string
+            $dish["photos"] = json_decode($dish["photos"]);
+            $dish["categories"] = json_decode($dish["categories"]);
             $tmp_array = array();
             foreach ($dish["categories"] as $cat_id) {
                 $tmp = Categories::where(['id' => $cat_id])->first(['title']);
                 $tmp = $tmp["title"];
                 array_push($tmp_array, $tmp);
             }
-            // $dish["test_photo"] = $tmp_photo;
             $dish["cat_names"] = $tmp_array;
         }
 
         return view('dishes.indexDish', compact('dishes'));
-
-        // return view('dishes.testDish');
     }
 
     /**
@@ -52,7 +46,6 @@ class DishesController extends Controller
     public function create()
     {
         $categories = Categories::all();
-        // Construction du tableau pour alimenter les select de la view
         $my_categories = [];
         foreach ($categories as $category) {
             $my_categories[$category->id] = $category->title;
@@ -68,6 +61,14 @@ class DishesController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate
+        $request->validate([
+            'categorie1' => 'required',
+            'photo1' => 'required',
+            'nb_servings' => 'integer|min:0',
+            'price' => 'integer|min:0',
+        ]);
+
         // Preparation du array pour les photos
         $my_photos = [];
         if ($request->file('photo1')) {
@@ -104,7 +105,11 @@ class DishesController extends Controller
             array_push($my_cat, $request["categorie3"]);
         }
         $dish->categories = json_encode($my_cat);
-        $dish->is_visible = $request["is_visible"];
+        if (isset($request["is_visible"])) {
+            $dish->is_visible = $request["is_visible"];
+        } else {
+            $dish->is_visible = 0;
+        }
         $dish->save();
 
         return "Dish created !";
@@ -163,9 +168,29 @@ class DishesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Dish $dish)
     {
-        //
+        // Get all categories list
+        $categories = Categories::all();
+        $all_categories = [];
+        foreach ($categories as $category) {
+            $all_categories[$category->id] = $category->title;
+        }
+
+        // Get Dish info
+        $dish->photos = json_decode($dish->photos);
+        $dish->categories = json_decode($dish->categories);
+
+        return view('dishes.editDish', [
+            'name' => $dish->name,
+            'description' => $dish->description,
+            'photos' => $dish->photos,
+            'nb_servings' => $dish->nb_servings,
+            'price' => $dish->price,
+            'categories' => $dish->categories,
+            'is_visible' => $dish->is_visible,
+            'all_categories' => $all_categories
+        ]);
     }
 
     /**
@@ -175,9 +200,78 @@ class DishesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Dish $dish)
     {
-        //
+        // Validate
+        $request->validate([
+            'categorie1' => 'required',
+            'nb_servings' => 'integer|min:0',
+            'price' => 'integer|min:0',
+        ]);
+
+        // Preparation du array pour les photos
+        $dish->photos = json_decode($dish->photos);
+
+        $my_photos = [];
+        if ($request["del_photo1"] != 1) {
+            if ($request->file('photo1')) {
+                $path_photo1 = $request->file('photo1')->store('public');
+                $path_photo1 = preg_replace('/^public\//', '', $path_photo1);
+                array_push($my_photos, $path_photo1);
+            } else {
+                if (isset($dish->photos[0])) {
+                    array_push($my_photos, $dish->photos[0]);
+                }
+            }
+        }
+        if ($request["del_photo2"] != 1) {
+            if ($request->file('photo2')) {
+                $path_photo2 = $request->file('photo2')->store('public');
+                $path_photo2 = preg_replace('/^public\//', '', $path_photo2);
+                array_push($my_photos, $path_photo2);
+            } else {
+                if (isset($dish->photos[1])) {
+                    array_push($my_photos, $dish->photos[1]);
+                }
+            }
+        }
+        if ($request["del_photo3"] != 1) {
+            if ($request->file('photo3')) {
+                $path_photo3 = $request->file('photo3')->store('public');
+                $path_photo3 = preg_replace('/^public\//', '', $path_photo3);
+                array_push($my_photos, $path_photo3);
+            } else {
+                if (isset($dish->photos[2])) {
+                    array_push($my_photos, $dish->photos[2]);
+                }
+            }
+        }
+
+        $dish->name = $request["name"];
+        $dish->description = $request["description"];
+        $dish->photos = json_encode($my_photos);
+        $dish->nb_servings = $request["nb_servings"];
+        $dish->price = $request["price"];
+        $my_cat = [];
+        if ($request["categorie1"]) {
+            array_push($my_cat, $request["categorie1"]);
+        }
+        if ($request["categorie2"]) {
+            array_push($my_cat, $request["categorie2"]);
+        }
+        if ($request["categorie3"]) {
+            array_push($my_cat, $request["categorie3"]);
+        }
+        $dish->categories = json_encode($my_cat);
+        if (isset($request["is_visible"])) {
+            $dish->is_visible = $request["is_visible"];
+        } else {
+            $dish->is_visible = 0;
+        }
+
+        $dish->save();
+
+        return "Dish update !";
     }
 
 
@@ -187,8 +281,10 @@ class DishesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Dish $dish)
     {
-        //
+        $dish->delete();
+        Session::flash('alert-danger', 'The dish has been deleted with success.');
+        return "Dish deleted !";
     }
 }
