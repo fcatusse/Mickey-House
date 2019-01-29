@@ -42,16 +42,20 @@ Route::get('/', 'DishesController@index');
 Route::post('/orders/new', 'OrderController@storeAndUpdate')->middleware('auth');
 Route::get('/orders/show', 'OrderController@showAll')->name('orders.show')->middleware('auth');
 
-
 // =========== DISHES ==========
 
-
 Route::get('/dishes', 'DishesController@index')->name('dish.show.all');
+
 Route::get('/dish/create', 'DishesController@create')->name('create.dish');
 Route::put('/dish/create', 'DishesController@store');
+
+Route::get('/dish/edit/{dish}', 'DishesController@edit')->name('dish.edit');
+Route::put('/dish/edit/{dish}', 'DishesController@update');
+
 Route::get('/dish/{id}', 'DishesController@show')->name('dish.show');
 Route::put('/dish/order', 'DishesController@updateServings')->middleware('auth');
 
+Route::delete('dish/{category}', 'CategoriesController@destroy');
 
 // =========== ADMIN ==========
 
