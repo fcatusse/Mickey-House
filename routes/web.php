@@ -47,7 +47,7 @@ Route::get('/orders/show', 'OrderController@showAll')->name('orders.show')->midd
 
 
 Route::get('/dishes', 'DishesController@index')->name('dish.show.all');
-Route::get('/dish/create', 'DishesController@create');
+Route::get('/dish/create', 'DishesController@create')->name('create.dish');
 Route::put('/dish/create', 'DishesController@store');
 Route::get('/dish/{id}', 'DishesController@show')->name('dish.show');
 Route::put('/dish/order', 'DishesController@updateServings')->middleware('auth');
