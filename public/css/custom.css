@@ -55,6 +55,12 @@
         max-width: 47%;
     }
 }
+
 .madeBy span {
     font-style: italic;
+}
+
+.titleProfile {
+    font-weight: bold;
+    text-transform: uppercase;
 }
