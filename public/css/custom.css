@@ -45,8 +45,44 @@
 }
 
 /* Edit Dish */
-
 .edit-preview {
     max-width: 100px;
     max-height: 100px;
+
+  
+ 
+.orderCol {
+    padding: 10px;
+    border: 1px solid #eee;
+    background-color: #f9f9f9;
+}
+
+@media (min-width: 576px) {
+    .card-deck .card {
+        max-width: 47%;
+    }
+}
+
+.madeBy span {
+    font-style: italic;
+}
+
+.titleProfile {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.reviewDishTitle {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.badgeBuyer {
+    padding: 5px !important;
+    background: orange !important;
+    color: white !important;
+}
+
+.txtReview {
+    font-size: 16px;
 }

@@ -2,20 +2,22 @@
 
 use App\Http\Controllers\DishesController;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class DishesApiTest extends TestCase
 {
 
-    public function testDishesController() {
-        $controller = new DishesController();
-        $result = $controller->index();
-        $this->assertTrue($result == 1);
-    }
+  use WithoutMiddleware;
+  // the function has to find a dish and show it. It returns to the view in case of success
+  // and gives an error 404 in case of id not found
 
-    public function testUpdateServings() {
-      $response = $this->call('PUT', '/dish/order', ['user_id' => 1, 'dish_id' => 2, 'nb_servings' => 1, 'price' => 4]);
-      dump($response->status());
-      $this->assertTrue($response->status() == 302);
-    }
+  public function testShowDish()
+  {
+    $response = $this->call('GET', '/dish/1');
+    $response->assertViewHas('dish');
+    $response->assertViewHas('servings');
+    $this->assertTrue($response->status() == 200);
+    $this->assertTrue($response->original->getData()["dish"][0]->id == 1);
+  }
 
 }

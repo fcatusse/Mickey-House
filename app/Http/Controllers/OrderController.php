@@ -63,24 +63,27 @@ class OrderController extends Controller
         Session::flash('alert-danger', 'One or more inputs have the wrong type');
         return response()->view('dish.show.all', [], 400);
       }
-
-      $order = new Order;
-      $order->user_id = $request->input('user_id');
-      $order->dish_id = $request->input('dish_id');
-      $order->nb_servings = $request->input('nb_servings');
-      $order->price = $request->input('nb_servings') * $request->input('price');
-      $order->sent = 0;
-      $order->save();
-
       // find dish corresponding to order and update the number of servings
       // remove the nb of servings that has just been ordered
       $dish = Dish::find($request->input('dish_id'));
-      $dish->nb_servings = $dish->nb_servings - $request->input('nb_servings');
-      $dish->save();
+      if ($dish->nb_servings > 0) {
+        $dish->nb_servings = $dish->nb_servings - $request->input('nb_servings');
+        $dish->save();
 
-      Session::flash('alert-success', 'Votre commande a été passée');
-      return redirect('/dishes'); //donne status 302
-      //return response('Success', 200); //donnera status 200
+        $order = new Order;
+        $order->user_id = $request->input('user_id');
+        $order->dish_id = $request->input('dish_id');
+        $order->nb_servings = $request->input('nb_servings');
+        $order->price = $request->input('nb_servings') * $request->input('price');
+        $order->sent = 0;
+        $order->save();
+
+        Session::flash('alert-success', 'Votre commande a été passée');
+        return redirect('/dishes'); //donne status 302
+      } else {
+        Session::flash('alert-danger', 'Il y a eu un problème avec votre commande');
+        return response()->view('dish.show.all', [], 400);
+      }
     }
 
     /**
@@ -109,15 +112,19 @@ class OrderController extends Controller
       ->select('orders.*', 'dishes.name', 'dishes.description', 'dishes.photos', 'users.username')
       ->where('orders.user_id', Auth::user()->id)
       ->get();
+      if ($orders) {
+        //converts json into string
+        foreach ($orders as $order) {
+            $order->photos = json_decode($order->photos);
+        }
 
-      //converts json into string
-      foreach ($orders as $order) {
-          $order->photos = json_decode($order->photos);
+        return view('users.orders', [
+          'orders' => $orders,
+        ]);
+      } else {
+        return response()->view('error.error404', [], 404);
       }
 
-      return view('users.orders', [
-        'orders' => $orders,
-      ]);
     }
 
     /**
