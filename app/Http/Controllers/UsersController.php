@@ -49,7 +49,7 @@ class UsersController extends Controller
             ->join('orders', 'dishes.id', '=', 'orders.dish_id')
             ->join('reviews', 'orders.id', '=', 'reviews.order_id')
             ->get();
-
+        
         $averageNote = $reviews->sum('note') / $reviews->count();
         
       }

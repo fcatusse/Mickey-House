@@ -147,9 +147,23 @@ class DishesController extends Controller
            $servings[$i] = $i. " - ". $i*$dish[0]->price. "€";
          }
 
+         // find other dishes from this cook
+         $recommendations = DB::table('dishes')
+         ->where([['user_id','=', $dish[0]->cook_id], ['id', '!=', $id]] )
+         ->latest()
+         ->limit(3)
+         ->get();
+
+         if ($recommendations) {
+           foreach ($recommendations as $recommendation) {
+               $recommendation->photos = json_decode($recommendation->photos);
+           }
+         }
+
          return view('dishes.showDish', [
            'dish' => $dish,
-           'servings' => $servings
+           'servings' => $servings,
+           'recommendations' => $recommendations
          ]);
        } else {
          return response()->view('error.error404', [], 404);
