@@ -24,7 +24,7 @@
                 @foreach($cat as $categorie)
                 <small class="text-muted">{{ $categorie->title }} - </small>
                 @endforeach
-                <div class="priceHome badge badge-success">{{$dish[0]->price}} € / Part</div>
+                <div class="priceHome badge badge-primary">{{$dish[0]->price}} € / Part</div>
             </div>
         </div>
     </div>
