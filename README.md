@@ -1,65 +1,46 @@
 # End of training project
 
-In this project, we had to create a web app allowing private individuals to sell meals, and to buy meals from others who sell the meals they cook.
-A user has a page presenting his details and the meals he offers, and each meal has a page presenting it and allowing to order it.
+In this project, we created a web app allowing people to sell meals and to buy meals from others.
+The aim of this project was to get familiar with the Agile methodology, version control and collaborative work with Git, and unit tests.
 
-## Getting Started
+## Features
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+### Core features
 
-### Prerequisites
+* One "user profile", the user can be both a cook and a consumer.
+* Non registered users can see the dishes, but only registered users can post and order dishes.
+* A cook can post a dish, edit it, and remove it from the available dishes.
+* Dishes belong to categories that are administrated by the user.
+* All dishes can be seen on the home page. Clicking on a dish opens a page where it is possible to order it.
+* A user can order a dish. (In this concept, the delivery happens IRL between the user and the cook as the user has the cook's address)
+* A user can see a history of his orders.
+* Every user has a page with his info and the dishes he posted if he did so.
 
-What things you need to install the software and how to install them
+### Additional features
 
-```
-Give examples
-```
+* A system of reviews: 24h after a dish, the user receives an email that asks him to rate the dish he ordered. He can then go on the website, write a review and rate the dish.
+* The dish ratings create a rating for the cook.
 
-### Installing
 
-A step by step series of examples that tell you how to get a development env running
+### Nice to have Features
 
-Say what the step will be
+* The dishes are located on a map, allowing the user to see how close or far they are from him.
+* The dishes are ordered according to how close to the user they are.
+* Users can follow other users and be notified when they post a new dish or when a dish is available again.
 
-```
-Give the example
-```
+## Database
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+The database is composed of :
+* Users
+* Categories
+* Dishes
+* Orders
+* Reviews
 
 ## Built With
 
 * [Laravel](https://laravel.com/) - The web framework used
+* [MySQL](https://www.mysql.com/fr/)
 
 
 ## Authors
@@ -67,16 +48,10 @@ Add additional notes about how to deploy this on a live system
 * **Edouard Boivin**
 * **François Catusse**
 * **Camille Clipet** [camille-dev](https://github.com/camille-dev)
-* **Julie**
+* **Julie Bianchin**
 * **Habib Redissi**
 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+This project is licensed under ___ License - see the [LICENSE.md](LICENSE.md) file for details
