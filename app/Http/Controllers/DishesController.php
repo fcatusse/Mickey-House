@@ -131,13 +131,15 @@ class DishesController extends Controller
        if ($find_dish) {
          $dish = DB::table('dishes')
          ->join('users', 'dishes.user_id', '=', 'users.id')
-         ->select('dishes.*', 'users.username', 'users.id as cook_id')
+         ->select('dishes.*', 'users.username', 'users.id as cook_id', 'users.address', 'users.postal_code','users.city')
          ->where('dishes.id', $id)
          ->get();
 
          // converts json into string for photos and categories
          $dish[0]->photos = json_decode($dish[0]->photos);
          $dish[0]->categories = json_decode($dish[0]->categories);
+
+         $full_address = $dish[0]->address.' '.$dish[0]->postal_code.' '.$dish[0]->city;
 
          // call to table categories
          $cat = DB::table('categories')
@@ -169,7 +171,8 @@ class DishesController extends Controller
          return view('dishes.showDish', [
            'dish' => $dish,
            'servings' => $servings,
-           'recommendations' => $recommendations
+           'recommendations' => $recommendations,
+           'full_address' => $full_address,
          ]);
        } else {
          return response()->view('error.error404', [], 404);
@@ -220,13 +223,14 @@ class DishesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, Dish $dish, User $user)
     {
         // If not login -> redirect home page
         if ( (!isset(Auth::user()->id)) || (Auth::user()->id != $dish->id) ) {
             return redirect()->action('DishesController@index');
         }
-
+  
         // Validate
         $request->validate([
             'categorie1' => 'required',
@@ -307,6 +311,8 @@ class DishesController extends Controller
      */
     public function destroy(Dish $dish)
     {
-        //
+        $dish->delete();
+        Session::flash('alert-danger', 'The dish has been deleted with success.');
+        return "Dish deleted !";
     }
 }

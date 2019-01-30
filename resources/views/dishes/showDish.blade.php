@@ -59,8 +59,9 @@
       </div>
     @endif
     </div>
-
+      <div class="my-4" id="map3" style='width: 400px; height: 300px; margin:auto'></div>
     </div>
+
   </div>
 
   <div class="my-4">
@@ -83,12 +84,43 @@
         @endfor
       </div>
     @endif
+  </div>
+  <div id="full_address" style="visibility: hidden"> {{$full_address}}
+  </div>
 
 
 
+    <script>
+    // Initialize and add the map
+    function initMap() {
+    // initialize
+    var paris = {lat: 48.866667, lng: 2.333333};
+    // The map, centered on paris
+    var map = new google.maps.Map(
+        document.getElementById('map3'), {zoom: 12, center: paris});
+    // The marker, positioned at the center
+    var marker = new google.maps.Marker({position: paris, map: map});
+    codeAddress();
+    }
 
-
-
-
+    function codeAddress() {
+    var geocoder;
+    var address = document.getElementById('full_address').value;
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+    }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=MYKEY&callback=initMap"
+    async defer></script>
 
 @endsection

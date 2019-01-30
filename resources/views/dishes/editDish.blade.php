@@ -91,9 +91,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td>
-                    {!! Form::submit('Modifier le plat') !!}
-                </td>
+                <td>{!! Form::submit('Modifier le plat') !!}</td>
             </tr>
         </table>
     {!! Form::close() !!}

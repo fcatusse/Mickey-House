@@ -1,9 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+
 <h1 class="mb-4 titleProfile text-center">La page de {{ $user->firstname }}</h1>
 <div class="card">
     <div class="card-body">
+    @if(isset($averageNote))
+        <div class="noteProfile text-center"><img src="{{asset('img/icons/chef.png')}}"> <br><h3><span class="badge badge-success">{{$averageNote}} / 5</span></h3></div>
+    @endif
         <p class="profil-info"><b>Pseudo</b> : {{ $user->username }}</p>
         <p class="profil-info"><b>Nom</b> : {{ $user->firstname }} {{ $user->lastname }}</p>
         <p class="profil-info"><b>Adresse</b> : {{ $user->address ? $user->complete_address : ''}}</p>
@@ -46,7 +52,7 @@
 <h4>{{ $user->username }} n'a pas encore de plats</h4>
 @endif
 
-@if(count($dishes) > 0)
+@if(count($reviews) > 0)
     <h1 class="titleProfile mt-5">Les reviews du cuisinier : <span class="badge badge-success">{{$averageNote}} / 5</span></h1>
     <hr>
     @foreach($reviews as $review)
