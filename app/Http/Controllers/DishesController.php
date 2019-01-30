@@ -130,13 +130,15 @@ class DishesController extends Controller
        if ($find_dish) {
          $dish = DB::table('dishes')
          ->join('users', 'dishes.user_id', '=', 'users.id')
-         ->select('dishes.*', 'users.username', 'users.id as cook_id')
+         ->select('dishes.*', 'users.username', 'users.id as cook_id', 'users.address', 'users.postal_code','users.city')
          ->where('dishes.id', $id)
          ->get();
 
          // converts json into string for photos and categories
          $dish[0]->photos = json_decode($dish[0]->photos);
          $dish[0]->categories = json_decode($dish[0]->categories);
+
+         $full_address = $dish[0]->address.' '.$dish[0]->postal_code.' '.$dish[0]->city;
 
          // call to table categories
          $cat = DB::table('categories')
@@ -168,7 +170,8 @@ class DishesController extends Controller
          return view('dishes.showDish', [
            'dish' => $dish,
            'servings' => $servings,
-           'recommendations' => $recommendations
+           'recommendations' => $recommendations,
+           'full_address' => $full_address,
          ]);
        } else {
          return response()->view('error.error404', [], 404);
