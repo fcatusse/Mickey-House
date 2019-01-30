@@ -45,6 +45,7 @@ Route::get('/orders/show', 'OrderController@showAll')->name('orders.show')->midd
 // =========== DISHES ==========
 
 Route::get('/dishes', 'DishesController@index')->name('dish.show.all');
+Route::get('/dishes/map', 'DishesController@map_dishes')->name('dish.map');
 
 Route::get('/dish/create', 'DishesController@create')->name('create.dish');
 Route::put('/dish/create', 'DishesController@store');

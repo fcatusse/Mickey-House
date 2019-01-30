@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Categories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Order;
 use App\Dish;
 use App\User;
@@ -131,7 +132,7 @@ class DishesController extends Controller
        if ($find_dish) {
          $dish = DB::table('dishes')
          ->join('users', 'dishes.user_id', '=', 'users.id')
-         ->select('dishes.*', 'users.username', 'users.id as cook_id', 'users.address', 'users.postal_code','users.city')
+         ->select('dishes.*', 'users.username', 'users.id as cook_id', 'users.lat', 'users.long', 'users.address', 'users.postal_code','users.city')
          ->where('dishes.id', $id)
          ->get();
 
@@ -301,6 +302,31 @@ class DishesController extends Controller
         $dish->save();
         return redirect()->action('UsersController@show', [Auth::user()->id]);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function map_dishes()
+     {
+       $dishes = DB::table('dishes')
+       ->join('users', 'dishes.user_id', '=', 'users.id')
+       ->select('dishes.*', 'users.username', 'users.id as cook_id', 'users.lat', 'users.long', 'users.address', 'users.postal_code','users.city')
+       ->get();
+       $arr = [];
+       for ($i = 0; $i < count($dishes); $i++) {
+         $arr[$i] = $dishes[$i];
+       }
+       $user = User::find(Auth::user()->id);
+
+       return view('dishes.map', [
+         'dishes' => $dishes,
+         'user' => $user,
+         'arr' => $arr,
+       ]);
+
+     }
 
 
     /**

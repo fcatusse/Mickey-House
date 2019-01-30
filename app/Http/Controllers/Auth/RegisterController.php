@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Config;
 
 class RegisterController extends Controller
 {
@@ -68,12 +69,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+      $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".str_replace (' ' , '+' , $data['address']) ."&city=".$data['city']."&country=france&postalcode=".$data['postal_code']."&limit=1");
+      $decoded = json_decode($json);
+    //  dd($decoded[0]->lat);
+        Session::flash('alert-success', 'Welcome!');
         return User::create([
             'username' => $data['username'],
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
             'email' => $data['email'],
             'address' => $data['address'],
+            'lat' => $decoded[0]->lat,
+            'long' => $decoded[0]->lon,
             'postal_code' => $data['postal_code'],
             'city' => $data['city'],
             'password' => Hash::make($data['password']),
