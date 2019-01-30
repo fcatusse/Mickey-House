@@ -10,7 +10,7 @@ use App\Dish;
 use App\User;
 use DB;
 
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
@@ -231,7 +231,7 @@ class DishesController extends Controller
         if ( (!isset(Auth::user()->id)) || (Auth::user()->id != $dish->id) ) {
             return redirect()->action('DishesController@index');
         }
-  
+
         // Validate
         $request->validate([
             'categorie1' => 'required',

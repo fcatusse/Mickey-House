@@ -50,7 +50,7 @@
                             <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Autour de moi</a>
+                            <a class="nav-link" href="/dishes/map">Autour de moi</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Top 10</a>
