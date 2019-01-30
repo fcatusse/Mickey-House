@@ -55,7 +55,7 @@ Route::put('/dish/edit/{dish}', 'DishesController@update');
 Route::get('/dish/{id}', 'DishesController@show')->name('dish.show');
 Route::put('/dish/order', 'DishesController@updateServings')->middleware('auth');
 
-Route::delete('dish/{category}', 'CategoriesController@destroy');
+Route::get('/dish/hide/{dish}', 'DishesController@hide');
 
 // =========== ADMIN ==========
 

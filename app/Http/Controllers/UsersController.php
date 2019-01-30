@@ -50,7 +50,11 @@ class UsersController extends Controller
             ->join('reviews', 'orders.id', '=', 'reviews.order_id')
             ->get();
         
-        $averageNote = $reviews->sum('note') / $reviews->count();
+        if($reviews->count() != 0) {
+          $averageNote = $reviews->sum('note') / $reviews->count();
+        } else {
+          // $averageNote = 'Pas de note';
+        }
         
       }
       return response()->view('users.show', compact('user', 'dishes', 'reviews', 'averageNote'), 200);

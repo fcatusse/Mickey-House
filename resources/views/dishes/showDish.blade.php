@@ -30,7 +30,6 @@
     </div>
     <div class="col">
       {{-- Display the dish order part : if there are servings available show the form otherwise display an info message "unavailable "--}}
-
     <div class="orderCol">
       @if ($dish[0]->nb_servings > 0 && isset(Auth::user()->id))
 
@@ -121,7 +120,7 @@
     });
     }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoUO-aH1Nyp8iJTS_zNs5kF9vvrRMawww&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=MYKEY&callback=initMap"
     async defer></script>
 
 @endsection
