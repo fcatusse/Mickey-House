@@ -34,7 +34,8 @@
                 <span class="badge badge-secondary badgeHome">{{ $dish->nb_servings }} Parts disponibles</span>
                 <h5 class="card-title titleHome">{{$dish->name}}</h5>
                 <p class="card-text descriptionHome">{{$dish->description}}</p>
-                <a class="btn btn-primary text-white btnHome" href="{{ "/dish/". $dish->id }}">Voir le plat</a>
+                <p><a class="btn btn-primary text-white btnHome" href="{{ "/dish/". $dish->id }}">Voir le plat</a></p>
+                <p><a class="btn btn-secondary btnHome" href="{{ "/dish/edit/". $dish->id }}">Editer le plat</a></p>
             </div>
             <div class="card-footer catFooter">
                 @foreach($dish->categories as $categorie)
