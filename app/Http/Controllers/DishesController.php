@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Categories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Order;
 use App\Dish;
 use App\User;
 use DB;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
@@ -130,7 +132,7 @@ class DishesController extends Controller
        if ($find_dish) {
          $dish = DB::table('dishes')
          ->join('users', 'dishes.user_id', '=', 'users.id')
-         ->select('dishes.*', 'users.username', 'users.id as cook_id', 'users.address', 'users.postal_code','users.city')
+         ->select('dishes.*', 'users.username', 'users.id as cook_id', 'users.lat', 'users.long', 'users.address', 'users.postal_code','users.city')
          ->where('dishes.id', $id)
          ->get();
 
@@ -187,6 +189,11 @@ class DishesController extends Controller
      */
     public function edit(Dish $dish)
     {
+        // If not login -> redirect home page
+        if ( (!isset(Auth::user()->id)) || (Auth::user()->id != $dish->id) ) {
+            return redirect()->action('DishesController@index');
+        }
+
         // Get all categories list
         $categories = Categories::all();
         $all_categories = [];
@@ -217,8 +224,14 @@ class DishesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dish $dish)
+
+    public function update(Request $request, Dish $dish, User $user)
     {
+        // If not login -> redirect home page
+        if ( (!isset(Auth::user()->id)) || (Auth::user()->id != $dish->id) ) {
+            return redirect()->action('DishesController@index');
+        }
+  
         // Validate
         $request->validate([
             'categorie1' => 'required',
@@ -287,9 +300,33 @@ class DishesController extends Controller
         }
 
         $dish->save();
-
-        return "Dish update !";
+        return redirect()->action('UsersController@show', [Auth::user()->id]);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function map_dishes()
+     {
+       $dishes = DB::table('dishes')
+       ->join('users', 'dishes.user_id', '=', 'users.id')
+       ->select('dishes.*', 'users.username', 'users.id as cook_id', 'users.lat', 'users.long', 'users.address', 'users.postal_code','users.city')
+       ->get();
+       $arr = [];
+       for ($i = 0; $i < count($dishes); $i++) {
+         $arr[$i] = $dishes[$i];
+       }
+       $user = User::find(Auth::user()->id);
+
+       return view('dishes.map', [
+         'dishes' => $dishes,
+         'user' => $user,
+         'arr' => $arr,
+       ]);
+
+     }
 
 
     /**

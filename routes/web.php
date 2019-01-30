@@ -45,6 +45,7 @@ Route::get('/orders/show', 'OrderController@showAll')->name('orders.show')->midd
 // =========== DISHES ==========
 
 Route::get('/dishes', 'DishesController@index')->name('dish.show.all');
+Route::get('/dishes/map', 'DishesController@map_dishes')->name('dish.map');
 
 Route::get('/dish/create', 'DishesController@create')->name('create.dish');
 Route::put('/dish/create', 'DishesController@store');
@@ -55,7 +56,7 @@ Route::put('/dish/edit/{dish}', 'DishesController@update');
 Route::get('/dish/{id}', 'DishesController@show')->name('dish.show');
 Route::put('/dish/order', 'DishesController@updateServings')->middleware('auth');
 
-Route::delete('dish/{category}', 'CategoriesController@destroy');
+Route::get('/dish/hide/{dish}', 'DishesController@hide');
 
 // =========== ADMIN ==========
 

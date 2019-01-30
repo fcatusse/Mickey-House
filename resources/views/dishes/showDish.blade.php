@@ -30,7 +30,6 @@
     </div>
     <div class="col">
       {{-- Display the dish order part : if there are servings available show the form otherwise display an info message "unavailable "--}}
-
     <div class="orderCol">
       @if ($dish[0]->nb_servings > 0 && isset(Auth::user()->id))
 
@@ -60,7 +59,7 @@
       </div>
     @endif
     </div>
-      <div class="my-4" id="map3" style='width: 400px; height: 300px; margin:auto'></div>
+      <div class="my-4" id="map" style='width: 400px; height: 300px; margin:auto'></div>
     </div>
 
   </div>
@@ -86,42 +85,30 @@
       </div>
     @endif
   </div>
-  <div id="full_address" style="visibility: hidden"> {{$full_address}}
-  </div>
+
+  <script type="text/javascript">
+            // On initialise la latitude et la longitude de Paris (centre de la carte)
+            var lat = {{$dish[0]->lat}};
+            var lon = {{$dish[0]->long}};
+            var macarte = null;
+            // Fonction d'initialisation de la carte
+            function initMap() {
+                // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
+                macarte = L.map('map').setView([lat, lon], 11);
+                var marker = L.marker([lat, lon]).addTo(macarte);
+                // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+                L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                    // Il est toujours bien de laisser le lien vers la source des données
+                    attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                    minZoom: 15,
+                }).addTo(macarte);
+            }
+
+            window.onload = function(){
+                initMap();
+            };
+        </script>
 
 
-
-    <script>
-    // Initialize and add the map
-    function initMap() {
-    // initialize
-    var paris = {lat: 48.866667, lng: 2.333333};
-    // The map, centered on paris
-    var map = new google.maps.Map(
-        document.getElementById('map3'), {zoom: 12, center: paris});
-    // The marker, positioned at the center
-    var marker = new google.maps.Marker({position: paris, map: map});
-    codeAddress();
-    }
-
-    function codeAddress() {
-    var geocoder;
-    var address = document.getElementById('full_address').value;
-    geocoder = new google.maps.Geocoder();
-    geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == 'OK') {
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location
-        });
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status);
-      }
-    });
-    }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoUO-aH1Nyp8iJTS_zNs5kF9vvrRMawww&callback=initMap"
-    async defer></script>
 
 @endsection

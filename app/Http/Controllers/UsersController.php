@@ -43,15 +43,19 @@ class UsersController extends Controller
         $dish->categories = $cat;
 
         // ------ HABIB ------ //
-        // Load reviews & Join them with Order & Dish 
+        // Load reviews & Join them with Order & Dish
         $reviews = DB::table('users')
             ->join('dishes', 'users.id', '=', 'dishes.user_id')
             ->join('orders', 'dishes.id', '=', 'orders.dish_id')
             ->join('reviews', 'orders.id', '=', 'reviews.order_id')
             ->get();
-        
-        $averageNote = $reviews->sum('note') / $reviews->count();
-        
+
+        if($reviews->count() != 0) {
+          $averageNote = $reviews->sum('note') / $reviews->count();
+        } else {
+          // $averageNote = 'Pas de note';
+        }
+
       }
       return response()->view('users.show', compact('user', 'dishes', 'reviews', 'averageNote'), 200);
     }
@@ -100,6 +104,11 @@ class UsersController extends Controller
         'city' => 'required|string',
         'email' => 'required|string|email',
       ]);
+
+      $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".str_replace (' ' , '+' , $data['address']) ."&city=".$data['city']."&country=france&postalcode=".$data['postal_code']."&limit=1");
+      $decoded = json_decode($json);
+      $data['lat'] = $decoded[0]->lat;
+      $data['long'] = $decoded[0]->lon;
 
       //Change the updated user in the database
       $user->update($data);

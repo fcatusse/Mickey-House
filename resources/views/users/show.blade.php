@@ -1,9 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+
 <h1 class="mb-4 titleProfile text-center">La page de {{ $user->firstname }}</h1>
 <div class="card">
     <div class="card-body">
+    @if(isset($averageNote))
+        <div class="noteProfile text-center"><img src="{{asset('img/icons/chef.png')}}"> <br><h3><span class="badge badge-success">{{$averageNote}} / 5</span></h3></div>
+    @endif
         <p class="profil-info"><b>Pseudo</b> : {{ $user->username }}</p>
         <p class="profil-info"><b>Nom</b> : {{ $user->firstname }} {{ $user->lastname }}</p>
         <p class="profil-info"><b>Adresse</b> : {{ $user->address ? $user->complete_address : ''}}</p>
@@ -28,7 +34,8 @@
                 <span class="badge badge-secondary badgeHome">{{ $dish->nb_servings }} Parts disponibles</span>
                 <h5 class="card-title titleHome">{{$dish->name}}</h5>
                 <p class="card-text descriptionHome">{{$dish->description}}</p>
-                <a class="btn btn-primary text-white btnHome" href="{{ "/dish/". $dish->id }}">Voir le plat</a>
+                <p><a class="btn btn-primary text-white btnHome" href="{{ "/dish/". $dish->id }}">Voir le plat</a></p>
+                <p><a class="btn btn-secondary btnHome" href="{{ "/dish/edit/". $dish->id }}">Editer le plat</a></p>
             </div>
             <div class="card-footer catFooter">
                 @foreach($dish->categories as $categorie)
@@ -45,7 +52,7 @@
 <h4>{{ $user->username }} n'a pas encore de plats</h4>
 @endif
 
-@if(count($dishes) > 0)
+@if(count($reviews) > 0)
     <h1 class="titleProfile mt-5">Les reviews du cuisinier : <span class="badge badge-success">{{$averageNote}} / 5</span></h1>
     <hr>
     @foreach($reviews as $review)
