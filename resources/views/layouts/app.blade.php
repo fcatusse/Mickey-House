@@ -53,7 +53,7 @@
                             <a class="nav-link" href="/dishes/map">Autour de moi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Top 10</a>
+                            <a class="nav-link" href="users/best">Top 10</a>
                         </li>
                         <form class="form-inline my-2 my-lg-0 ml-5">
                             <input class="form-control mr-sm-2" type="text" placeholder="Rechercher un plat...">

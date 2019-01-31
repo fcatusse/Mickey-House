@@ -24,7 +24,9 @@ class DishesController extends Controller
 
     public function index()
     {
-        $dishes = Dish::all();
+        $dishes = Dish::orderBy('created_at','desc')
+        ->where('is_visible',1)
+        ->paginate(4);
         foreach ($dishes as $dish) {
             $dish["photos"] = json_decode($dish["photos"]);
             $dish["categories"] = json_decode($dish["categories"]);

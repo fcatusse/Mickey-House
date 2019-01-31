@@ -17,11 +17,14 @@
               </div>
               <div class="card-footer catFooter">
                 <small class="text-muted">Nombre de parts commandées : {{ $order->nb_servings }}</small>
-                <p>Prix total : {{$order->price}} €</dp>
+                <p>Prix total : {{$order->price}} €</p>
               </div>
             </div>
           </div>
         @endforeach
+      </div>
+      <div class="my-4">
+        {{ $orders_to_me->links() }}
       </div>
 
     @else
@@ -57,6 +60,10 @@
             </div>
           @endforeach
         </div>
+        <div class="my-4">
+          {{ $orders_passed->links() }}
+        </div>
+
 
       @else
 

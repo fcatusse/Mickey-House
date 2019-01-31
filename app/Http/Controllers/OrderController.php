@@ -112,7 +112,7 @@ class OrderController extends Controller
       ->join('users', 'users.id', '=', 'dishes.user_id')
       ->select('orders.*', 'dishes.name', 'dishes.description', 'dishes.photos', 'users.username')
       ->where('orders.user_id', Auth::user()->id)
-      ->get();
+      ->paginate(6);
       if ($orders_passed) {
         //converts json into string
         foreach ($orders_passed as $order) {
@@ -125,7 +125,7 @@ class OrderController extends Controller
         ->join('users', 'users.id', '=', 'orders.user_id')
         ->select('orders.*', 'dishes.name', 'dishes.description', 'dishes.photos', 'users.username')
         ->where('dishes.user_id', Auth::user()->id)
-        ->get();
+        ->paginate(3);
 
         return view('users.orders', [
           'orders_passed' => $orders_passed,
