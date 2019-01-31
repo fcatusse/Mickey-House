@@ -88,6 +88,8 @@
                                 <a href="{{route('user.show', Auth::user()->id)}}" class="dropdown-item">Ma page</a>
                                 <a href="{{route('orders.show', Auth::user()->id)}}" class="dropdown-item">Mes
                                     commandes</a>
+                                <a href="{{route('dish.show.mine', Auth::user()->id)}}" class="dropdown-item">Mes
+                                    plats</a>
                                 <a href="{{route('user.edit', Auth::user()->id)}}" class="dropdown-item">Editer mon
                                     profil</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
