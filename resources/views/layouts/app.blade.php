@@ -90,7 +90,7 @@
                                     commandes</a>
                                 <a href="{{route('dish.show.mine', Auth::user()->id)}}" class="dropdown-item">Mes
                                     plats</a>
-                                <a href="{{route('user.edit', Auth::user()->id)}}" class="dropdown-item">Editer mon
+                                <a href="{{route('user.edit')}}" class="dropdown-item">Editer mon
                                     profil</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">
