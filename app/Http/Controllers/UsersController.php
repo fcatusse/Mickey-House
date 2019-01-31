@@ -14,6 +14,29 @@ use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+
+  public function showBest()
+  {
+    $users = DB::table('users')
+    ->join('dishes', 'users.id', '=', 'dishes.user_id')
+    ->join('orders', 'dishes.id', '=', 'orders.dish_id')
+    ->join('reviews', 'orders.id', '=', 'reviews.order_id')
+    ->selectRaw('avg(note) as avg_note, users.*')
+    ->orderBy('avg_note','desc')
+    ->groupBy('users.id')
+    ->limit(10)
+    ->get();
+
+    return view('users.best', [
+      'users' => $users,
+    ]);
+  }
+
 
 
   /**

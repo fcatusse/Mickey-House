@@ -23,6 +23,7 @@ Auth::routes();
 // ============= USERS =========
 
 Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
+Route::get('/users/best', 'UsersController@showBest')->name('user.best');
 
 Route::get('/users/edit/{id}', 'UsersController@edit')->name('user.edit');
 Route::put('/users/edit/{user}', 'UsersController@update')->name('user.update');

@@ -51,7 +51,7 @@
 <h4>{{ $user->username }} n'a pas encore de plats</h4>
 @endif
 
-@if(count($reviews) > 0)
+@if(isset($reviews) && count($reviews) > 0)
     <h1 class="titleProfile mt-5">Les reviews du cuisinier : <span class="badge badge-success">{{$averageNote}} / 5</span></h1>
     <hr>
     @foreach($reviews as $review)
