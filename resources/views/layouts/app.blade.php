@@ -53,7 +53,7 @@
                             <a class="nav-link" href="/dishes/map">Autour de moi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="users/best">Top 10</a>
+                            <a class="nav-link" href="/users/best">Top 10</a>
                         </li>
                         <form class="form-inline my-2 my-lg-0 ml-5">
                             <input class="form-control mr-sm-2" type="text" placeholder="Rechercher un plat...">
@@ -90,7 +90,7 @@
                                     commandes</a>
                                 <a href="{{route('dish.show.mine', Auth::user()->id)}}" class="dropdown-item">Mes
                                     plats</a>
-                                <a href="{{route('user.edit', Auth::user()->id)}}" class="dropdown-item">Editer mon
+                                <a href="{{route('user.edit')}}" class="dropdown-item">Editer mon
                                     profil</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">
