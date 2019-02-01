@@ -37,18 +37,60 @@
 
       <div class="form-group">
         {{form::label('nb_servings', __('Nombre de parts'))}}
-        {{form::select('nb_servings', $servings, null, ['class' => 'form-control'])}}
+        {{form::select('nb_servings', $servings, null, ['id' => 'nb_servings', 'class' => 'form-control'])}}
       </div>
 
       {{ Form::hidden('user_id', Auth::user()->id) }}
       {{ Form::hidden('dish_id', $dish[0]->id) }}
       {{ Form::hidden('price', $dish[0]->price) }}
+            {{ Form::hidden('stripeToken', '', ['id' => 'stripeToken']) }}
 
       <div class="form-group">
-      {{ Form::button('<i class="fas fa-shopping-cart"></i> Commander', ['class' => 'btn btn-success btnHome', 'type' => 'submit']) }}
+      {{ Form::button('<i class="fas fa-shopping-cart"></i> Commander', ['class' => 'btn btn-success btnHome', 'type' => 'submit', 'id' => 'purchaseButton']) }}
+
+          <script src="https://checkout.stripe.com/checkout.js"></script>
+
+          <button type="submit" class="btn btn-success btnHome" id="customButton"><i class="fas fa-shopping-cart"></i> Commander par Carte</button>
+
+          <script>
+              var handler = StripeCheckout.configure({
+                  key: '{{env('STRIPE_KEY')}}',
+                  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+                  locale: 'fr',
+                  token: function(token) {
+                      document.getElementById('stripeToken').value = token.id;
+                      document.getElementById('purchaseButton').click();
+                  }
+              });
+
+              document.getElementById('customButton').addEventListener('click', function(e) {
+                  nb_servings = document.getElementById('nb_servings').selectedIndex + 1;
+                  // Open Checkout with further options:
+                  handler.open({
+                      name: "{{$dish[0]->name}}",
+                      description: "Mickey House - {{$dish[0]->name}}",
+                      currency: 'eur',
+                      email: '{{$email}}',
+                      amount:  nb_servings * {{$dish[0]->price * 100}}
+                  });
+                  e.preventDefault();
+              });
+
+              // Close Checkout on page navigation:
+              window.addEventListener('popstate', function() {
+                  handler.close();
+              });
+          </script>
+
+
+
       </div>
 
       {!! Form::close() !!}
+
+
+
+
     @elseif (isset(Auth::user()->id))
       <div class="alert alert-warning" role="alert" style="heigth:30px">
           <strong>Désolé...</strong> Ce plat n'est pas disponible pour le moment.
