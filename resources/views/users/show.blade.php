@@ -35,7 +35,6 @@
                 <h5 class="card-title titleHome">{{$dish->name}}</h5>
                 <p class="card-text descriptionHome">{{$dish->description}}</p>
                 <p><a class="btn btn-primary text-white btnHome" href="{{ "/dish/". $dish->id }}">Voir le plat</a></p>
-                <p><a class="btn btn-secondary btnHome" href="{{ "/dish/edit/". $dish->id }}">Editer le plat</a></p>
             </div>
             <div class="card-footer catFooter">
                 @foreach($dish->categories as $categorie)
@@ -52,7 +51,7 @@
 <h4>{{ $user->username }} n'a pas encore de plats</h4>
 @endif
 
-@if(count($reviews) > 0)
+@if(isset($reviews) && count($reviews) > 0)
     <h1 class="titleProfile mt-5">Les reviews du cuisinier : <span class="badge badge-success">{{$averageNote}} / 5</span></h1>
     <hr>
     @foreach($reviews as $review)

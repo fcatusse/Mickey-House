@@ -8,6 +8,7 @@
     </ol>
 </nav>
 
+<h3 class="titleProfile">Découvrir les plats</h3>
 @for ($i = 1; $i <= count($dishes); $i++)
     @if($i % 2 == 0)
         <div class="card">
@@ -51,4 +52,10 @@
         </div>
     @endif
 @endfor
+<div class="my-4">
+  {{ $dishes->links() }}
+</div>
+
+
+
 @endsection

@@ -23,12 +23,13 @@ Auth::routes();
 // ============= USERS =========
 
 Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
+Route::get('/users/best', 'UsersController@showBest')->name('user.best');
 
-Route::get('/users/edit/{id}', 'UsersController@edit')->name('user.edit');
-Route::put('/users/edit/{user}', 'UsersController@update')->name('user.update');
+Route::get('/users/edit', 'UsersController@edit')->name('user.edit')->middleware('auth');
+Route::put('/users/edit', 'UsersController@update')->name('user.update')->middleware('auth');
 
-Route::get('/users/password/{id}', 'UsersController@psw_edit')->name('password.edit');
-Route::put('/users/password/{user}', 'UsersController@psw_update')->name('password.update');
+Route::get('/users/password/{id}', 'UsersController@psw_edit')->name('password.edit')->middleware('auth');
+Route::put('/users/password/{user}', 'UsersController@psw_update')->name('password.update')->middleware('auth');
 
 //============== HOME =========
 
@@ -37,7 +38,7 @@ Route::get('/', 'DishesController@index');
 
 // =========== ORDERS ==========
 
-Route::post('/orders/new', 'OrderController@storeAndUpdate')->middleware('auth');
+Route::post('/orders/new', 'OrderController@storeAndUpdate')->name('orders.new')->middleware('auth');
 Route::get('/orders/show', 'OrderController@showAll')->name('orders.show')->middleware('auth');
 
 // =========== DISHES ==========
@@ -45,16 +46,19 @@ Route::get('/orders/show', 'OrderController@showAll')->name('orders.show')->midd
 Route::post('/dishes/search/', 'DishesController@search');
 
 Route::get('/dishes', 'DishesController@index')->name('dish.show.all');
-Route::get('/dishes/map', 'DishesController@map_dishes')->name('dish.map');
+Route::get('/dishes/map', 'DishesController@map_dishes')->name('dish.map')->middleware('auth');
+Route::get('/dishes/me', 'DishesController@indexCurrentUser')->name('dish.show.mine')->middleware('auth');
 
-Route::get('/dish/create', 'DishesController@create')->name('create.dish');
-Route::put('/dish/create', 'DishesController@store');
+Route::get('/dish/create', 'DishesController@create')->name('create.dish')->middleware('auth');
+Route::put('/dish/create', 'DishesController@store')->middleware('auth');
 
 Route::get('/dish/edit/{dish}', 'DishesController@edit')->name('dish.edit');
 Route::put('/dish/edit/{dish}', 'DishesController@update');
 
 Route::get('/dish/{id}', 'DishesController@show')->name('dish.show');
 Route::put('/dish/order', 'DishesController@updateServings')->middleware('auth');
+
+Route::get('/dish/hide/{dish}', 'DishesController@hide')->name('dish.hide')->middleware('auth');
 
 // =========== ADMIN ==========
 

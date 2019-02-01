@@ -24,7 +24,9 @@ class DishesController extends Controller
 
     public function index()
     {
-        $dishes = Dish::all();
+        $dishes = Dish::orderBy('created_at','desc')
+        ->where('is_visible',1)
+        ->paginate(4);
         foreach ($dishes as $dish) {
             $dish["photos"] = json_decode($dish["photos"]);
             $dish["categories"] = json_decode($dish["categories"]);
@@ -38,6 +40,33 @@ class DishesController extends Controller
         }
 
         return view('dishes.indexDish', compact('dishes'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function indexCurrentUser()
+    {
+        $dishes = DB::table('dishes')
+        ->orderBy('created_at', 'desc')
+        ->where('dishes.user_id', Auth::user()->id)
+        ->get();
+        foreach ($dishes as $dish) {
+            $dish->photos = json_decode($dish->photos);
+            $dish->categories = json_decode($dish->categories);
+            $tmp_array = array();
+            foreach ($dish->categories as $cat_id) {
+                $tmp = Categories::where(['id' => $cat_id])->first(['title']);
+                $tmp = $tmp["title"];
+                array_push($tmp_array, $tmp);
+            }
+            $dish->cat_names = $tmp_array;
+        }
+
+        return view('dishes.userDishes', compact('dishes'));
     }
 
     /**
