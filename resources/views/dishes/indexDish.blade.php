@@ -7,6 +7,7 @@
         <li class="breadcrumb-item active" aria-current="page">Dishes</li>
     </ol>
 </nav>
+
 @for ($i = 1; $i <= count($dishes); $i++)
     @if($i % 2 == 0)
         <div class="card">

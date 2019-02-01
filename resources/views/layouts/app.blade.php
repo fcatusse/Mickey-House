@@ -55,8 +55,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Top 10</a>
                         </li>
-                        <form class="form-inline my-2 my-lg-0 ml-5">
-                            <input class="form-control mr-sm-2" type="text" placeholder="Rechercher un plat...">
+                        <form action="/dishes/search" method="POST" class="form-inline my-2 my-lg-0 ml-5">
+                            @csrf
+                            <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="Rechercher un plat...">
                             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher</button>
                         </form>
                     </ul>

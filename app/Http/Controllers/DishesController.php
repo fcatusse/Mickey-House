@@ -328,7 +328,6 @@ class DishesController extends Controller
 
      }
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -340,5 +339,70 @@ class DishesController extends Controller
         $dish->delete();
         Session::flash('alert-danger', 'The dish has been deleted with success.');
         return "Dish deleted !";
+    }
+
+    /**
+     * Search in categories and
+     *
+     */
+
+    public function search(Request $request, Dish $dish, Categories $categories)
+    {
+        $keyword = $request->keyword;
+        $dish_ids = [];
+
+        // Search in categories
+        $categories_find = Categories::where('title', 'like', '%'.$keyword.'%')->get();
+        $dishes = Dish::all();
+        foreach ($dishes as $dish) {
+            $dish->categories = json_decode($dish->categories);
+            foreach ($dish->categories as $category_id) {
+                foreach ($categories_find as $category_find) {
+                    if ($category_find->id == $category_id) {
+                        Array_push($dish_ids, $dish->id);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Search in title
+        /*
+        $dishes_find = Dish::where('name', 'like', '%'.$keyword.'%')->get();
+        foreach ($dishes_find as $dish_find) {
+            if (isset($dish_ids)) {
+                foreach ($dish_ids as $dish_id) {
+                    if ($dish_find->id != $dish_id) {
+                        Array_push($dish_ids, $dish_find->id);
+                    }
+                }
+            } else {
+                Array_push($dish_ids, $dish_find->id);
+            }
+        }
+        // dd($dish_ids);
+        */
+
+        // Collect dishes keyword matching
+        $dishes = DB::table('dishes')
+            ->whereIn('id', $dish_ids)
+            ->get();
+
+        $i = 0;
+        foreach ($dishes as $dish) {
+            $dish->photos = json_decode($dish->photos);
+            $dish->categories = json_decode($dish->categories);
+            $tmp_array = array();
+
+            foreach ($dish->categories as $cat_id) {
+                $tmp = Categories::where(['id' => $cat_id])->first(['title']);
+                $tmp = $tmp["title"];
+                array_push($tmp_array, $tmp);
+            }
+            $i++;
+            $dish->cat_names = $tmp_array;
+        }
+        $infos = ['nb_result' => $i, 'keyword' => $keyword];
+        return view('dishes.searchDish', compact('dishes', 'infos'));
     }
 }
