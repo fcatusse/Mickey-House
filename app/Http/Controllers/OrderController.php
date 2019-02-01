@@ -132,20 +132,30 @@ class OrderController extends Controller
      */
     public function showAll()
     {
-      $orders = DB::table('orders')
+      $orders_passed = DB::table('orders')
+      ->orderBy('created_at', 'desc')
       ->join('dishes', 'dishes.id', '=', 'orders.dish_id')
       ->join('users', 'users.id', '=', 'dishes.user_id')
       ->select('orders.*', 'dishes.name', 'dishes.description', 'dishes.photos', 'users.username')
       ->where('orders.user_id', Auth::user()->id)
-      ->get();
-      if ($orders) {
+      ->paginate(6);
+      if ($orders_passed) {
         //converts json into string
-        foreach ($orders as $order) {
+        foreach ($orders_passed as $order) {
             $order->photos = json_decode($order->photos);
         }
 
+        $orders_to_me = DB::table('orders')
+        ->orderBy('created_at', 'desc')
+        ->join('dishes', 'dishes.id', '=', 'orders.dish_id')
+        ->join('users', 'users.id', '=', 'orders.user_id')
+        ->select('orders.*', 'dishes.name', 'dishes.description', 'dishes.photos', 'users.username')
+        ->where('dishes.user_id', Auth::user()->id)
+        ->paginate(3);
+
         return view('users.orders', [
-          'orders' => $orders,
+          'orders_passed' => $orders_passed,
+          'orders_to_me' => $orders_to_me,
         ]);
       } else {
         return response()->view('error.error404', [], 404);

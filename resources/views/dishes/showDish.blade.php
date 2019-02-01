@@ -31,13 +31,12 @@
     <div class="col">
       {{-- Display the dish order part : if there are servings available show the form otherwise display an info message "unavailable "--}}
     <div class="orderCol">
-      @if ($dish[0]->nb_servings > 0 && isset(Auth::user()->id))
 
-      {!! Form::open(['action' => 'OrderController@storeAndUpdate', 'method'=>'POST']) !!}
+      @if ($dish[0]->nb_servings > 0 && isset(Auth::user()->id) && Auth::user()->id != $dish[0]->user_id)
 
       <div class="form-group">
-        {{form::label('nb_servings', __('Nombre de parts'))}}
-        {{form::select('nb_servings', $servings, null, ['id' => 'nb_servings', 'class' => 'form-control'])}}
+        {{Form::label('nb_servings', __('Nombre de parts'))}}
+        {{Form::select('nb_servings', $servings, null, ['id' => 'nb_servings', 'class' => 'form-control'])}}
       </div>
 
       {{ Form::hidden('user_id', Auth::user()->id) }}
@@ -85,26 +84,27 @@
 
 
       </div>
-
-      {!! Form::close() !!}
-
-
-
-
-    @elseif (isset(Auth::user()->id))
-      <div class="alert alert-warning" role="alert" style="heigth:30px">
-          <strong>Désolé...</strong> Ce plat n'est pas disponible pour le moment.
-      </div>
-    @else
-      <div class="alert alert-warning" role="alert" style="heigth:30px">
-          <strong>Désolé...</strong> Vous devez être connecté pour commander
-      </div>
-    @endif
+            {!! Form::close() !!}
+        @elseif ($dish[0]->nb_servings == 0)
+            <div class="alert alert-info" role="alert" style="heigth:30px">
+                <strong>Désolé...</strong> Ce plat n'est pas disponible pour le moment.
+            </div>
+        @elseif (Auth::user()->id == $dish[0]->user_id)
+            <div class="alert alert-primary" role="alert" style="heigth:30px">
+                Vous êtes le cuisinier de ce plat.
+            </div>
+        @else
+            <div class="alert alert-warning" role="alert" style="heigth:30px">
+                <strong>Désolé...</strong> Vous devez être connecté pour commander
+            </div>
+        @endif
     </div>
       <div class="my-4" id="map" style='width: 400px; height: 300px; margin:auto'></div>
     </div>
 
+    </div>
   </div>
+
 
   <div class="my-4">
     @if (count($recommendations) > 0)
