@@ -34,6 +34,8 @@
 
       @if ($dish[0]->nb_servings > 0 && isset(Auth::user()->id) && Auth::user()->id != $dish[0]->user_id)
 
+            {!! Form::open(['action' => 'OrderController@storeAndUpdate', 'method'=>'POST']) !!}
+
       <div class="form-group">
         {{Form::label('nb_servings', __('Nombre de parts'))}}
         {{Form::select('nb_servings', $servings, null, ['id' => 'nb_servings', 'class' => 'form-control'])}}
@@ -81,7 +83,7 @@
               });
           </script>
 
-
+          {!! Form::close() !!}
 
       </div>
             {!! Form::close() !!}
