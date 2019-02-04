@@ -9,6 +9,7 @@ use App\Order;
 use App\Dish;
 use App\User;
 use DB;
+use App\Notifications\UserFollowed;
 
 
 use Illuminate\Support\Facades\Storage;
@@ -142,6 +143,15 @@ class DishesController extends Controller
             $dish->is_visible = 0;
         }
         $dish->save();
+
+        $text = "a publié un nouveau plat";
+
+        foreach (auth()->user()->followers as $follower) {
+          //  $follower->notify(new UserFollowed(auth()->user(), $text));
+            $follower->notify(new UserFollowed(auth()->user(), $text));
+        }
+
+        //return "Dish created !";
         return redirect()->action('UsersController@show', [Auth::user()->id]);
     }
 
