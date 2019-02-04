@@ -2,12 +2,7 @@
 
 @section('content')
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Add your dish</li>
-    </ol>
-</nav>
+  <h3 class="titleProfile">Ajouter un plat</h3>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -20,7 +15,7 @@
     @endif
 
 {!! Form::open(['method' => 'put', 'files' => true]) !!}
-<table class="table">
+<table class="table my-4">
     <tr>
         <td>{!! Form::label('name', "Nom du plat") !!}</td>
         <td>{!! Form::text('name', '', ['class' => 'form-control','placeholder' => 'Nom du plat']) !!}</td>
