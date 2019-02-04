@@ -7,7 +7,7 @@
 <h1 class="mb-4 titleProfile text-center">La page de {{ $user->firstname }}</h1>
 <div class="card">
     <div class="card-body">
-    @if(isset($averageNote))
+    @if($averageNote != -1)
         <div class="noteProfile text-center"><img src="{{asset('img/icons/chef.png')}}"> <br><h3><span class="badge badge-success">{{$averageNote}} / 5</span></h3></div>
     @endif
         <p class="profil-info"><b>Pseudo</b> : {{ $user->username }}</p>
@@ -57,7 +57,7 @@
     @foreach($reviews as $review)
         <div class="card mt-4">
         <div class="card-header">
-            <span class="reviewName font-weight-bold">Client @ {{$review->firstname}} </span><span class="badge badge-warning badgeBuyer">Acheteur vérifié</span><div class="priceHome badge badge-primary">Note : {{$review->note}} / 5</div>
+            <span class="reviewName font-weight-bold">Client @ {{$review->client_name}} </span><span class="badge badge-warning badgeBuyer">Acheteur vérifié</span><div class="priceHome badge badge-primary">Note : {{$review->note}} / 5</div>
         </div>
         <div class="card-body">
             <h5 class="card-title reviewDishTitle">Le plat noté : {{$review->name}}</h5>

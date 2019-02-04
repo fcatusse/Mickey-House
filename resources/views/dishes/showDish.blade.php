@@ -50,11 +50,11 @@
         </div>
 
         {!! Form::close() !!}
-      @elseif ($dish[0]->nb_servings == 0)
+      @elseif (isset(Auth::user()->id) && $dish[0]->nb_servings == 0)
         <div class="alert alert-info" role="alert" style="heigth:30px">
             <strong>Désolé...</strong> Ce plat n'est pas disponible pour le moment.
         </div>
-      @elseif (Auth::user()->id == $dish[0]->user_id)
+      @elseif (isset(Auth::user()->id) && Auth::user()->id == $dish[0]->user_id)
         <div class="alert alert-primary" role="alert" style="heigth:30px">
             Vous êtes le cuisinier de ce plat.
         </div>

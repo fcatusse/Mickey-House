@@ -23,8 +23,8 @@
                 <a class="btn btn-success btnHome" href="{{route('dish.edit', $dish->id)}}">
                   Editer</a>
                   @if ($dish->is_visible == 1)
-                <a class="btn btn-secondary text-white btnHome" href="{{route('dish.hide', $dish->id)}}">
-                  Retirer de la vente</a>
+                <!-- <a class="btn btn-secondary text-white btnHome" href="{{route('dish.hide', $dish->id)}}">
+                  Retirer de la vente</a> -->
                 @endif
 
               </div>

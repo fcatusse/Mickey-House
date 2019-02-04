@@ -9,6 +9,7 @@ use App\Order;
 use App\Dish;
 use App\User;
 use DB;
+use App\Notifications\UserFollowed;
 
 
 use Illuminate\Support\Facades\Storage;
@@ -51,8 +52,8 @@ class DishesController extends Controller
     public function indexCurrentUser()
     {
         $dishes = DB::table('dishes')
-        ->orderBy('created_at', 'desc')
         ->where('dishes.user_id', Auth::user()->id)
+        ->orderBy('created_at', 'desc')
         ->get();
         foreach ($dishes as $dish) {
             $dish->photos = json_decode($dish->photos);
@@ -119,7 +120,7 @@ class DishesController extends Controller
         }
 
         $dish = new Dish();
-        $dish->user_id = 1;
+        $dish->user_id = Auth::user()->id;
         $dish->name = $request["name"];
         $dish->description = $request["description"];
         $dish->photos = json_encode($my_photos);
@@ -143,7 +144,15 @@ class DishesController extends Controller
         }
         $dish->save();
 
-        return "Dish created !";
+        $text = "a publié un nouveau plat";
+
+        foreach (auth()->user()->followers as $follower) {
+          //  $follower->notify(new UserFollowed(auth()->user(), $text));
+            $follower->notify(new UserFollowed(auth()->user(), $text));
+        }
+
+        //return "Dish created !";
+        return redirect()->action('UsersController@show', [Auth::user()->id]);
     }
 
     /**
@@ -152,7 +161,7 @@ class DishesController extends Controller
      * that we want to display in the view, and the table categories to retrieve
      * the name of the categories we have in this dish
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -192,11 +201,11 @@ class DishesController extends Controller
                 ->limit(3)
                 ->get();
 
-            if ($recommendations) {
-                foreach ($recommendations as $recommendation) {
-                    $recommendation->photos = json_decode($recommendation->photos);
-                }
-            }
+         if ($recommendations) {
+           foreach ($recommendations as $recommendation) {
+               $recommendation->photos = json_decode($recommendation->photos);
+           }
+         }
 
             return view('dishes.showDish', [
                 'dish' => $dish,
@@ -219,7 +228,7 @@ class DishesController extends Controller
     public function edit(Dish $dish)
     {
         // If not login -> redirect home page
-        if ((!isset(Auth::user()->id)) || (Auth::user()->id != $dish->id)) {
+        if ((!isset(Auth::user()->id)) || (Auth::user()->id != $dish->user_id)) {
             return redirect()->action('DishesController@index');
         }
 
@@ -257,7 +266,7 @@ class DishesController extends Controller
     public function update(Request $request, Dish $dish, User $user)
     {
         // If not login -> redirect home page
-        if ((!isset(Auth::user()->id)) || (Auth::user()->id != $dish->id)) {
+        if ((!isset(Auth::user()->id)) || (Auth::user()->id != $dish->user_id)) {
             return redirect()->action('DishesController@index');
         }
 
@@ -266,6 +275,7 @@ class DishesController extends Controller
             'categorie1' => 'required',
             'nb_servings' => 'integer|min:0',
             'price' => 'integer|min:0',
+            'description' => 'required',
         ]);
 
         // Preparation du array pour les photos
@@ -396,21 +406,10 @@ class DishesController extends Controller
         }
 
         // Search in title
-        /*
         $dishes_find = Dish::where('name', 'like', '%'.$keyword.'%')->get();
         foreach ($dishes_find as $dish_find) {
-            if (isset($dish_ids)) {
-                foreach ($dish_ids as $dish_id) {
-                    if ($dish_find->id != $dish_id) {
-                        Array_push($dish_ids, $dish_find->id);
-                    }
-                }
-            } else {
-                Array_push($dish_ids, $dish_find->id);
-            }
+            Array_push($dish_ids, $dish_find->id);
         }
-        // dd($dish_ids);
-        */
 
         // Collect dishes keyword matching
         $dishes = DB::table('dishes')
