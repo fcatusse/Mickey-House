@@ -66,6 +66,9 @@
           <li class="nav-item">
             <a class="nav-link" href="/users/best">Top 10</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/demands">Demands</a>
+          </li>
           <form action="/dishes/search" method="POST" class="form-inline my-2 my-lg-0 ml-5">
             @csrf
             <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="Rechercher un plat...">
@@ -105,6 +108,7 @@
                 <a href="{{route('adminPanel')}}" class="dropdown-item">Admin Panel</a>
               @endif
               <a href="{{route('create.dish')}}" class="dropdown-item">Ajouter un plat</a>
+              <a href="{{route('create.demand')}}" class="dropdown-item">Ajouter une demande</a>
               <a href="{{route('user.show', Auth::user()->id)}}" class="dropdown-item">Ma page</a>
               <a href="{{route('orders.show', Auth::user()->id)}}" class="dropdown-item">Mes
                 commandes</a>
