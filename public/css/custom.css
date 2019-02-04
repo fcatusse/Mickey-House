@@ -1,6 +1,5 @@
 * {
-    font-family: 'Open Sans', sans-serif;
-
+    font-family: "Open Sans", sans-serif;
 }
 
 .priceHome {
@@ -88,4 +87,17 @@
 
 .noteProfile {
     float: right;
+}
+
+.contactInfo {
+    float: left;
+}
+
+.demandBudget {
+    float: right;
+}
+
+.titleDeamndBoard {
+    text-transform: uppercase;
+    font-weight: bold;
 }

@@ -84,7 +84,12 @@ Route::group(['middleware' => 'IsAdmin'], function () {
 Route::get('/user/review/{order_id}', 'ReviewsController@index')->middleware('auth');
 Route::post('/user/review', 'ReviewsController@store')->middleware('auth');
 
+// ========= NOTIFICATIONS ===========
+
+Route::get('/notifications', 'UsersController@notifications')->middleware('auth');
+
 // =========== DEMANDS ==========
 
-Route::get('/user/demand', 'DemandController@index')->middleware('auth');
+Route::get('/user/demand', 'DemandController@index')->name('create.demand')->middleware('auth');
 Route::post('/user/demand', 'DemandController@store')->middleware('auth');
+Route::get('/demands', 'DemandController@board');
