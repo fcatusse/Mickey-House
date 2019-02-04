@@ -4,7 +4,7 @@
 
   @php ($arr = json_encode((array)$arr))
 
-    <h4><img src="/img/route.png" alt="route" height="42" width="42"> Trouver des plats près de chez moi </h4> 
+    <h4><img src="/img/route.png" alt="route" height="42" width="42"> Trouver des plats près de chez moi </h4>
 
   </div class="container">
       <div class="my-4" id="map" style='width: 80%; height: 400px; margin:auto'></div>
@@ -13,7 +13,7 @@
   <script type="text/javascript">
       var lat = {{$user->lat}};
       var lon = {{$user->long}};
-      var fromPHP = <? echo $arr ?>;
+      var fromPHP = <?php echo $arr; ?> ;
       console.log(fromPHP);
 
       var lat0 = {{$user->lat}};

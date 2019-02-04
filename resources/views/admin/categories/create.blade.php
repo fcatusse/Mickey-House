@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Create a category</h1>
+    <h1>Nouvelle catégorie</h1>
 
     {!! Form::open(['action' => 'CategoriesController@store', 'method' => 'POST']) !!}
 

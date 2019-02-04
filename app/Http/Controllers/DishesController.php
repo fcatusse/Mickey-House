@@ -52,8 +52,8 @@ class DishesController extends Controller
     public function indexCurrentUser()
     {
         $dishes = DB::table('dishes')
-        ->orderBy('created_at', 'desc')
         ->where('dishes.user_id', Auth::user()->id)
+        ->orderBy('created_at', 'desc')
         ->get();
         foreach ($dishes as $dish) {
             $dish->photos = json_decode($dish->photos);

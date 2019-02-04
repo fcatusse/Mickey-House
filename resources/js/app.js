@@ -68,7 +68,7 @@ function showNotifications(notifications, target) {
         $(target + 'Menu').html(htmlElements.join(''));
         $(target).addClass('has-notifications')
     } else {
-        $(target + 'Menu').html('<li class="dropdown-header">No notifications</li>');
+        $(target + 'Menu').html('<li class="dropdown-header">Pas de notifications</li>');
         $(target).removeClass('has-notifications');
     }
 }
