@@ -83,6 +83,8 @@ Route::group(['middleware' => 'IsAdmin'], function () {
 
 Route::get('/user/review/{order_id}', 'ReviewsController@index')->middleware('auth');
 Route::post('/user/review', 'ReviewsController@store')->middleware('auth');
-// Route::get('/home/top10', 'DishesController@index')->name('home');
 
+// =========== DEMANDS ==========
 
+Route::get('/user/demand', 'DemandController@index')->middleware('auth');
+Route::post('/user/demand', 'DemandController@store')->middleware('auth');
