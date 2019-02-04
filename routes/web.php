@@ -21,6 +21,7 @@
 Auth::routes();
 
 // ============= USERS =========
+Route::get('/users/index', 'UsersController@index')->name('user.index')->middleware('auth');
 
 Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
 Route::get('/users/best', 'UsersController@showBest')->name('user.best');
@@ -30,6 +31,9 @@ Route::put('/users/edit', 'UsersController@update')->name('user.update')->middle
 
 Route::get('/users/password/{id}', 'UsersController@psw_edit')->name('password.edit')->middleware('auth');
 Route::put('/users/password/{user}', 'UsersController@psw_update')->name('password.update')->middleware('auth');
+
+Route::post('users/{user}/follow', 'UsersController@follow')->name('follow')->middleware('auth');
+Route::delete('users/{user}/unfollow', 'UsersController@unfollow')->name('unfollow')->middleware('auth');
 
 //============== HOME =========
 
@@ -84,12 +88,12 @@ Route::group(['middleware' => 'IsAdmin'], function () {
 Route::get('/user/review/{order_id}', 'ReviewsController@index')->middleware('auth');
 Route::post('/user/review', 'ReviewsController@store')->middleware('auth');
 
-// ========= NOTIFICATIONS ===========
-
-Route::get('/notifications', 'UsersController@notifications')->middleware('auth');
-
 // =========== DEMANDS ==========
 
 Route::get('/user/demand', 'DemandController@index')->name('create.demand')->middleware('auth');
 Route::post('/user/demand', 'DemandController@store')->middleware('auth');
 Route::get('/demands', 'DemandController@board');
+
+// ========= NOTIFICATIONS ===========
+
+Route::get('/notifications', 'UsersController@notifications')->middleware('auth');

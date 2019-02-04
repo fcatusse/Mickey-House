@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Edit a category</h1>
+    <h1>Editer une categorie</h1>
 
     {!! Form::open(['action' => ['CategoriesController@update', $category->id], 'method' => 'PUT']) !!}
 
