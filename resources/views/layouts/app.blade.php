@@ -91,7 +91,7 @@
                 News
               </a>
               <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
-                <li class="dropdown-header">No notifications</li>
+                <li class="dropdown-header">Pas de notifications</li>
               </ul>
             </li>
             <li class="nav-item dropdown">

@@ -62,6 +62,7 @@ class UsersController extends Controller
       $user->complete_address = $user->address.' - '.$user->postal_code.' - '.$user->city;
       // find dishes that are made by this cook
       $dishes = DB::table('dishes')
+      ->orderBy('created_at','desc')
       ->where('dishes.user_id', $id)
       ->get();
 
