@@ -33,10 +33,8 @@ Route::put('/users/password/{user}', 'UsersController@psw_update')->name('passwo
 
 //============== HOME =========
 
-
 Route::get('/home', 'DishesController@index')->name('home');
 Route::get('/', 'DishesController@index');
-
 
 // =========== ORDERS ==========
 
@@ -44,6 +42,8 @@ Route::post('/orders/new', 'OrderController@storeAndUpdate')->name('orders.new')
 Route::get('/orders/show', 'OrderController@showAll')->name('orders.show')->middleware('auth');
 
 // =========== DISHES ==========
+
+Route::post('/dishes/search/', 'DishesController@search');
 
 Route::get('/dishes', 'DishesController@index')->name('dish.show.all');
 Route::get('/dishes/map', 'DishesController@map_dishes')->name('dish.map')->middleware('auth');
@@ -83,3 +83,6 @@ Route::group(['middleware' => 'IsAdmin'], function () {
 
 Route::get('/user/review/{order_id}', 'ReviewsController@index')->middleware('auth');
 Route::post('/user/review', 'ReviewsController@store')->middleware('auth');
+// Route::get('/home/top10', 'DishesController@index')->name('home');
+
+
