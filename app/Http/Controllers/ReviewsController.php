@@ -42,7 +42,7 @@ class ReviewsController extends Controller
         //Add the new review in the database
         $category = Reviews::create($data);
         Session::flash('alert-success', 'Thank you for your review !');
-        return redirect()->action('HomeController@index');
+        return redirect()->route('home');
     }
 
     /**
