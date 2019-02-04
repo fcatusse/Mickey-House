@@ -14,6 +14,29 @@ use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+
+  public function showBest()
+  {
+    $users = DB::table('users')
+    ->join('dishes', 'users.id', '=', 'dishes.user_id')
+    ->join('orders', 'dishes.id', '=', 'orders.dish_id')
+    ->join('reviews', 'orders.id', '=', 'reviews.order_id')
+    ->selectRaw('avg(note) as avg_note, users.*')
+    ->orderBy('avg_note','desc')
+    ->groupBy('users.id')
+    ->limit(10)
+    ->get();
+
+    return view('users.best', [
+      'users' => $users,
+    ]);
+  }
+
 
 
   /**
@@ -43,19 +66,19 @@ class UsersController extends Controller
         $dish->categories = $cat;
 
         // ------ HABIB ------ //
-        // Load reviews & Join them with Order & Dish 
+        // Load reviews & Join them with Order & Dish
         $reviews = DB::table('users')
             ->join('dishes', 'users.id', '=', 'dishes.user_id')
             ->join('orders', 'dishes.id', '=', 'orders.dish_id')
             ->join('reviews', 'orders.id', '=', 'reviews.order_id')
             ->get();
-        
+
         if($reviews->count() != 0) {
           $averageNote = $reviews->sum('note') / $reviews->count();
         } else {
           // $averageNote = 'Pas de note';
         }
-        
+
       }
       return response()->view('users.show', compact('user', 'dishes', 'reviews', 'averageNote'), 200);
     }
@@ -65,34 +88,29 @@ class UsersController extends Controller
   /**
   * Show the form for editing the current user's data.
   *
-  * @param  int  $id
+  *
   * @return \Illuminate\Http\Response
   */
-  public function edit($id)
+  public function edit()
   {
-    $user = User::find($id);
+    $user = User::find(Auth::user()->id);
     if ($user) {
-      if (Auth::user()->id == $user->id) {
         $data = [
           'user' => $user,
         ];
         return view('users.edit')->with('data', $data);
       } else {
-        return redirect()->action('HomeController@index');
+        return response()->view('error.error404', [], 404);
       }
-    } else {
-      return response()->view('error.error404', [], 404);
-    }
   }
 
   /**
    * Update the current user's data.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  \App\User  $user
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, User $user)
+  public function update(Request $request)
   {
       // Check & Collect the request data
       $data = $request->validate([
@@ -105,7 +123,13 @@ class UsersController extends Controller
         'email' => 'required|string|email',
       ]);
 
+      $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".str_replace (' ' , '+' , $data['address']) ."&city=".$data['city']."&country=france&postalcode=".$data['postal_code']."&limit=1");
+      $decoded = json_decode($json);
+      $data['lat'] = $decoded[0]->lat;
+      $data['long'] = $decoded[0]->lon;
+
       //Change the updated user in the database
+      $user = User::find(Auth::user()->id);
       $user->update($data);
 
       Session::flash('alert-success', 'Profil édité avec succès');
@@ -115,20 +139,19 @@ class UsersController extends Controller
   /**
   * Show the form for editing the specified resource.
   *
-  * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function psw_edit($id)
+  public function psw_edit()
   {
-    $user = User::find($id);
+    $user = User::find(Auth::user()->id);
   //  dd($user);
-    if (Auth::user()->id == $user->id) {
+    if ($user) {
       $data = [
         'user' => $user,
       ];
       return view('users.password')->with('data', $data);
     } else {
-      return redirect()->action(['UserController@show', $user->id ]);
+      return response()->view('error.error404', [], 404);
     }
   }
 
@@ -136,21 +159,20 @@ class UsersController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  \App\User  $user
    * @return \Illuminate\Http\Response
    */
-  public function psw_update(Request $request, User $user)
+  public function psw_update(Request $request)
   {
+      $user = User::find(Auth::user()->id);
       // Check & Collect the request data
 
       if ($request->new_psw == $request->new_psw_repeat && strlen($request->new_psw)>=6) {
         if (Hash::check($request->old_psw, $user->password)) {
           $user->password = Hash::make($request->new_psw);
           $user->save();
-          Session::flash('alert-success', 'Profil édité avec succès');
+          Session::flash('alert-success', 'Mot de passe édité avec succès');
           return redirect()->action('UsersController@show', [$user->id]);
         } else {
-
           Session::flash('alert-danger', 'Le mot de passe actuel n\'est pas le bon');
           return redirect()->action('UsersController@psw_edit', [$user->id]);
         }

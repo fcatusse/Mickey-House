@@ -43,24 +43,24 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dishes/map">Autour de moi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Top 10</a>
-                    </li>
-                    <form action="/dishes/search" method="POST" class="form-inline my-2 my-lg-0 ml-5">
-                        @csrf
-                        <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="Rechercher un plat...">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher</button>
-                    </form>
-                </ul>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dishes/map">Autour de moi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users/best">Top 10</a>
+                        </li>
+                        <form action="/dishes/search" method="POST" class="form-inline my-2 my-lg-0 ml-5">
+                            @csrf
+                            <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="Rechercher un plat...">
+                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher</button>
+                        </form>
+                    </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -83,13 +83,15 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @if (Auth::user()->is_admin)
-                                    <a href="{{route('adminPanel')}}" class="dropdown-item">Admin Panel</a>
+                                <a href="{{route('adminPanel')}}" class="dropdown-item">Admin Panel</a>
                                 @endif
                                 <a href="{{route('create.dish')}}" class="dropdown-item">Ajouter un plat</a>
                                 <a href="{{route('user.show', Auth::user()->id)}}" class="dropdown-item">Ma page</a>
                                 <a href="{{route('orders.show', Auth::user()->id)}}" class="dropdown-item">Mes
                                     commandes</a>
-                                <a href="{{route('user.edit', Auth::user()->id)}}" class="dropdown-item">Editer mon
+                                <a href="{{route('dish.show.mine', Auth::user()->id)}}" class="dropdown-item">Mes
+                                    plats</a>
+                                <a href="{{route('user.edit')}}" class="dropdown-item">Editer mon
                                     profil</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">
