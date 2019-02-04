@@ -76,12 +76,19 @@
             </tr>
             <tr>
                 <td>{!! Form::label('categorie2', 'Categorie secondaire') !!}</td>
-                <td>{!! Form::select('categorie2', $all_categories, $categories[1], ['placeholder' => 'Choisir catégorie...']) !!}
-                </td>
+                @if(isset($categories[1]))
+                    <td>{!! Form::select('categorie2', $all_categories, $categories[1], ['placeholder' => 'Choisir catégorie...']) !!}</td>
+                @else
+                    <td>{!! Form::select('categorie2', $all_categories, null, ['placeholder' => 'Choisir catégorie...']) !!}</td>
+                @endif
             </tr>
             <tr>
                 <td>{!! Form::label('categorie3', 'Categorie secondaire') !!}</td>
-                <td>{!! Form::select('categorie3', $all_categories, $categories[2], ['placeholder' => 'Choisir catégorie...']) !!}
+                @if(isset($categories[2]))
+                    <td>{!! Form::select('categorie3', $all_categories, $categories[2], ['placeholder' => 'Choisir catégorie...']) !!}</td>
+                @else
+                    <td>{!! Form::select('categorie3', $all_categories, null, ['placeholder' => 'Choisir catégorie...']) !!}</td>
+                    @endif
                 </td>
             </tr>
             </tr>
