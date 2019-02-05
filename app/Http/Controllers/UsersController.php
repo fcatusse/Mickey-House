@@ -63,7 +63,7 @@ class UsersController extends Controller
       // find dishes that are made by this cook
       $dishes = DB::table('dishes')
       ->orderBy('created_at','desc')
-      ->where('dishes.user_id', $id)
+      ->where([['dishes.user_id', '=', $id], ['is_visible','=',1]])
       ->get();
 
       // converts json to string

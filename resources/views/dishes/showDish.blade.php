@@ -104,6 +104,7 @@
     </div>
   </div>
 </br>
+</div>
 
 @if (count($recommendations) > 0)
   <h3 class="my-4">Autres plats de ce cuisinier</h3>
@@ -124,7 +125,7 @@
         @endfor
       </div>
     @endif
-  </div>
+  <!--/div-->
 
 
   <script type="text/javascript">
