@@ -67,7 +67,10 @@
             <a class="nav-link" href="/users/best">Top 10</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/demands">Demands</a>
+            <a class="nav-link" href="/demands">Demandes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/index">Communauté</a>
           </li>
           <form action="/dishes/search" method="POST" class="form-inline my-2 my-lg-0 ml-5">
             @csrf
