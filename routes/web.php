@@ -23,8 +23,8 @@ Auth::routes();
 // ============= USERS =========
 Route::get('/users/index', 'UsersController@index')->name('user.index')->middleware('auth');
 
-Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
-Route::get('/users/best', 'UsersController@showBest')->name('user.best');
+Route::get('/users/show/{id}', 'UsersController@show')->name('user.show')->middleware('auth');
+Route::get('/users/best', 'UsersController@showBest')->name('user.best')->middleware('auth');
 
 Route::get('/users/edit', 'UsersController@edit')->name('user.edit')->middleware('auth');
 Route::put('/users/edit', 'UsersController@update')->name('user.update')->middleware('auth');
@@ -96,4 +96,4 @@ Route::get('/notifications', 'UsersController@notifications')->middleware('auth'
 
 Route::get('/user/demand', 'DemandController@index')->name('create.demand')->middleware('auth');
 Route::post('/user/demand', 'DemandController@store')->middleware('auth');
-Route::get('/demands', 'DemandController@board');
+Route::get('/demands', 'DemandController@board')->middleware('auth');

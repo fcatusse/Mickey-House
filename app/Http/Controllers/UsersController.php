@@ -16,12 +16,46 @@ use App\Notifications\UserFollowed;
 
 class UsersController extends Controller
 {
+  /*
+  |--------------------------------------------------------------------------
+  | Users Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller handles functions related to the user.
+  |
+  | The function showBest returns the view of the best users, based on the
+  | grades they got from their reviews. The 10 best users are displayed, or less
+  | if there are less of them.
+  |
+  | The function index returns all users except the current one, for the view
+  | allowing to follow/unfollow users.
+  |
+  | The function show returns the view of one specific user: his infos, his
+  | dishes, his reviews if there are some and in this case his average grade.
+  |
+  | The function edit returns the view of the form allowing to edit a user.
+  |
+  | The function update saves the new user's data in the database.
+  |
+  | The function psw_edit returns the view of the form to edit one's password.
+  | The function psw_update saves the new password.
+  |
+  | The functions follow and unfollow allow a user to follow/unfollow another
+  | user. Once a user follow someone, they will get a notification when $this
+  | person posts a new dish. A notification also appears when someone followss
+  | you.
+  |
+  | The function notifications selects the 5 most recent notifications to
+  | display them.
+  |
+  |
+  */
+
   /**
    * Display a listing of the resource.
    *
    * @return \Illuminate\Http\Response
    */
-
   public function showBest()
   {
     $users = DB::table('users')
@@ -39,7 +73,10 @@ class UsersController extends Controller
     ]);
   }
 
-
+  /**
+   *
+   * @return \Illuminate\Http\Response
+   */
   public function index()
   {
       $users = User::where('id', '!=', auth()->user()->id)->get();
@@ -79,7 +116,6 @@ class UsersController extends Controller
         $dish->categories = $cat;
         }
 
-        // ------ HABIB ------ //
         // Load reviews & Join them with Order & Dish
         $reviews = DB::table('users')
             ->join('dishes', 'users.id', '=', 'dishes.user_id')
@@ -103,11 +139,11 @@ class UsersController extends Controller
           $averageNote = -1;
         }
 
-      //dd('toto');
       return response()->view('users.show', compact('user', 'dishes', 'reviews', 'averageNote'), 200);
     }
     return response()->view('error.error404', [], 404);
   }
+
 
   /**
   * Show the form for editing the current user's data.
@@ -147,6 +183,7 @@ class UsersController extends Controller
         'email' => 'required|string|email',
       ]);
 
+      // reverse geocoding of the address to get the coordinates
       $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".str_replace (' ' , '+' , $data['address']) ."&city=".$data['city']."&country=france&postalcode=".$data['postal_code']."&limit=1");
       $decoded = json_decode($json);
       $data['lat'] = $decoded[0]->lat;
