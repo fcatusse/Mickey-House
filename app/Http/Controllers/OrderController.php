@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Api\Stripe;
+use App\UsersStripes;
 use Illuminate\Http\Request;
 use App\Order;
 use App\Dish;
@@ -9,9 +11,23 @@ use App\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Stripe\Card;
+use Stripe\Charge;
+use Stripe\Customer;
 
 class OrderController extends Controller
 {
+
+    /**
+     * @var Stripe
+     */
+    private $stripe;
+
+    public function __construct()
+    {
+        $this->stripe = new Stripe(env('STRIPE_SECRET'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -57,7 +73,6 @@ class OrderController extends Controller
         'nb_servings' => 'required|integer',
         'price' => 'required|numeric',
       ]);
-
       if ($data == false) {
         //return response('One or more inputs have the wrong type', 400);
         Session::flash('alert-danger', 'One or more inputs have the wrong type');
@@ -82,8 +97,11 @@ class OrderController extends Controller
         $order->user_id = $request->input('user_id');
         $order->dish_id = $request->input('dish_id');
         $order->nb_servings = $request->input('nb_servings');
-        $order->price = $request->input('nb_servings') * $request->input('price');
+        $order->price = $total_price;
         $order->sent = 0;
+        if ($chargeId) {
+            $order->charge_id = $chargeId;
+        }
         $order->save();
 
         Session::flash('alert-success', 'Votre commande a été passée');
@@ -177,5 +195,68 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function process(string $token, float $price)
+    {
+        $id = Auth::id();
+        $card = $this->stripe->getCardFromToken($token);
+        $customer = $this->findCustomerForUser($id, $token);
+        if (!$this->hasCard($customer, $card))
+        {
+            var_dump("creation carte");
+            $card = $this->stripe->createCardForCustomer($customer, $token);
+        }
+        /** @var Charge $charge */
+        $charge = $this->stripe->createCharge([
+            "amount" => $price * 100,
+            "currency" => "eur",
+            "source" => $card->id,
+            "customer" => $customer->id,
+            "description" => "Achat sur le site Mickey House"
+        ]);
+        return $charge->id;
+    }
+
+    /**
+     * @param Customer $customer
+     * @param Card $card
+     * @return bool
+     */
+    private function hasCard(Customer $customer, Card $card): bool
+    {
+        $fingerprints = array_map(function($source) {
+            return $source->fingerprint;
+        }, $customer->sources->data);
+        return in_array($card->fingerprint, $fingerprints);
+    }
+
+    /**
+     * Get the client from the user id
+     * @param int $id
+     * @param string $token
+     * @return Customer
+     */
+    private function findCustomerForUser(int $id, string $token): Customer
+    {
+        $custumerId = UsersStripes::findCustomerForUser($id);
+        if ($custumerId)
+        {
+            $customer = $this->stripe->getCustomer($custumerId);
+        } else {
+            $user = User::findById($id);
+            $customer = $this->stripe->createCustomer([
+                'email' => $user->email,
+                'source' => $token
+            ]);
+            $user_stripe = new UsersStripes();
+            $user_stripe->user_id = $id;
+            $user_stripe->customer_id = $customer->id;
+            $user_stripe->created_at = date("Y-m-d H:i:s");
+            $user_stripe->updated_at = date("Y-m-d H:i:s");
+            $user_stripe->save();
+        }
+        /** @var Customer $customer */
+        return $customer;
     }
 }
