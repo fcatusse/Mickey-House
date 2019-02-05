@@ -14,7 +14,7 @@ class AddSentToOrders extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->boolean('sent')->after('price');
+            $table->boolean('sent')->after('price')->nullable();
         });
     }
 
