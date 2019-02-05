@@ -12,6 +12,28 @@ use Illuminate\Support\Facades\Session;
 
 class ReviewsController extends Controller
 {
+  /*
+  |--------------------------------------------------------------------------
+  | Reviews Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller handles reviews (only the admin can access it).
+  |
+  | The function index returns the view of one review.
+  |
+  | The function store saves a new review in the database.
+  |
+  | The function update changes the status of the order once an email asking for
+  | a review has been sent.
+  |
+  | The function admin returns all the reviews for the admin to delete them if
+  | needed.
+  |
+  | The function delete allows to delete a review.
+  |
+  |
+  */
+
     /**
      * Display a listing of the resource.
      *
@@ -97,7 +119,7 @@ class ReviewsController extends Controller
         //
     }
     }
-}
+  }
 
     /**
      * Remove the specified resource from storage.
@@ -110,9 +132,11 @@ class ReviewsController extends Controller
         //
     }
 
+    /**
+     * @return \Illuminate\Http\Response
+     */
     public function admin()
     {
-
         $reviews = DB::table('reviews')
         ->join('orders', 'orders.id', '=', 'reviews.order_id')
         ->join('dishes', 'dishes.id', '=', 'orders.dish_id')
@@ -125,6 +149,11 @@ class ReviewsController extends Controller
         ]);
     }
 
+    /**
+     *
+     * @param  $review
+     * @return \Illuminate\Http\Response
+     */
     public function delete($review)
     {
         $review = Reviews::find($review);

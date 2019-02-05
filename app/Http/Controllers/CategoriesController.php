@@ -8,6 +8,29 @@ use Illuminate\Support\Facades\Session;
 
 class CategoriesController extends Controller
 {
+  /*
+  |--------------------------------------------------------------------------
+  | Categories Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller handles dishes categories that allow "tagging" the dishes.
+  | Only the admin can access these functions.
+  |
+  | The function index returns the view of all categories.
+  |
+  | The function store saves a newly created category.
+  |
+  | The function show returns the view of the form to edit a category.
+  |
+  | The function update saves the updated category.
+  |
+  | The function destroy deletes the chosen category.
+  |
+  | The function create returns the view of the form to create a category.
+  |
+  |
+  */
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +57,7 @@ class CategoriesController extends Controller
             'title' => 'required|string',
         ]);
 
-        //Add the new task in the database
+        //Add the new category in the database
         $category = Categories::create($data);
 
         Session::flash('alert-success', 'The category has been created with success.');
@@ -68,7 +91,7 @@ class CategoriesController extends Controller
             'title' => 'required|string',
         ]);
 
-        //Add the new task in the database
+        //Add the newly updated category in the database
         $category->update($data);
 
         Session::flash('alert-success', 'The category has been updated with success.');

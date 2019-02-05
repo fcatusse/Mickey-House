@@ -17,6 +17,28 @@ use Stripe\Customer;
 
 class OrderController extends Controller
 {
+  /*
+  |--------------------------------------------------------------------------
+  | Orders Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller handles orders.
+  |
+  | The function storeAndUpdate handles
+  | - the creation of an order when a customer orders a dish
+  | - the update of the number of servings of dish
+  | - the payment with the payment processor Stripe (function process)
+  |
+  | The function showAll returns the orders of the current user (orders passed
+  | to him and orders he passed) to display them.
+  |
+  | The function process makes the payment with Stripe.
+  |
+  | The function hasCard checks if the user has entered a card number.
+  |
+  | The function findCustomerForUser gets the client ID from the user ID.
+  |
+  */
 
     /**
      * @var Stripe
@@ -28,15 +50,6 @@ class OrderController extends Controller
         $this->stripe = new Stripe(env('STRIPE_SECRET'));
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return(1);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -74,26 +87,27 @@ class OrderController extends Controller
         'price' => 'required|numeric',
       ]);
       if ($data == false) {
-        //return response('One or more inputs have the wrong type', 400);
         Session::flash('alert-danger', 'One or more inputs have the wrong type');
         return response()->view('dish.show.all', [], 400);
       }
+
       // find dish corresponding to order and update the number of servings
       // remove the nb of servings that has just been ordered
       $dish = Dish::find($request->input('dish_id'));
       if ($dish->nb_servings > 0) {
-
+        // compute total price
         $total_price = (float) $request->input('nb_servings') * $request->input('price');
         $token = $request->input('stripeToken');
         $chargeId = null;
-
+        //process payment
         if ($token != "") {
             $chargeId = $this->process($token, $total_price);
         }
-        
+
         $dish->nb_servings = $dish->nb_servings - $request->input('nb_servings');
         $dish->save();
 
+        // save new order
         $order = new Order;
         $order->user_id = $request->input('user_id');
         $order->dish_id = $request->input('dish_id');
@@ -125,9 +139,9 @@ class OrderController extends Controller
     }
 
     /**
-     * Display the orders of the currently authentified customer.
-     * Calls the dishes table to get the detail of the order and
-     * the users table to get name of the cook
+     * Display the orders of the currently authentified customer:
+     * orders that have been passed to him and/or orders than he has passed
+     *
      *
      * @return \Illuminate\Http\Response
      */
@@ -135,8 +149,8 @@ class OrderController extends Controller
     {
       $orders_passed = DB::table('orders')
       ->orderBy('created_at', 'desc')
-      ->join('dishes', 'dishes.id', '=', 'orders.dish_id')
-      ->join('users', 'users.id', '=', 'dishes.user_id')
+      ->join('dishes', 'dishes.id', '=', 'orders.dish_id') // to get the dish name
+      ->join('users', 'users.id', '=', 'dishes.user_id') // to get the customer name
       ->select('orders.*', 'dishes.name', 'dishes.description', 'dishes.photos', 'users.username')
       ->where('orders.user_id', Auth::user()->id)
       ->paginate(6);
@@ -161,8 +175,8 @@ class OrderController extends Controller
       } else {
         return response()->view('error.error404', [], 404);
       }
-
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -198,6 +212,12 @@ class OrderController extends Controller
         //
     }
 
+    /**
+     *
+     * @param  string $token
+     * @param  float  $price
+     * @return int
+     */
     public function process(string $token, float $price)
     {
         $id = Auth::id();
@@ -205,7 +225,6 @@ class OrderController extends Controller
         $customer = $this->findCustomerForUser($id, $token);
         if (!$this->hasCard($customer, $card))
         {
-            var_dump("creation carte");
             $card = $this->stripe->createCardForCustomer($customer, $token);
         }
         /** @var Charge $charge */
@@ -218,6 +237,7 @@ class OrderController extends Controller
         ]);
         return $charge->id;
     }
+
 
     /**
      * @param Customer $customer

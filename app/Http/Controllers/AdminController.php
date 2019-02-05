@@ -6,6 +6,19 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+
+  /*
+  |--------------------------------------------------------------------------
+  | Admin Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller doesn't handles the actions specific to the administrator.
+  |
+  | See CategoriesController and ReviewsController for those.
+  |
+  |
+  */
+
     /**
      * Display a listing of the resource.
      *

@@ -56,8 +56,8 @@ class User extends Authenticatable
         return $this->belongsToMany(self::class, 'followers', 'user_id', 'follows_id')
                     ->withTimestamps();
     }
-    
 
+    // check if a user is following someone based on their user id
     public function isFollowing($userId)
     {
         $follow = Follower::where([['user_id', '=', Auth::user()->id], ['follows_id', '=', $userId]])->get();

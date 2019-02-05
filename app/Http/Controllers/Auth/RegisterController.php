@@ -21,6 +21,12 @@ class RegisterController extends Controller
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
+    | The registration requires the following data: username, first name, last
+    | name, address (street and number, postcode, city), email and password.
+    | The address is used to directly add the geographical coordinates (latitude
+    | and longitude) of the user in the database to provide an enhanced user
+    | experience.
+    |
     */
 
     use RegistersUsers;
@@ -70,22 +76,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+      // reverse geocoding of the user's address
       $arr = [' ', '-'];
       $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".str_replace ($arr , '+' , $data['address']) ."&city=".str_replace ($arr , '+' , $data['city'])."&country=france&postalcode=".$data['postal_code']."&limit=1");
       $decoded = json_decode($json);
-    //  dd($decoded[0]->lat);
-        Session::flash('alert-success', 'Welcome!');
-        return User::create([
-            'username' => $data['username'],
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-            'email' => $data['email'],
-            'address' => $data['address'],
-            'lat' => $decoded[0]->lat,
-            'long' => $decoded[0]->lon,
-            'postal_code' => $data['postal_code'],
-            'city' => $data['city'],
-            'password' => Hash::make($data['password']),
-        ]);
+
+      // success alert
+      Session::flash('alert-success', 'Welcome!');
+      
+      return User::create([
+          'username' => $data['username'],
+          'firstname' => $data['firstname'],
+          'lastname' => $data['lastname'],
+          'email' => $data['email'],
+          'address' => $data['address'],
+          'lat' => $decoded[0]->lat,
+          'long' => $decoded[0]->lon,
+          'postal_code' => $data['postal_code'],
+          'city' => $data['city'],
+          'password' => Hash::make($data['password']),
+      ]);
     }
 }
