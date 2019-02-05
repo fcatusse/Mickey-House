@@ -51,7 +51,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:255'],
@@ -70,7 +70,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-      $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".str_replace (' ' , '+' , $data['address']) ."&city=".$data['city']."&country=france&postalcode=".$data['postal_code']."&limit=1");
+      $arr = [' ', '-'];
+      $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".str_replace ($arr , '+' , $data['address']) ."&city=".str_replace ($arr , '+' , $data['city'])."&country=france&postalcode=".$data['postal_code']."&limit=1");
       $decoded = json_decode($json);
     //  dd($decoded[0]->lat);
         Session::flash('alert-success', 'Welcome!');

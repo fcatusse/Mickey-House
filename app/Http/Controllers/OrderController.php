@@ -86,10 +86,11 @@ class OrderController extends Controller
         $total_price = (float) $request->input('nb_servings') * $request->input('price');
         $token = $request->input('stripeToken');
         $chargeId = null;
-        if ($token) {
+
+        if ($token != "") {
             $chargeId = $this->process($token, $total_price);
         }
-
+        
         $dish->nb_servings = $dish->nb_servings - $request->input('nb_servings');
         $dish->save();
 

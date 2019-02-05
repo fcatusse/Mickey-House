@@ -64,7 +64,7 @@
                 <td>{!! Form::number('nb_servings', $nb_servings) !!}</td>
             </tr>
             <tr>
-                <td>{!! Form::label('price', 'Prix part part') !!}</td>
+                <td>{!! Form::label('price', 'Prix par part') !!}</td>
                 <td>{!! Form::text('price', $price) !!}</td>
             </tr>
             <tr>
