@@ -21,6 +21,7 @@
 Auth::routes();
 
 // ============= USERS =========
+Route::get('/users/index', 'UsersController@index')->name('user.index')->middleware('auth');
 
 Route::get('/users/show/{id}', 'UsersController@show')->name('user.show');
 Route::get('/users/best', 'UsersController@showBest')->name('user.best');
@@ -31,12 +32,13 @@ Route::put('/users/edit', 'UsersController@update')->name('user.update')->middle
 Route::get('/users/password/{id}', 'UsersController@psw_edit')->name('password.edit')->middleware('auth');
 Route::put('/users/password/{user}', 'UsersController@psw_update')->name('password.update')->middleware('auth');
 
-//============== HOME =========
+Route::post('users/{user}/follow', 'UsersController@follow')->name('follow')->middleware('auth');
+Route::delete('users/{user}/unfollow', 'UsersController@unfollow')->name('unfollow')->middleware('auth');
 
+//============== HOME =========
 
 Route::get('/home', 'DishesController@index')->name('home');
 Route::get('/', 'DishesController@index');
-
 
 // =========== ORDERS ==========
 
@@ -44,6 +46,8 @@ Route::post('/orders/new', 'OrderController@storeAndUpdate')->name('orders.new')
 Route::get('/orders/show', 'OrderController@showAll')->name('orders.show')->middleware('auth');
 
 // =========== DISHES ==========
+
+Route::post('/dishes/search/', 'DishesController@search');
 
 Route::get('/dishes', 'DishesController@index')->name('dish.show.all');
 Route::get('/dishes/map', 'DishesController@map_dishes')->name('dish.map')->middleware('auth');
@@ -83,3 +87,13 @@ Route::group(['middleware' => 'IsAdmin'], function () {
 
 Route::get('/user/review/{order_id}', 'ReviewsController@index')->middleware('auth');
 Route::post('/user/review', 'ReviewsController@store')->middleware('auth');
+
+// ========= NOTIFICATIONS ===========
+
+Route::get('/notifications', 'UsersController@notifications')->middleware('auth');
+
+// =========== DEMANDS ==========
+
+Route::get('/user/demand', 'DemandController@index')->name('create.demand')->middleware('auth');
+Route::post('/user/demand', 'DemandController@store')->middleware('auth');
+Route::get('/demands', 'DemandController@board');

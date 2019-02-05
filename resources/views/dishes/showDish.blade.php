@@ -83,24 +83,21 @@
               });
           </script>
 
-          {!! Form::close() !!}
+        {!! Form::close() !!}
+      @elseif (isset(Auth::user()->id) && $dish[0]->nb_servings == 0)
+        <div class="alert alert-info" role="alert" style="heigth:30px">
+            <strong>Désolé...</strong> Ce plat n'est pas disponible pour le moment.
+        </div>
+      @elseif (isset(Auth::user()->id) && Auth::user()->id == $dish[0]->user_id)
+        <div class="alert alert-primary" role="alert" style="heigth:30px">
+            Vous êtes le cuisinier de ce plat.
+        </div>
+      @else
+        <div class="alert alert-warning" role="alert" style="heigth:30px">
+            <strong>Désolé...</strong> Vous devez être connecté pour commander
+        </div>
+      @endif
 
-      </div>
-            {!! Form::close() !!}
-        @elseif ($dish[0]->nb_servings == 0)
-            <div class="alert alert-info" role="alert" style="heigth:30px">
-                <strong>Désolé...</strong> Ce plat n'est pas disponible pour le moment.
-            </div>
-        @elseif (Auth::user()->id == $dish[0]->user_id)
-            <div class="alert alert-primary" role="alert" style="heigth:30px">
-                Vous êtes le cuisinier de ce plat.
-            </div>
-        @else
-            <div class="alert alert-warning" role="alert" style="heigth:30px">
-                <strong>Désolé...</strong> Vous devez être connecté pour commander
-            </div>
-        @endif
-    </div>
       <div class="my-4" id="map" style='width: 400px; height: 300px; margin:auto'></div>
     </div>
 

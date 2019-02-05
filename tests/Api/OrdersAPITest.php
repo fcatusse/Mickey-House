@@ -16,7 +16,7 @@ class OrderAPITest extends TestCase
   //the function has to save new data in the table and redirect to a view
   public function testSaveNewOrder() {
     //order OK
-    $response = $this->call('POST', '/orders/new', ['user_id' => 2, 'dish_id' => 1, 'nb_servings' => 1, 'price' => 4.5]);
+    $response = $this->call('POST', '/orders/new', ['user_id' => 2, 'dish_id' => 1, 'nb_servings' => 0, 'price' => 4.5]);
     $this->assertTrue($response->status() == 302);
   }
 

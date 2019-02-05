@@ -37,12 +37,12 @@ class ReviewsController extends Controller
             'note' => 'required|integer',
             'comment' => 'required|string'
             ]);
-            
+
         // dd($data);
         //Add the new review in the database
         $category = Reviews::create($data);
         Session::flash('alert-success', 'Thank you for your review !');
-        return redirect()->action('HomeController@index');
+        return redirect()->route('home');
     }
 
     /**
@@ -115,8 +115,9 @@ class ReviewsController extends Controller
 
         $reviews = DB::table('reviews')
         ->join('orders', 'orders.id', '=', 'reviews.order_id')
+        ->join('dishes', 'dishes.id', '=', 'orders.dish_id')
         ->join('users', 'users.id', '=', 'orders.user_id')
-        ->select('reviews.id as review_id', 'reviews.*', 'users.*')
+        ->select('reviews.id as review_id', 'reviews.*', 'users.*', 'dishes.name as dish_name', 'dishes.id as dish_id')
         ->get();
 
         return view('admin.reviews.index', [

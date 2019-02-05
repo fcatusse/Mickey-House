@@ -11,6 +11,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Follower;
+use App\Notifications\UserFollowed;
 
 class UsersController extends Controller
 {
@@ -38,6 +40,12 @@ class UsersController extends Controller
   }
 
 
+  public function index()
+  {
+      $users = User::where('id', '!=', auth()->user()->id)->get();
+      return view('users.index', compact('users'));
+  }
+
 
   /**
   * Affiche les informations relatives à un cuisinier en fonction de son id
@@ -47,15 +55,20 @@ class UsersController extends Controller
   */
   public function show(string $id): Response
   {
+
     $user = User::findById($id);
     if ($user) {
+
       $user->complete_address = $user->address.' - '.$user->postal_code.' - '.$user->city;
       // find dishes that are made by this cook
       $dishes = DB::table('dishes')
+      ->orderBy('created_at','desc')
       ->where('dishes.user_id', $id)
       ->get();
+
       // converts json to string
       foreach ($dishes as $dish) {
+
         $dish->photos = json_decode($dish->photos);
         $dish->categories = json_decode($dish->categories);
 
@@ -64,6 +77,7 @@ class UsersController extends Controller
         ->whereIn('id', $dish->categories)
         ->get();
         $dish->categories = $cat;
+        }
 
         // ------ HABIB ------ //
         // Load reviews & Join them with Order & Dish
@@ -71,15 +85,25 @@ class UsersController extends Controller
             ->join('dishes', 'users.id', '=', 'dishes.user_id')
             ->join('orders', 'dishes.id', '=', 'orders.dish_id')
             ->join('reviews', 'orders.id', '=', 'reviews.order_id')
+            ->where('dishes.user_id','=', $id)
+            ->select('users.*', 'reviews.*', 'dishes.*','orders.user_id as client_id')
             ->get();
+
+        foreach($reviews as $review) {
+          $client = DB::table('users')
+          ->where('id','=',$review->client_id)
+          ->get();
+        //  dd($client);
+          $review->client_name = $client[0]->username;
+        }
 
         if($reviews->count() != 0) {
           $averageNote = $reviews->sum('note') / $reviews->count();
         } else {
-          // $averageNote = 'Pas de note';
+          $averageNote = -1;
         }
 
-      }
+      //dd('toto');
       return response()->view('users.show', compact('user', 'dishes', 'reviews', 'averageNote'), 200);
     }
     return response()->view('error.error404', [], 404);
@@ -182,6 +206,48 @@ class UsersController extends Controller
       //return redirect()->action('HomeController@pindex');
       }
 
+  }
+
+
+  public function follow($userId)
+  {
+    $user = User::where('id', '=', $userId)->get();
+  //  dd($user);
+    $current = auth()->user();
+    $text = "vous suit";
+
+    $follow = new Follower;
+    $follow->user_id = Auth::user()->id;
+    $follow->follows_id = $userId;
+    $follow->save();
+    foreach($user as $followed) {
+    $followed->notify(new UserFollowed($current, $text));
+    //$followed->notify(new UserFollowed($current));
+    }
+
+    return back()->withSuccess("You are now following {$user[0]->username}");
+    //return redirect()->action('UsersController@index');
+  }
+
+
+    /**
+  * Remove the specified resource from storage.
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
+  */
+  public function unfollow($userId)
+  {
+    $follow = Follower::where([['user_id', '=', Auth::user()->id], ['follows_id', '=', $userId]]);;
+    //dd($follow);
+    $follow->delete();
+    return redirect()->action('UsersController@index');
+  }
+
+
+  public function notifications()
+  {
+    //return last 5 unread notifications
+    return Auth::user()->unreadNotifications()->limit(5)->get()->toArray();
   }
 
 }

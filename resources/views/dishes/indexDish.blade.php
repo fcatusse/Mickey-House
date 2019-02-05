@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-  <h3 class="titleProfile">Découvrir les plats</h3>
+
+<h3 class="titleProfile">Découvrir les plats</h3>
 @for ($i = 1; $i <= count($dishes); $i++)
     @if($i % 2 == 0)
         <div class="card">
