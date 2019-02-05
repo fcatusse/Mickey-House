@@ -95,10 +95,13 @@ class DishesController extends Controller
     {
         // Validate
         $request->validate([
+            'name' => 'required',
+            'description' => 'required',
             'categorie1' => 'required',
             'photo1' => 'required',
+            'price' => 'numeric|min:0',
             'nb_servings' => 'integer|min:0',
-            'price' => 'integer|min:0',
+
         ]);
 
         // Preparation du array pour les photos
@@ -274,7 +277,7 @@ class DishesController extends Controller
         $request->validate([
             'categorie1' => 'required',
             'nb_servings' => 'integer|min:0',
-            'price' => 'integer|min:0',
+            'price' => 'numeric|min:0',
             'description' => 'required',
         ]);
 

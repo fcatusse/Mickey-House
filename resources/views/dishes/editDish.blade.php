@@ -34,7 +34,7 @@
                 </td>
             </tr>
             <tr>
-                <td>{!! Form::label('photo2', 'Image') !!}</td>
+                <td>{!! Form::label('photo2', 'Image 2') !!}</td>
                 <td>
                     @isset ($photos[1])
                         <img src="{{ url('/storage/'.$photos[1]) }}" class="edit-preview">
@@ -47,7 +47,7 @@
                 </td>
             </tr>
             <tr>
-                <td>{!! Form::label('photo3', 'Image') !!}</td>
+                <td>{!! Form::label('photo3', 'Image 3') !!}</td>
                 <td>
                     @isset ($photos[2])
                         <img src="{{ url('/storage/'.$photos[2]) }}" class="edit-preview">
@@ -65,7 +65,7 @@
             </tr>
             <tr>
                 <td>{!! Form::label('price', 'Prix part part') !!}</td>
-                <td>{!! Form::number('price', $price) !!}</td>
+                <td>{!! Form::text('price', $price) !!}</td>
             </tr>
             <tr>
                 <td>{!! Form::label('categorie1', 'Categorie principale*') !!}</td>
@@ -73,7 +73,7 @@
                 </td>
             </tr>
             <tr>
-                <td>{!! Form::label('categorie2', 'Categorie secondaire') !!}</td>
+                <td>{!! Form::label('categorie2', 'Categorie 2') !!}</td>
                 @if(isset($categories[1]))
                     <td>{!! Form::select('categorie2', $all_categories, $categories[1], ['placeholder' => 'Choisir catégorie...']) !!}</td>
                 @else
@@ -81,7 +81,7 @@
                 @endif
             </tr>
             <tr>
-                <td>{!! Form::label('categorie3', 'Categorie secondaire') !!}</td>
+                <td>{!! Form::label('categorie3', 'Categorie 3') !!}</td>
                 @if(isset($categories[2]))
                     <td>{!! Form::select('categorie3', $all_categories, $categories[2], ['placeholder' => 'Choisir catégorie...']) !!}</td>
                 @else
