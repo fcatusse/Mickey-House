@@ -199,7 +199,7 @@ class DishesController extends Controller
 
             // find other dishes from this cook
             $recommendations = DB::table('dishes')
-                ->where([['user_id', '=', $dish[0]->cook_id], ['id', '!=', $id]])
+                ->where([['user_id', '=', $dish[0]->cook_id], ['id', '!=', $id], ['is_visible', '=', '1']])
                 ->latest()
                 ->limit(3)
                 ->get();

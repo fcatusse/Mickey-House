@@ -68,11 +68,10 @@
 
     </div>
   </div>
+</br>
 
-
-  <div class="my-4">
-    @if (count($recommendations) > 0)
-      <h3>Autres plats de ce cuisinier</h3>
+@if (count($recommendations) > 0)
+  <h3 class="my-4">Autres plats de ce cuisinier</h3>
       <div class="card-deck my-4">
         @for ($i = 1; $i <= count($recommendations); $i++)
               <div class="card" style="max-width: 24rem;">
@@ -91,6 +90,7 @@
       </div>
     @endif
   </div>
+
 
   <script type="text/javascript">
             // On initialise la latitude et la longitude de Paris (centre de la carte)
