@@ -18,7 +18,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'username' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => bcrypt($faker->password(6)), // secret
+        'password' => bcrypt('secret'), // secret
         'firstname' => $faker->firstname,
         'lastname' => $faker->lastname,
         'address' => '12 rue Saint Nicolas',
