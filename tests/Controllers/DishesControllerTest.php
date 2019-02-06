@@ -39,7 +39,7 @@ class DishesControllerTest extends TestCase
     $this->assertEquals($dish_view->name, $dish->name);
     $this->assertEquals($dish_view->description, $dish->description);
 
-    //$this->assertTrue($response->original->getData()["dish"][0]->id == 1);
+
   }
 
 }
