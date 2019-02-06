@@ -18,7 +18,17 @@ $factory->define(App\User::class, function (Faker $faker) {
         'username' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'password' => bcrypt($faker->password(6)), // secret
+        'firstname' => $faker->firstname,
+        'lastname' => $faker->lastname,
+        'address' => '12 rue Saint Nicolas',
+        'postal_code' => 75012,
+        'city'=> 'Paris',
+        'lat' => 48.850798,
+        'long' =>  2.374290,
+        'is_admin' => 1,
         'remember_token' => str_random(10),
+        'created_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = null) ,
+        'updated_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = null),
     ];
 });
