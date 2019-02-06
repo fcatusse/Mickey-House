@@ -39,7 +39,8 @@ class OrdersControllerTest extends TestCase
   }
 
   // the function has to display all orders of the current user
-  public function testShowAll(){
+  public function testShowAllGood()
+  {
     // test OK
     $user = new User();
     $user->id = 1;
@@ -47,10 +48,14 @@ class OrdersControllerTest extends TestCase
     $response = $this->call('GET','/orders/show');
     $response->assertViewHas('orders_passed');
     $this->assertTrue($response->status() == 200);
-    // test KO
-    // $response = $this->call('GET','/orders/show');
-    // $response->assertViewHas('orders');
-    // $this->assertTrue($response->status() == 500);
+
+  }
+
+  public function testShowAllBad()
+  {
+  // test KO
+  $response = $this->call('GET','/orders/show');
+  $this->assertTrue($response->status() == 500);
 
   }
 

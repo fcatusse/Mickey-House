@@ -1,10 +1,11 @@
 <?php
 
 use Faker\Generator as Faker;
+use App\Order;
 
 $factory->define(App\Reviews::class, function (Faker $faker) {
     return [
-        'order_id' => $faker->numberBetween(1, 5),
+        'order_id' => factory(Order::class)->create()->id,
         'note' => $faker->numberBetween(0, 5),
         'comment' => $faker->text($maxNbChars = 200),
     ];
