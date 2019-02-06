@@ -17,17 +17,52 @@ use Illuminate\Support\Facades\File;
 
 class DishesController extends Controller
 {
+  /*
+  |--------------------------------------------------------------------------
+  | Dishes Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller handles dishes.
+  |
+  | The function index returns all dishes to display them, the most recent at
+  | the top.
+  |
+  | The function indexCurrentUser returns the dishes of the connected user to
+  | display them (the corresponding view is where the user can admnistrate his
+  | own dishes)
+  |
+  | The function create returns the view of the form for creating a dish.
+  |
+  | The function store saves the new dish in the database.
+  |
+  | The function show returns the dish that corresponds to a certain id, so that
+  | the view displays the picture and info of the dish, the form to order the
+  | dish, the map to see where the dish is available, and the recommendations:
+  | other dishes by the same cook (3 max.)
+  |
+  | The function edit return the view of the form used to edit a dish.
+  |
+  | The function update saves the new edited dish in the database.
+  |
+  | The function map_dishes return a view where the user can locate on a map the
+  | dishes around him.
+  |
+  | The function search returns the view of the search results (search in
+  | categories and title of the dish)
+  |
+  */
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
         $dishes = Dish::orderBy('created_at','desc')
         ->where('is_visible',1)
         ->paginate(4);
+
         foreach ($dishes as $dish) {
             $dish["photos"] = json_decode($dish["photos"]);
             $dish["categories"] = json_decode($dish["categories"]);
@@ -48,13 +83,13 @@ class DishesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function indexCurrentUser()
     {
         $dishes = DB::table('dishes')
         ->where('dishes.user_id', Auth::user()->id)
         ->orderBy('created_at', 'desc')
         ->get();
+
         foreach ($dishes as $dish) {
             $dish->photos = json_decode($dish->photos);
             $dish->categories = json_decode($dish->categories);
@@ -104,7 +139,7 @@ class DishesController extends Controller
 
         ]);
 
-        // Preparation du array pour les photos
+        // Preparation of the array for the photos
         $my_photos = [];
         if ($request->file('photo1')) {
             $path_photo1 = $request->file('photo1')->store('public');
@@ -154,7 +189,6 @@ class DishesController extends Controller
             $follower->notify(new UserFollowed(auth()->user(), $text));
         }
 
-        //return "Dish created !";
         return redirect()->action('UsersController@show', [Auth::user()->id]);
     }
 
@@ -268,7 +302,6 @@ class DishesController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-
     public function update(Request $request, Dish $dish, User $user)
     {
         // If not login -> redirect home page
@@ -370,7 +403,6 @@ class DishesController extends Controller
             'user' => $user,
             'arr' => $arr,
         ]);
-
     }
 
     /**
@@ -387,10 +419,12 @@ class DishesController extends Controller
     }
 
     /**
-     * Search in categories and
-     *
+     * [search description]
+     * @param  Request    $request
+     * @param  Dish       $dish
+     * @param  Categories $categories
+     * @return \Illuminate\Http\Response
      */
-
     public function search(Request $request, Dish $dish, Categories $categories)
     {
         $keyword = $request->keyword;

@@ -9,6 +9,23 @@ use Illuminate\Support\Facades\Session;
 
 class DemandController extends Controller
 {
+  /*
+  |--------------------------------------------------------------------------
+  | Demands Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller handles demands: when a user posts a specific demand to the
+  | community (for instance: a barbecue for 20 people).
+  |
+  | The function index returns the view of the form to post a demand.
+  |
+  | The function board returns the demands that have been made to display them.
+  |
+  | The function store saves the demand into the database.
+  |
+  |
+  */
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +44,7 @@ class DemandController extends Controller
     public function board()
     {
         $demands = Demand::all();
-        
+
         return view('demand.index', [
             'demands' => $demands
         ]);
@@ -50,8 +67,8 @@ class DemandController extends Controller
         ]);
 
         $data['user_id'] = Auth::id();
-        // dd($data);
-        //Add your demande to database
+
+        //Add your demand to database
         $category = Demand::create($data);
         Session::flash('alert-success', 'Votre demande a été ajoutée avec succès !');
         return redirect()->route('home');

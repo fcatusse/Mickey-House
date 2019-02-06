@@ -3444,9 +3444,7 @@
                 "payment processing",
                 "stripe"
             ],
-
-            "time": "2019-01-25T14:24:25+00:00"
-
+            "time": "2019-01-31T15:23:38+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
