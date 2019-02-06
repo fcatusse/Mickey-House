@@ -16,7 +16,7 @@ $factory->define(\App\Dish::class, function (Faker $faker) {
             $faker->numberBetween(0, 15)
         ]),
         'is_visible' => $faker->boolean(),
-        'created_at' => $faker->date(),
-        'updated_at' => $faker->date()
+        'created_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = null) ,
+        'updated_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = null) 
     ];
 });
