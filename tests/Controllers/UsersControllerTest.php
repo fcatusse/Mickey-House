@@ -5,12 +5,14 @@ use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+//use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class UsersControllerTest extends TestCase
 {
 
     use RefreshDatabase;
     use DatabaseMigrations;
+    //use WithoutMiddleware;
 
     public function setUp()
     {
@@ -28,7 +30,10 @@ class UsersControllerTest extends TestCase
         foreach ($user_dishes as $dish) {
             $this->assertInstanceOf(Dish::class, $dish);
         }
-        $response = $this->get(route('user.show', $user->id));
+        $response = $this->actingAs($user)
+            ->withSession(['foo' => 'bar'])
+            ->get(route('user.show', $user->id));
+        //dd($response);
         $response->assertStatus(200);
 
         $user_view = $response->getOriginalContent()->getData()['user'];
@@ -38,15 +43,21 @@ class UsersControllerTest extends TestCase
         $this->assertEquals($user_view->address, $user->address);
 
         $dishes_view = $response->getOriginalContent()->getData()['dishes'];
-        foreach ($user_dishes as $key => $user_dish)
-        {
-            $this->assertEquals($user_dish->getAttributes(), $dishes_view[$key]);
+        if(!empty($user_dishes)) {
+          foreach ($user_dishes as $key => $user_dish)
+          {
+              $this->assertEquals($user_dish->getAttributes(), $dishes_view[$key]);
+          }
         }
+
     }
 
     public function testShowUserWithWrongId()
     {
-        $response = $this->get(route('user.show', 0));
+        $user = User::find(1);
+        $response = $this->actingAs($user)
+            ->withSession(['foo' => 'bar'])
+            ->get(route('user.show', 0));
         $response->assertStatus(404);
     }
 
