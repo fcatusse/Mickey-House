@@ -184,7 +184,7 @@ class UsersController extends Controller
       ]);
 
       // reverse geocoding of the address to get the coordinates
-      $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".str_replace (' ' , '+' , $data['address']) ."&city=".$data['city']."&country=france&postalcode=".$data['postal_code']."&limit=1");
+      $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".$this->formatAddress($data['address'])."&city=".$this->formatAddress( $data['city'])."&country=france&postalcode=".$data['postal_code']."&limit=1");
       $decoded = json_decode($json);
       $data['lat'] = $decoded[0]->lat;
       $data['long'] = $decoded[0]->lon;
@@ -195,6 +195,19 @@ class UsersController extends Controller
 
       Session::flash('alert-success', 'Profil édité avec succès');
       return redirect()->action('UsersController@show', [$user->id]);
+  }
+
+  /**
+   *
+   * @param  $address string
+   * @return string
+   */
+  public function formatAddress($address)
+  {
+    $arr = [' ', '-'];
+    $address = str_replace ($arr , '+' , $address);
+    $address = str_replace ('\'' , '' , $address);
+    return $address;
   }
 
   /**

@@ -40,7 +40,7 @@
             var lat = markers[i][0]+offset*sign;
             sign = 1 - Math.random();
             var lon = markers[i][1]+offset;
-            var popupText =  "<a href='/dish/"+markers[i][3]+"'>"+markers[i][2]+"</a>";
+            var popupText =  "<a id='dish"+markers[i][3]+"' href='/dish/"+markers[i][3]+"'>"+markers[i][2]+"</a>";
 
              var markerLocation = new L.LatLng(lat, lon);
              var marker = new L.Marker(markerLocation);

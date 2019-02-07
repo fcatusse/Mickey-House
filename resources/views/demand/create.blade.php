@@ -2,12 +2,7 @@
 
 @section('content')
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Poster une demande spécifique</li>
-    </ol>
-</nav>
+  <h3 class="titleProfile">Ajouter une demande</h3>
 
     @if ($errors->any())
         <div class="alert alert-danger">

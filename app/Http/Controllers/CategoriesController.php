@@ -60,7 +60,7 @@ class CategoriesController extends Controller
         //Add the new category in the database
         $category = Categories::create($data);
 
-        Session::flash('alert-success', 'The category has been created with success.');
+        Session::flash('alert-success', 'Catégorie créée!');
         return redirect()->action('CategoriesController@index');
     }
 
@@ -94,7 +94,7 @@ class CategoriesController extends Controller
         //Add the newly updated category in the database
         $category->update($data);
 
-        Session::flash('alert-success', 'The category has been updated with success.');
+        Session::flash('alert-success', 'Catégorie éditée avec succès.');
         return redirect()->action('CategoriesController@index');
     }
 
@@ -107,7 +107,7 @@ class CategoriesController extends Controller
     public function destroy(Categories $category)
     {
         $category->delete();
-        Session::flash('alert-danger', 'The category has been deleted with success.');
+        Session::flash('alert-danger', 'Catégorie supprimée avec succès.');
         return redirect()->action('CategoriesController@index');
     }
 
