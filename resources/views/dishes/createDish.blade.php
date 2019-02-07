@@ -47,7 +47,7 @@
     </tr>
     <tr>
         <td>{!! Form::label('categorie1', 'Categorie principale*') !!}</td>
-        <td>{!! Form::select('categorie1', $my_categories, null, ['class' => 'form-control', 'placeholder' => 'Choisir
+        <td>{!! Form::select('categorie1', $my_categories, null, ['id' => 'cat-1', 'class' => 'form-control', 'placeholder' => 'Choisir
             catégorie...']) !!}
         </td>
     </tr>

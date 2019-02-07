@@ -61,19 +61,19 @@
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
+            <a id="home" class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/dishes/map">Autour de moi</a>
+            <a id="map-link" class="nav-link" href="/dishes/map">Autour de moi</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/best">Top 10</a>
+            <a id="top-10" class="nav-link" href="/users/best">Top 10</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/demands">Demandes</a>
+            <a id="demandes" class="nav-link" href="/demands">Demandes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/index">Communauté</a>
+            <a id="community" class="nav-link" href="/users/index">Communauté</a>
           </li>
           <form action="/dishes/search" method="POST" class="form-inline my-2 my-lg-0 ml-5">
             @csrf
@@ -96,7 +96,7 @@
             @endif
           @else
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <a id="news" class="nav-link dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 News
               </a>
               <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
@@ -113,16 +113,16 @@
               @if (Auth::user()->is_admin)
                 <a href="{{route('adminPanel')}}" class="dropdown-item">Admin Panel</a>
               @endif
-              <a href="{{route('create.dish')}}" class="dropdown-item">Ajouter un plat</a>
-              <a href="{{route('create.demand')}}" class="dropdown-item">Ajouter une demande</a>
-              <a href="{{route('user.show', Auth::user()->id)}}" class="dropdown-item">Ma page</a>
-              <a href="{{route('orders.show', Auth::user()->id)}}" class="dropdown-item">Mes
+              <a id="add-dish" href="{{route('create.dish')}}" class="dropdown-item">Ajouter un plat</a>
+              <a id="add-demand" href="{{route('create.demand')}}" class="dropdown-item">Ajouter une demande</a>
+              <a id="my-page" href="{{route('user.show', Auth::user()->id)}}" class="dropdown-item">Ma page</a>
+              <a id="my-orders" href="{{route('orders.show', Auth::user()->id)}}" class="dropdown-item">Mes
                 commandes</a>
-                <a href="{{route('dish.show.mine', Auth::user()->id)}}" class="dropdown-item">Mes
+                <a id="my-dishes" href="{{route('dish.show.mine', Auth::user()->id)}}" class="dropdown-item">Mes
                   plats</a>
-                  <a href="{{route('user.edit')}}" class="dropdown-item">Editer mon
+                  <a id="edit" href="{{route('user.edit')}}" class="dropdown-item">Editer mon
                     profil</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    <a id="logout" class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                   </a>

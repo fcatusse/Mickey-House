@@ -77,13 +77,12 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
       // reverse geocoding of the user's address
-      $arr = [' ', '-'];
-      $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".str_replace ($arr , '+' , $data['address']) ."&city=".str_replace ($arr , '+' , $data['city'])."&country=france&postalcode=".$data['postal_code']."&limit=1");
+      $json = file_get_contents("https://nominatim.openstreetmap.org/search/reverse?email=".config('app.email')."&format=json&street=".$this->formatAddress($data['address'])."&city=".$this->formatAddress( $data['city'])."&country=france&postalcode=".$data['postal_code']."&limit=1");
       $decoded = json_decode($json);
 
       // success alert
-      Session::flash('alert-success', 'Welcome!');
-      
+      Session::flash('alert-success', 'Bienvenue!');
+
       return User::create([
           'username' => $data['username'],
           'firstname' => $data['firstname'],
@@ -96,5 +95,18 @@ class RegisterController extends Controller
           'city' => $data['city'],
           'password' => Hash::make($data['password']),
       ]);
+    }
+
+    /**
+     *
+     * @param  $address string
+     * @return string
+     */
+    public function formatAddress($address)
+    {
+      $arr = [' ', '-'];
+      $address = str_replace ($arr , '+' , $address);
+      $address = str_replace ('\'' , '' , $address);
+      return $address;
     }
 }

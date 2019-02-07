@@ -48,6 +48,6 @@
 
   </br>
 
-    <a href="{{route('password.edit', $data['user']->id)}}" class="btn btn-secondary">Changer mon mot de passe</a>
+    <a id="change-psw" href="{{route('password.edit', $data['user']->id)}}" class="btn btn-secondary">Changer mon mot de passe</a>
 
 @endsection

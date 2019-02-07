@@ -1,28 +1,61 @@
 <?php
+
 use App\User;
+use App\Dish;
+use App\Order;
+use App\Reviews;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\DishesController;
-use App\Http\Controllers\ReviewsController;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ReviewsTest extends TestCase
 {
 
+  use RefreshDatabase;
+  use DatabaseMigrations;
   use WithoutMiddleware;
-  // the function has to find a dish and show it. It returns to the view in case of success
-  // and gives an error 404 in case of id not found
 
-  public function testShowReviews()
+  public function setUp()
   {
-    $response = $this->call('GET', '/users/show/1');
-    $response->assertViewHas('averageNote');
-    $response->assertViewHas('reviews');
-    $this->assertTrue($response->status() == 200);
-    $this->assertTrue($response->original->getData()["reviews"][0]->note == 1);
+      parent::setUp();
+      //factory(User::class, 5)->create();
+      //factory(Dish::class, 10)->create();
+      //factory(Order::class, 10)->create();
+      factory(Reviews::class, 10)->create();
+
   }
 
-  public function testSaveNewReview() {
+  public function testIndex()
+  {
+    $response = $this->call('GET', '/user/review/1');
+    $this->assertTrue($response->status() == 200);
+    $order_id = $response->getOriginalContent()->getData()['order_id'];
+    $this->assertTrue($order_id != null);
+  }
+
+  public function testIndexAdmin()
+  {
+    $response = $this->call('GET', '/admin/reviews');
+    $this->assertTrue($response->status() == 200);
+    $reviews = $response->getOriginalContent()->getData()['reviews'];
+    $this->assertTrue($reviews != null);
+  }
+
+  public function testReviewsPageUser()
+  {
+    $response = $this->call('GET', '/users/show/1');
+    $this->assertTrue($response->status() == 200);
+
+    $avg_note = $response->getOriginalContent()->getData()['averageNote'];
+    $this->assertTrue($avg_note != null);
+
+    $reviews = $response->getOriginalContent()->getData()['reviews'];
+    $this->assertTrue($reviews != null);
+  }
+
+  public function testStoreReview()
+  {
     $user = new User();
     $user->id = 1;
     $this->be($user);

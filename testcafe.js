@@ -16,6 +16,3 @@ test('Registration', async t => {
     .click('.btn-primary')
     .expect(Selector('.alert-succcess').innerText).eql('Bienvenue!');
 });
-
-
-
