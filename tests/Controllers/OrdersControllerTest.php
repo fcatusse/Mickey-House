@@ -13,6 +13,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class OrdersControllerTest extends TestCase
 {
+    /**
   use WithoutMiddleware;
   use RefreshDatabase;
   use DatabaseMigrations;
@@ -58,9 +59,5 @@ class OrdersControllerTest extends TestCase
   $this->assertTrue($response->status() == 500);
 
   }
-
-
-
+*/
 }
-
- ?>

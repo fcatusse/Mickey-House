@@ -8,10 +8,10 @@ $factory->define(\App\Dish::class, function (Faker $faker) {
         'user_id' => factory(User::class)->create()->id,
         'name' => $faker->name,
         'description' => $faker->text,
-        'photos' => $faker->word.'.png',
+        'photos' => json_encode($faker->word.'.png'),
         'nb_servings' => $faker->numberBetween(10, 20),
         'price' => $faker->randomFloat(2, 1, 20),
-        'categories' => serialize([
+        'categories' => json_encode([
             $faker->numberBetween(0, 15),
             $faker->numberBetween(0, 15),
             $faker->numberBetween(0, 15)
