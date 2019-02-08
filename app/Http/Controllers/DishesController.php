@@ -244,8 +244,12 @@ class DishesController extends Controller
            }
          }
 
-         $user = User::findById(Auth::id());
-         $email = $user->email;
+         $email = '';
+         if (Auth::user())
+         {
+             $user = User::findById(Auth::id());
+             $email = $user->email;
+         }
 
             return view('dishes.showDish', [
                 'dish' => $dish,
