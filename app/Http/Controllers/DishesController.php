@@ -245,10 +245,10 @@ class DishesController extends Controller
          }
 
          $email = '';
-         if (Auth::user())
+         if(Auth::user())
          {
-             $user = User::findById(Auth::id());
-             $email = $user->email;
+           $user = User::findById(Auth::id());
+           $email = $user->email;
          }
 
             return view('dishes.showDish', [
